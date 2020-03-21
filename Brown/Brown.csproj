@@ -174,7 +174,6 @@
     <Compile Include="Forms\Frm_report_regdebt.Designer.cs">
       <DependentUpon>Frm_report_regdebt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Misc\Test.cs" />
     <Compile Include="Report\Item_stat_Report.cs">
       <SubType>Component</SubType>
     </Compile>
