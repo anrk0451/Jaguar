@@ -551,7 +551,7 @@ namespace Brown.Action
 				if (result > 0)
 				{
 					XtraMessageBox.Show("发票开具成功!\r\n" + "发票代码:" + s_fpdm + "\r\n" + "发票号码:" + s_fphm, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
+				}   
 				else
 				{
 					XtraMessageBox.Show("发票开具成功!但记录开票日志失败!\r\n" + "发票代码:" + s_fpdm + "\r\n" + "发票号码:" + s_fphm, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
