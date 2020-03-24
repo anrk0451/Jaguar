@@ -68,20 +68,20 @@
     <Reference Include="DevExpress.XtraTreeList.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraVerticalGrid.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\..\dll\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\..\dll\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\dll\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess">
-      <HintPath>..\..\..\dll\Oracle.ManagedDataAccess.dll</HintPath>
+      <HintPath>..\..\dll\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\dll\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SqlSugar">
-      <HintPath>..\..\..\dll\SqlSugar.dll</HintPath>
+      <HintPath>..\..\dll\SqlSugar.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -167,6 +167,12 @@
     </Compile>
     <Compile Include="BusinessObject\RightGrant.Designer.cs">
       <DependentUpon>RightGrant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObject\WorkStationList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BusinessObject\WorkStationList.Designer.cs">
+      <DependentUpon>WorkStationList.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Frm_report_regdebt.cs">
       <SubType>Form</SubType>
@@ -684,6 +690,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BusinessObject\RightGrant.resx">
       <DependentUpon>RightGrant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BusinessObject\WorkStationList.resx">
+      <DependentUpon>WorkStationList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_report_regdebt.resx">
       <DependentUpon>Frm_report_regdebt.cs</DependentUpon>

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
-
+using System.Net;
 namespace Brown
 {
     public class Tools
@@ -475,6 +475,25 @@ namespace Brown
         {
             return Regex.IsMatch(text, @"[\u4E00-\u9FA5]+$");
              
+        }
+
+        /// <summary>
+        /// 返回本机的ip地址
+        /// </summary>
+        /// <returns></returns>
+        public static void GetIpAddress(out string hostname,out string ipaddress)
+        {
+            hostname = Dns.GetHostName();                        //本机名 
+            IPAddress[] ipHost = Dns.GetHostAddresses(hostname); //会返回所有地址，包括IPv4和IPv6   
+            string ipaddr = string.Empty;
+
+            foreach (IPAddress ip in ipHost)
+            {
+                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    ipaddr = ip.ToString();
+            }
+
+            ipaddress = ipaddr;
         }
 
 	}

@@ -513,13 +513,15 @@ namespace Brown.Action
 			//将业务数据转换为Json字符串
 			string s_json = Tools.ConvertObjectToJson(bdata);
 
-			//XtraMessageBox.Show(s_json);
+			XtraMessageBox.Show(s_json);
 			Envior.TAX_DEBUG = s_json;
 
 			string s_req_sid = string.Empty;
 			string s_retstr = string.Empty;
 
-			s_req_sid = Tools.GetEntityPK("TAXREQ"); //报文请求ID			
+			s_req_sid = Tools.GetEntityPK("TAXREQ"); //报文请求ID	
+			//XtraMessageBox.Show(s_json);
+
 			s_retstr = WrapData("FPKJ", s_req_sid, s_json);
 
 			//分析返回结果

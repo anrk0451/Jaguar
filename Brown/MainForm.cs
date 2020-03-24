@@ -663,6 +663,21 @@ namespace Brown
 			Bs_CURUSER.Caption = Envior.cur_userName;
 		}
 
+		private void barButtonItem38_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			//Tools.GetIpAddress();
+		}
+
+		/// <summary>
+		/// 工作站信息维护
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void barButtonItem42_ItemClick(object sender, ItemClickEventArgs e)
+		{
+
+		}
+
 		/// <summary>
 		/// 处理窗口消息
 		/// </summary>
