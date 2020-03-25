@@ -59,6 +59,12 @@ namespace Brown.Action
 
 			string s_req_sid = Tools.GetEntityPK("TAXREQ"); //报文请求ID
 			string s_retstr = WrapData("HQDQFPDMHM", s_req_sid, s_json);
+
+			if (string.IsNullOrEmpty(s_retstr))
+			{
+				XtraMessageBox.Show("未获取到票号!","提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+				return -1;
+			}
  
 			//分析返回结果
 			Object obj = JsonConvert.DeserializeObject(s_retstr);
@@ -381,6 +387,10 @@ namespace Brown.Action
  
 			if (itemCount > AppInfo.TAXITEMCOUNT)	   //超出清单阈值
 			{
+				//debug  
+				XtraMessageBox.Show("退费项目超出打印清单数目!","提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+				return -1;
+
 				while (reader_sa01.Read())
 				{
 					if(reader_sa01["SA020"].ToString() != "T") continue;					 //不是税务项目 忽略
@@ -513,8 +523,8 @@ namespace Brown.Action
 			//将业务数据转换为Json字符串
 			string s_json = Tools.ConvertObjectToJson(bdata);
 
-			XtraMessageBox.Show(s_json);
-			Envior.TAX_DEBUG = s_json;
+			//XtraMessageBox.Show(s_json);
+			//Envior.TAX_DEBUG = s_json;
 
 			string s_req_sid = string.Empty;
 			string s_retstr = string.Empty;
