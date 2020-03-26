@@ -675,7 +675,7 @@ namespace Brown
 		/// <param name="e"></param>
 		private void barButtonItem42_ItemClick(object sender, ItemClickEventArgs e)
 		{
-
+			LogUtils.Debug("测试日志信息1");
 		}
 
 		/// <summary>

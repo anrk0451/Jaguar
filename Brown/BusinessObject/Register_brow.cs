@@ -429,7 +429,7 @@ namespace Brown.BusinessObject
 			string s_sql = string.Empty;
 			string s_text = te_quicksearch.EditValue.ToString();
 
-			if(s_text.Length == 4)   //号位查询
+			if(s_text.Length == 4 || (s_text.Length == 5 && s_text.Contains("-") ) )   //号位查询
 			{
 				s_sql = "select * from v_register r where exists(select 1 from bi01 b where r.rc130 = b.bi001 and bi003 ='" + s_text + "')";
 			}else if (Tools.IsHZ(s_text))
