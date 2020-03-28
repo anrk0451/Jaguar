@@ -779,7 +779,6 @@ namespace Brown.BusinessObject
 					if (XtraMessageBox.Show("下一张税票代码:" + Envior.NEXT_BILL_CODE + "\r\n" + "票号:" + Envior.NEXT_BILL_NUM + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 					{
 						TaxInvoice.Invoice(fa001, clientInfo);
-						//textEdit1.Text = Envior.TAX_DEBUG;
 					}
 				}
 			}

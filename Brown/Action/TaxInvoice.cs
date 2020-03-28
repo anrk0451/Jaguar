@@ -365,7 +365,7 @@ namespace Brown.Action
 			string s_yfphm = string.Empty;             //原发票号码
 
 													   //发票明细数量
-			int itemCount = Convert.ToInt32(SqlAssist.ExecuteScalar("select count(*) from v_sa01 where sa010 ='" + fa001 + "'"));
+			int itemCount = Convert.ToInt32(SqlAssist.ExecuteScalar("select count(*) from v_sa01 where sa010 ='" + fa001 + "' and sa020 = 'T' "));
 
 			//退费总金额
 			decimal dec_sum = Convert.ToDecimal(SqlAssist.ExecuteScalar("select fa004 from fa01 where fa001='" + fa001 + "'"));
@@ -386,11 +386,7 @@ namespace Brown.Action
 			OracleDataReader reader_sa01 = SqlAssist.ExecuteReader("select * from sa01 where sa010 = :fa001 and status = '1' ", new OracleParameter[] { op_fa001 });
  
 			if (itemCount > AppInfo.TAXITEMCOUNT)	   //超出清单阈值
-			{
-				//debug  
-				XtraMessageBox.Show("退费项目超出打印清单数目!","提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-				return -1;
-
+			{				 
 				while (reader_sa01.Read())
 				{
 					if(reader_sa01["SA020"].ToString() != "T") continue;					 //不是税务项目 忽略
@@ -413,8 +409,8 @@ namespace Brown.Action
 				c_detail.fphxz = "0";                                                    //发票行性质	0 正常行1 折扣行2 被折扣行
 				c_detail.ggxh = s_ggxh;													 //规格型号
 
-				c_detail.dw = s_jldw;													 //计量单位
-				c_detail.spmc = s_spmc;													 //商品名称
+				c_detail.dw = s_jldw;                                                    //计量单位
+				c_detail.spmc = "详见对应正数发票及清单";                                //商品名称 s_spmc;
 				c_detail.spsl = "";														 //数量
 				c_detail.dj = "";														 //单价(不含税)
 				c_detail.je = dec_je_notax.ToString();                                   //金额(不含税)
@@ -466,8 +462,8 @@ namespace Brown.Action
 					c_detail.ggxh = MiscAction.GetItemGGXH(reader_sa01["SA004"].ToString()); //规格型号
 					c_detail.dw = MiscAction.GetItemDW(reader_sa01["SA004"].ToString());     //计量单位
 					c_detail.spmc = reader_sa01["SA003"].ToString();                         //商品名称
-					c_detail.spsl = reader_sa01["NUMS"].ToString();                          //数量
-					c_detail.dj = dec_price_notax.ToString();                                //单价(不含税)
+					c_detail.spsl = reader_sa01["NUMS"].ToString(); ;                        //数量 
+					c_detail.dj = dec_price_notax.ToString();                                //单价(不含税) 
 					c_detail.je = dec_je_notax.ToString();                                   //金额(不含税)
 					c_detail.sl = dec_rate.ToString();                                       //税率
 					c_detail.se = dec_tax.ToString();                                        //税额						
@@ -523,14 +519,17 @@ namespace Brown.Action
 			//将业务数据转换为Json字符串
 			string s_json = Tools.ConvertObjectToJson(bdata);
 
-			//XtraMessageBox.Show(s_json);
-			//Envior.TAX_DEBUG = s_json;
+			//加入调试信息
+			LogUtils.Debug("业务json:" + s_json);
+
+
 
 			string s_req_sid = string.Empty;
 			string s_retstr = string.Empty;
 
 			s_req_sid = Tools.GetEntityPK("TAXREQ"); //报文请求ID	
-			//XtraMessageBox.Show(s_json);
+			LogUtils.Debug("报文请求Id:" + s_req_sid);
+
 
 			s_retstr = WrapData("FPKJ", s_req_sid, s_json);
 
