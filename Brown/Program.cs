@@ -7,7 +7,9 @@ using DevExpress.Skins;
 using DevExpress.LookAndFeel;
 using System.Diagnostics;
 using System.Text;
-
+using Brown.Misc;
+using System.Configuration;
+using Brown.Action;
 
 namespace Brown
 {
@@ -74,12 +76,42 @@ namespace Brown
 						Console.WriteLine(e.Message);
 					}
 
-
 					Application.Exit();
 					return;
 				}
 
-
+				/// 检查 工作站是否进行登记
+				Envior.WORKSTATIONID = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["workstationID"].Value.ToString();
+				string hostname = string.Empty;
+				string ipaddress = string.Empty;
+				Tools.GetIpAddress(out hostname, out ipaddress);
+				if(!string.IsNullOrEmpty(Envior.WORKSTATIONID))
+				{
+					switch (AppAction.WorkStationIsRegistered(Envior.WORKSTATIONID, hostname, ipaddress))
+					{
+						case 0:  //未登记
+							MessageBox.Show("此工作站尚未登记！","提示",MessageBoxButtons.OK,MessageBoxIcon.Error);
+							Application.Exit();
+							return;
+						case 2:  //主机名不符
+							MessageBox.Show("此工作站【计算机名称】与登记不符!","错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+							Application.Exit();
+							return;
+						case 3:  //ip地址不符
+							MessageBox.Show("此工作站【IP地址】与登记不符!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+							Application.Exit();
+							return;
+						default:						
+							break;
+					}
+				}
+				else
+				{
+					MessageBox.Show("未设置工作站ID!","错误",MessageBoxButtons.OK,MessageBoxIcon.Stop);
+					Application.Exit();
+					return;
+				}
+ 
 				Application.Run(new MainForm());
 				#endregion
 			}

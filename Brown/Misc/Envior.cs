@@ -39,7 +39,8 @@ namespace Brown.Misc
         public static string TAX_SERVER_URL { get; set; }     //税务发票服务URL  
         public static string TAX_CASHIER { get; set; }        //税务发票-收款人
         public static string TAX_CHECKER { get; set; }        //税务发票-复核人
-        public static string TAX_DEBUG { get; set; }          //调试信息
+        
+        public static string WORKSTATIONID { get; set; }      //工作站ID
 
 
         public static string[] rolearry { get; set; }      //所属角色组

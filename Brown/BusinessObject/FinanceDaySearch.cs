@@ -620,7 +620,14 @@ namespace Brown.BusinessObject
 				return;
 			}
 
-
+			//如果收费不是本工作站,提示
+			if (!string.IsNullOrEmpty(gridView1.GetRowCellValue(rowHandle, "WS001").ToString()))
+			{
+				if(!Envior.WORKSTATIONID.Equals(gridView1.GetRowCellValue(rowHandle, "WS001").ToString()))
+				{
+					if (XtraMessageBox.Show("此收费记录结算并非当前工作站,是否继续?", "提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No) return;
+				}
+			}
 			 
 			//TODO 负数发票补开
 			if (Convert.ToDecimal(gridView1.GetRowCellValue(rowHandle, "FA004")) < 0 )

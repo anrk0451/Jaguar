@@ -126,7 +126,7 @@ namespace Brown.BusinessObject
 		{
 			if (gridView1.FocusedRowHandle >= 0)
 			{
-				if (MessageBox.Show("确认要删除当前的记录吗", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
+				if (XtraMessageBox.Show("确认要删除当前的记录吗", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
 				{
 					return;
 				}

@@ -239,7 +239,24 @@ namespace Brown.Action
 			return SqlAssist.ExecuteProcedure("pkg_business.prc_SaveFinanceInfo", new OracleParameter[] { op_pjlx,op_title});
 		} 
 
-
+		 
+		public static int WorkStationIsRegistered(string ws001,string ws005,string ws007)
+		{
+			//工作站编号
+			OracleParameter op_ws001 = new OracleParameter("ic_workStationId", OracleDbType.Varchar2, 10);
+			op_ws001.Direction = ParameterDirection.Input;
+			op_ws001.Value = ws001;
+			//工作站计算机名称
+			OracleParameter op_ws005 = new OracleParameter("ic_hostname", OracleDbType.Varchar2, 50);
+			op_ws005.Direction = ParameterDirection.Input;
+			op_ws005.Value = ws005;
+			//工作站ip地址
+			OracleParameter op_ws007 = new OracleParameter("ic_ipaddress", OracleDbType.Varchar2, 50);
+			op_ws007.Direction = ParameterDirection.Input;
+			op_ws007.Value = ws007;
+			 
+			return Convert.ToInt32(SqlAssist.ExecuteFunction("pkg_business.fun_workStationIsRegistered",new OracleParameter[] { op_ws001,op_ws005,op_ws007}).ToString());
+		}
 
 
 

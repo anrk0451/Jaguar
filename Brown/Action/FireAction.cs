@@ -364,7 +364,7 @@ namespace Brown.Action
 		}
 
 		public static int TempSalesSettle(string cuname,string settleId, string[] itemId_arry, string[] itemType_arry, decimal[] price_arry, decimal[] nums_arry,
-			string handler,string memo)
+			string handler ,string memo)
 		{
 			//交款人姓名
 			OracleParameter op_cuname = new OracleParameter("ic_cuname", OracleDbType.Varchar2, 100);
@@ -404,7 +404,7 @@ namespace Brown.Action
 			OracleParameter op_handler = new OracleParameter("ic_handler", OracleDbType.Varchar2, 10);
 			op_handler.Direction = ParameterDirection.Input;
 			op_handler.Value = handler;
-
+ 
 			//备注
 			OracleParameter op_memo = new OracleParameter("ic_memo", OracleDbType.Varchar2, 80);
 			op_memo.Direction = ParameterDirection.Input;
@@ -527,7 +527,7 @@ namespace Brown.Action
 			op_handler.Value = handler;
  
 			return SqlAssist.ExecuteProcedure("pkg_business.prc_FireBusinessSettle",
-				new OracleParameter[] { op_settleId, op_ac001, op_cuname, op_sa001_arry, op_handler });
+				new OracleParameter[] { op_settleId, op_ac001, op_cuname, op_sa001_arry, op_handler});
 
 		}
 
