@@ -70,6 +70,7 @@
             this.repositoryItemHyperLinkEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn31 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.gridControl2 = new DevExpress.XtraGrid.GridControl();
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -92,6 +93,7 @@
             this.gridColumn20 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn29 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn30 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn32 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.repositoryItemHyperLinkEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.gridControl4 = new DevExpress.XtraGrid.GridControl();
@@ -102,8 +104,6 @@
             this.gridColumn26 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn27 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn28 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn31 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn32 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).BeginInit();
@@ -539,6 +539,16 @@
             this.gridColumn3.VisibleIndex = 2;
             this.gridColumn3.Width = 94;
             // 
+            // gridColumn31
+            // 
+            this.gridColumn31.Caption = "工作站名";
+            this.gridColumn31.FieldName = "WS003";
+            this.gridColumn31.MinWidth = 25;
+            this.gridColumn31.Name = "gridColumn31";
+            this.gridColumn31.Visible = true;
+            this.gridColumn31.VisibleIndex = 1;
+            this.gridColumn31.Width = 113;
+            // 
             // repositoryItemCheckEdit1
             // 
             this.repositoryItemCheckEdit1.AutoHeight = false;
@@ -804,6 +814,16 @@
             this.gridColumn30.VisibleIndex = 3;
             this.gridColumn30.Width = 229;
             // 
+            // gridColumn32
+            // 
+            this.gridColumn32.Caption = "工作站名";
+            this.gridColumn32.FieldName = "WS003";
+            this.gridColumn32.MinWidth = 25;
+            this.gridColumn32.Name = "gridColumn32";
+            this.gridColumn32.Visible = true;
+            this.gridColumn32.VisibleIndex = 7;
+            this.gridColumn32.Width = 94;
+            // 
             // repositoryItemCheckEdit2
             // 
             this.repositoryItemCheckEdit2.AutoHeight = false;
@@ -913,26 +933,6 @@
             this.gridColumn28.Visible = true;
             this.gridColumn28.VisibleIndex = 3;
             this.gridColumn28.Width = 125;
-            // 
-            // gridColumn31
-            // 
-            this.gridColumn31.Caption = "工作站名";
-            this.gridColumn31.FieldName = "WS003";
-            this.gridColumn31.MinWidth = 25;
-            this.gridColumn31.Name = "gridColumn31";
-            this.gridColumn31.Visible = true;
-            this.gridColumn31.VisibleIndex = 1;
-            this.gridColumn31.Width = 113;
-            // 
-            // gridColumn32
-            // 
-            this.gridColumn32.Caption = "工作站名";
-            this.gridColumn32.FieldName = "WS003";
-            this.gridColumn32.MinWidth = 25;
-            this.gridColumn32.Name = "gridColumn32";
-            this.gridColumn32.Visible = true;
-            this.gridColumn32.VisibleIndex = 7;
-            this.gridColumn32.Width = 94;
             // 
             // FinanceDaySearch
             // 

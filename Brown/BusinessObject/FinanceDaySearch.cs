@@ -480,6 +480,14 @@ namespace Brown.BusinessObject
 						string s_fa190 = gridView1.GetRowCellValue(rowHandle, "FA190").ToString();
 
 						if (XtraMessageBox.Show("确认要作废吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No) return;
+
+						//检查与开票所在工作站是否一致!!!
+						if(MiscAction.CheckWorkStationCompare(s_fa001,Envior.WORKSTATIONID) == "0")
+						{
+							XtraMessageBox.Show("此笔收费发票不是在当前工作站开具,不能继续!","提示",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+							return;
+						}
+
 						Frm_RemoveFinReason frm_reason = new Frm_RemoveFinReason();
 						if (frm_reason.ShowDialog() == DialogResult.OK)
 						{
@@ -939,23 +947,7 @@ namespace Brown.BusinessObject
 			string s_billType = string.Empty;
 			string s_fa001 = string.Empty;
 			if (tabPane1.SelectedPageIndex == 0)
-			{
-				//rowHandle = gridView1.FocusedRowHandle;
-				//if (!AppAction.CheckRight("收费退费", gridView1.GetRowCellValue(rowHandle,"FA100").ToString())) return;
-
-				////负数不能退费
-				//if (Convert.ToDecimal(gridView1.GetRowCellValue(rowHandle,"FA004")) < 0 /*|| gridView1.GetRowCellValue(rowHandle, "FA002").ToString() == "2"*/)   
-				//{
-				//	XtraMessageBox.Show("此收费记录不能退费!","提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-				//	return;
-				//}
-				//s_fa001 = gridView1.GetRowCellValue(rowHandle, "FA001").ToString();
-				//if (MiscAction.HaveRefund(s_fa001))
-				//{
-				//	XtraMessageBox.Show("此收费记录已经有退费记录,不能再次退费!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				//	return;
-				//}
-				//s_billType = "%";
+			{				
 				return;
 			}
 			else if(tabPane1.SelectedPageIndex == 1)
@@ -966,6 +958,15 @@ namespace Brown.BusinessObject
 				s_billType = gridView3.GetRowCellValue(rowHandle, "BILLTYPE").ToString();
 				s_fa001 = gridView3.GetRowCellValue(rowHandle, "FA001").ToString();
 				string s_fa002 = SqlAssist.ExecuteScalar("select fa002 from fa01 where fa001='" + s_fa001 + "'").ToString();
+
+				//检查与开票所在工作站是否一致!!!
+				if (MiscAction.CheckWorkStationCompare(s_fa001, Envior.WORKSTATIONID) == "0")
+				{
+					XtraMessageBox.Show("此笔收费发票不是在当前工作站开具,不能继续!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					return;
+				}
+
+
 				//if(s_fa002 == "2")
 				//{
 				//	XtraMessageBox.Show("此收费记录不能退费!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);

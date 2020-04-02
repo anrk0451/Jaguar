@@ -583,5 +583,25 @@ namespace Brown.Action
 			return returnValue.Value.ToString();
 		}
 
+
+		/// <summary>
+		/// 判断 当前工作站是否允许 操作结算记录 1-允许操作 0-不允许
+		/// </summary>
+		/// <param name="fa001"></param>
+		/// <param name="ws001"></param>
+		/// <returns></returns>
+		public static string CheckWorkStationCompare(string fa001,string ws001)
+		{
+			OracleParameter op_fa001 = new OracleParameter("ic_fa001", OracleDbType.Varchar2, 10);
+			op_fa001.Direction = ParameterDirection.Input;
+			op_fa001.Value = fa001;
+
+			OracleParameter op_ws001 = new OracleParameter("ic_ws001", OracleDbType.Varchar2, 10);
+			op_ws001.Direction = ParameterDirection.Input;
+			op_ws001.Value = ws001;
+
+			return SqlAssist.ExecuteScalar("select pkg_business.fun_CheckWorkStationCompare(:ic_fa001,:ic_ws001) from dual", new OracleParameter[] { op_fa001,op_ws001 }).ToString();
+ 
+		}
 	}
 }
