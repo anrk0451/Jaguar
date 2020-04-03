@@ -960,7 +960,7 @@ namespace Brown.BusinessObject
 				string s_fa002 = SqlAssist.ExecuteScalar("select fa002 from fa01 where fa001='" + s_fa001 + "'").ToString();
 
 				//检查与开票所在工作站是否一致!!!
-				if (MiscAction.CheckWorkStationCompare(s_fa001, Envior.WORKSTATIONID) == "0")
+				if (MiscAction.CheckWorkStationCompare(s_fa001, Envior.WORKSTATIONID, s_billType) == "0")
 				{
 					XtraMessageBox.Show("此笔收费发票不是在当前工作站开具,不能继续!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					return;

@@ -118,6 +118,7 @@ namespace Brown
 			catch (Exception ex)
 			{
 				string str = GetExceptionMsg(ex, string.Empty);
+				LogUtils.Error(str);
 				MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
@@ -126,14 +127,14 @@ namespace Brown
 		{
 			string str = GetExceptionMsg(e.Exception, e.ToString());
 			MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//LogManager.WriteLog(str);
+			LogUtils.Error(str);
 		}
 
 		static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 			string str = GetExceptionMsg(e.ExceptionObject as Exception, e.ToString());
 			MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//LogManager.WriteLog(str);
+			LogUtils.Error(str);
 		}
 
 
