@@ -164,6 +164,7 @@ namespace Brown.Action
             }
             else
             {
+                LogUtils.Error("作废财政发票失败:\r\n" + "票据号:" + pjh + "注册号:" + zch + "\r\n" + "返回字符串:" + retstr);
                 XtraMessageBox.Show("作废财政发票失败!请与管理员联系!\r\n" + retstr,"提示",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return -1;
             }
