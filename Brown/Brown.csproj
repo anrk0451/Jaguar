@@ -165,6 +165,12 @@
     <Compile Include="BusinessObject\Report_RegDebtData.Designer.cs">
       <DependentUpon>Report_RegDebtData.cs</DependentUpon>
     </Compile>
+    <Compile Include="BusinessObject\Report_workstation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BusinessObject\Report_workstation.Designer.cs">
+      <DependentUpon>Report_workstation.cs</DependentUpon>
+    </Compile>
     <Compile Include="BusinessObject\RightGrant.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -182,6 +188,12 @@
     </Compile>
     <Compile Include="Forms\Frm_report_regdebt.Designer.cs">
       <DependentUpon>Frm_report_regdebt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Frm_wsStat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Frm_wsStat.Designer.cs">
+      <DependentUpon>Frm_wsStat.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\LogUtils.cs" />
     <Compile Include="Report\Item_stat_Report.cs">
@@ -692,6 +704,9 @@
     <EmbeddedResource Include="BusinessObject\Report_RegDebtData.resx">
       <DependentUpon>Report_RegDebtData.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BusinessObject\Report_workstation.resx">
+      <DependentUpon>Report_workstation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BusinessObject\RightGrant.resx">
       <DependentUpon>RightGrant.cs</DependentUpon>
     </EmbeddedResource>
@@ -700,6 +715,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_report_regdebt.resx">
       <DependentUpon>Frm_report_regdebt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Frm_wsStat.resx">
+      <DependentUpon>Frm_wsStat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\Item_stat_Report.resx">
       <DependentUpon>Item_stat_Report.cs</DependentUpon>

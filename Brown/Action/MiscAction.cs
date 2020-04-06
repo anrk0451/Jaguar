@@ -478,6 +478,35 @@ namespace Brown.Action
 				new OracleParameter[] { op_dbegin, op_dend, op_handler });
 		}
 
+
+		/// <summary>
+		/// 工作站统计
+		/// </summary>
+		/// <param name="ws001"></param>
+		/// <param name="dbegin"></param>
+		/// <param name="dend"></param>
+		/// <returns></returns>
+		public static int WorkStationStat(string ws001,string dbegin,string dend)
+		{
+			//工作站编号
+			OracleParameter op_ws001 = new OracleParameter("ic_ws001", OracleDbType.Varchar2, 10);
+			op_ws001.Direction = ParameterDirection.Input;
+			op_ws001.Value = ws001;
+
+			//开始日期
+			OracleParameter op_dbegin = new OracleParameter("ic_begin", OracleDbType.Varchar2, 20);
+			op_dbegin.Direction = ParameterDirection.Input;
+			op_dbegin.Value = dbegin;
+
+			//结束日期
+			OracleParameter op_dend = new OracleParameter("ic_end", OracleDbType.Varchar2, 20);
+			op_dend.Direction = ParameterDirection.Input;
+			op_dend.Value = dend;
+			 
+			return SqlAssist.ExecuteProcedure("pkg_report.prc_workStationStat",
+				new OracleParameter[] {op_ws001, op_dbegin, op_dend });
+		}
+
 		/// <summary>
 		/// 授权过程
 		/// </summary>

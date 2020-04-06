@@ -590,9 +590,15 @@ namespace Brown
 			openBusinessObject("Report_FinItemStat");
 		}
 
+		/// <summary>
+		/// 工作站统计
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void barButtonItem22_ItemClick(object sender, ItemClickEventArgs e)
 		{
-
+			if (!AppAction.CheckRight("工作站开票统计")) return;
+			openBusinessObject("Report_workstation");
 		}
 
 		/// <summary>
