@@ -23,10 +23,10 @@ namespace Brown.BusinessObject
         private OracleDataAdapter statAdapter = new OracleDataAdapter("select * from rep_workStation order by ws001", SqlAssist.conn);
 
         private DataTable dt_finInvoice = new DataTable();
-        private OracleDataAdapter finAdapter = new OracleDataAdapter("select * from v_financeDay_invoices where billType = 'F' and fa100 = :fa100 and (to_char(fa200,'yyyy-mm-dd') between :begin and :end) ", SqlAssist.conn);
+        private OracleDataAdapter finAdapter = new OracleDataAdapter("select * from v_financeDay_invoices where billType = 'F' and ws001 = :ws001 and (to_char(kprq,'yyyy-mm-dd') between :begin and :end) ", SqlAssist.conn);
 
         private DataTable dt_taxInvoice = new DataTable();
-        private OracleDataAdapter taxAdapter = new OracleDataAdapter("select * from v_financeDay_invoices where billType = 'T' and fa100 = :fa100 and (to_char(fa200,'yyyy-mm-dd') between :begin and :end) ", SqlAssist.conn);
+        private OracleDataAdapter taxAdapter = new OracleDataAdapter("select * from v_financeDay_invoices where billType = 'T' and ws001 = :ws001 and (to_char(kprq,'yyyy-mm-dd') between :begin and :end) ", SqlAssist.conn);
 
 
         private OracleParameter op_begin = new OracleParameter("begin", OracleDbType.Varchar2, 20);
@@ -48,8 +48,13 @@ namespace Brown.BusinessObject
             op_begin.Direction = ParameterDirection.Input;
             op_ws001.Direction = ParameterDirection.Input;
 
-            statAdapter.SelectCommand.Parameters.AddRange(new OracleParameter[] { op_ws001, op_begin, op_end });           
+            statAdapter.SelectCommand.Parameters.AddRange(new OracleParameter[] { op_ws001, op_begin, op_end });
+            finAdapter.SelectCommand.Parameters.AddRange(new OracleParameter[] { op_ws001, op_begin, op_end });
+            taxAdapter.SelectCommand.Parameters.AddRange(new OracleParameter[] { op_ws001, op_begin, op_end });
+
             gridControl_center.DataSource = dt_wsStat;
+            gridControl_fin.DataSource = dt_finInvoice;
+            gridControl_tax.DataSource = dt_taxInvoice;
         }
 
         private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -149,6 +154,69 @@ namespace Brown.BusinessObject
             }
         }
 
-        
+        /// <summary>
+        /// 行焦点改变事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridView_center_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        {
+            int rowHandle = e.FocusedRowHandle;
+            if (rowHandle >= 0)
+            {
+                string s_ws001 = gridView_center.GetRowCellValue(rowHandle, "WS001").ToString();
+                op_ws001.Value = s_ws001;
+ 
+                //1.财政发票
+                dt_finInvoice.Rows.Clear();
+                finAdapter.Fill(dt_finInvoice);
+                //2.税务发票
+                dt_taxInvoice.Rows.Clear();
+                taxAdapter.Fill(dt_taxInvoice);
+            }
+        }
+
+        /// <summary>
+        /// 绘制行号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridView_fin_CustomDrawRowIndicator(object sender, DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventArgs e)
+        {
+            e.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            if (e.Info.IsRowIndicator)
+            {
+                if (e.RowHandle >= 0)
+                {
+                    e.Info.DisplayText = (e.RowHandle + 1).ToString();
+                }
+                else if (e.RowHandle < 0 && e.RowHandle > -1000)
+                {
+                    e.Info.Appearance.BackColor = System.Drawing.Color.AntiqueWhite;
+                    e.Info.DisplayText = "G" + e.RowHandle.ToString();
+                }
+            }
+        }
+        /// <summary>
+        /// 绘制行号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gridView_tax_CustomDrawRowIndicator(object sender, DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventArgs e)
+        {
+            e.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            if (e.Info.IsRowIndicator)
+            {
+                if (e.RowHandle >= 0)
+                {
+                    e.Info.DisplayText = (e.RowHandle + 1).ToString();
+                }
+                else if (e.RowHandle < 0 && e.RowHandle > -1000)
+                {
+                    e.Info.Appearance.BackColor = System.Drawing.Color.AntiqueWhite;
+                    e.Info.DisplayText = "G" + e.RowHandle.ToString();
+                }
+            }
+        }
     }
 }

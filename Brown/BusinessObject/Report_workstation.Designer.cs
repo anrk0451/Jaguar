@@ -57,8 +57,8 @@
             this.repositoryItemHyperLinkEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
-            this.gridControl3 = new DevExpress.XtraGrid.GridControl();
-            this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridControl_fin = new DevExpress.XtraGrid.GridControl();
+            this.gridView_fin = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn26 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn_ph = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn_fee = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -70,8 +70,8 @@
             this.repositoryItemCheckEdit4 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.repositoryItemHyperLinkEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
-            this.gridControl4 = new DevExpress.XtraGrid.GridControl();
-            this.gridView4 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridControl_tax = new DevExpress.XtraGrid.GridControl();
+            this.gridView_tax = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn25 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn32 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn33 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -92,13 +92,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl_fin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView_fin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit2)).BeginInit();
             this.xtraTabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl_tax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView_tax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit3)).BeginInit();
             this.SuspendLayout();
@@ -220,7 +220,7 @@
             this.splitContainerControl1.Panel2.Controls.Add(this.xtraTabControl1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
             this.splitContainerControl1.Size = new System.Drawing.Size(1065, 642);
-            this.splitContainerControl1.SplitterPosition = 323;
+            this.splitContainerControl1.SplitterPosition = 186;
             this.splitContainerControl1.TabIndex = 4;
             // 
             // gridControl_center
@@ -232,7 +232,7 @@
             this.gridControl_center.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckEdit2,
             this.repositoryItemHyperLinkEdit1});
-            this.gridControl_center.Size = new System.Drawing.Size(1065, 323);
+            this.gridControl_center.Size = new System.Drawing.Size(1065, 186);
             this.gridControl_center.TabIndex = 6;
             this.gridControl_center.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView_center});
@@ -257,9 +257,11 @@
             this.gridView_center.Name = "gridView_center";
             this.gridView_center.OptionsBehavior.Editable = false;
             this.gridView_center.OptionsCustomization.AllowFilter = false;
+            this.gridView_center.OptionsView.AllowHtmlDrawHeaders = true;
             this.gridView_center.OptionsView.ColumnAutoWidth = false;
             this.gridView_center.OptionsView.ShowFooter = true;
             this.gridView_center.OptionsView.ShowGroupPanel = false;
+            this.gridView_center.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gridView_center_FocusedRowChanged);
             // 
             // gridColumn1
             // 
@@ -373,7 +375,7 @@
             this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(1065, 304);
+            this.xtraTabControl1.Size = new System.Drawing.Size(1065, 441);
             this.xtraTabControl1.TabIndex = 0;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
@@ -381,33 +383,33 @@
             // 
             // xtraTabPage1
             // 
-            this.xtraTabPage1.Controls.Add(this.gridControl3);
+            this.xtraTabPage1.Controls.Add(this.gridControl_fin);
             this.xtraTabPage1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("xtraTabPage1.ImageOptions.Image")));
             this.xtraTabPage1.Name = "xtraTabPage1";
             this.xtraTabPage1.Size = new System.Drawing.Size(1063, 272);
             this.xtraTabPage1.Text = "财政发票";
             // 
-            // gridControl3
+            // gridControl_fin
             // 
-            this.gridControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl3.Location = new System.Drawing.Point(0, 0);
-            this.gridControl3.MainView = this.gridView3;
-            this.gridControl3.Name = "gridControl3";
-            this.gridControl3.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.gridControl_fin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl_fin.Location = new System.Drawing.Point(0, 0);
+            this.gridControl_fin.MainView = this.gridView_fin;
+            this.gridControl_fin.Name = "gridControl_fin";
+            this.gridControl_fin.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckEdit4,
             this.repositoryItemHyperLinkEdit2});
-            this.gridControl3.Size = new System.Drawing.Size(1063, 272);
-            this.gridControl3.TabIndex = 7;
-            this.gridControl3.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView3});
+            this.gridControl_fin.Size = new System.Drawing.Size(1063, 272);
+            this.gridControl_fin.TabIndex = 7;
+            this.gridControl_fin.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView_fin});
             // 
-            // gridView3
+            // gridView_fin
             // 
-            this.gridView3.Appearance.FooterPanel.Options.UseFont = true;
-            this.gridView3.Appearance.HeaderPanel.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gridView3.Appearance.HeaderPanel.Options.UseFont = true;
-            this.gridView3.Appearance.Row.Options.UseFont = true;
-            this.gridView3.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridView_fin.Appearance.FooterPanel.Options.UseFont = true;
+            this.gridView_fin.Appearance.HeaderPanel.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView_fin.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridView_fin.Appearance.Row.Options.UseFont = true;
+            this.gridView_fin.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn26,
             this.gridColumn_ph,
             this.gridColumn_fee,
@@ -416,13 +418,14 @@
             this.gridColumn29,
             this.gridColumn30,
             this.gridColumn31});
-            this.gridView3.GridControl = this.gridControl3;
-            this.gridView3.IndicatorWidth = 45;
-            this.gridView3.Name = "gridView3";
-            this.gridView3.OptionsBehavior.Editable = false;
-            this.gridView3.OptionsCustomization.AllowFilter = false;
-            this.gridView3.OptionsView.ColumnAutoWidth = false;
-            this.gridView3.OptionsView.ShowGroupPanel = false;
+            this.gridView_fin.GridControl = this.gridControl_fin;
+            this.gridView_fin.IndicatorWidth = 45;
+            this.gridView_fin.Name = "gridView_fin";
+            this.gridView_fin.OptionsBehavior.Editable = false;
+            this.gridView_fin.OptionsCustomization.AllowFilter = false;
+            this.gridView_fin.OptionsView.ColumnAutoWidth = false;
+            this.gridView_fin.OptionsView.ShowGroupPanel = false;
+            this.gridView_fin.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.gridView_fin_CustomDrawRowIndicator);
             // 
             // gridColumn26
             // 
@@ -524,33 +527,33 @@
             // 
             // xtraTabPage2
             // 
-            this.xtraTabPage2.Controls.Add(this.gridControl4);
+            this.xtraTabPage2.Controls.Add(this.gridControl_tax);
             this.xtraTabPage2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("xtraTabPage2.ImageOptions.Image")));
             this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(1063, 272);
+            this.xtraTabPage2.Size = new System.Drawing.Size(1063, 409);
             this.xtraTabPage2.Text = "税务发票";
             // 
-            // gridControl4
+            // gridControl_tax
             // 
-            this.gridControl4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl4.Location = new System.Drawing.Point(0, 0);
-            this.gridControl4.MainView = this.gridView4;
-            this.gridControl4.Name = "gridControl4";
-            this.gridControl4.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.gridControl_tax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl_tax.Location = new System.Drawing.Point(0, 0);
+            this.gridControl_tax.MainView = this.gridView_tax;
+            this.gridControl_tax.Name = "gridControl_tax";
+            this.gridControl_tax.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckEdit5,
             this.repositoryItemHyperLinkEdit3});
-            this.gridControl4.Size = new System.Drawing.Size(1063, 272);
-            this.gridControl4.TabIndex = 8;
-            this.gridControl4.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView4});
+            this.gridControl_tax.Size = new System.Drawing.Size(1063, 409);
+            this.gridControl_tax.TabIndex = 8;
+            this.gridControl_tax.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView_tax});
             // 
-            // gridView4
+            // gridView_tax
             // 
-            this.gridView4.Appearance.FooterPanel.Options.UseFont = true;
-            this.gridView4.Appearance.HeaderPanel.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gridView4.Appearance.HeaderPanel.Options.UseFont = true;
-            this.gridView4.Appearance.Row.Options.UseFont = true;
-            this.gridView4.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridView_tax.Appearance.FooterPanel.Options.UseFont = true;
+            this.gridView_tax.Appearance.HeaderPanel.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gridView_tax.Appearance.HeaderPanel.Options.UseFont = true;
+            this.gridView_tax.Appearance.Row.Options.UseFont = true;
+            this.gridView_tax.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.gridColumn25,
             this.gridColumn32,
             this.gridColumn33,
@@ -559,13 +562,14 @@
             this.gridColumn36,
             this.gridColumn37,
             this.gridColumn38});
-            this.gridView4.GridControl = this.gridControl4;
-            this.gridView4.IndicatorWidth = 45;
-            this.gridView4.Name = "gridView4";
-            this.gridView4.OptionsBehavior.Editable = false;
-            this.gridView4.OptionsCustomization.AllowFilter = false;
-            this.gridView4.OptionsView.ColumnAutoWidth = false;
-            this.gridView4.OptionsView.ShowGroupPanel = false;
+            this.gridView_tax.GridControl = this.gridControl_tax;
+            this.gridView_tax.IndicatorWidth = 45;
+            this.gridView_tax.Name = "gridView_tax";
+            this.gridView_tax.OptionsBehavior.Editable = false;
+            this.gridView_tax.OptionsCustomization.AllowFilter = false;
+            this.gridView_tax.OptionsView.ColumnAutoWidth = false;
+            this.gridView_tax.OptionsView.ShowGroupPanel = false;
+            this.gridView_tax.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.gridView_tax_CustomDrawRowIndicator);
             // 
             // gridColumn25
             // 
@@ -687,13 +691,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl_fin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView_fin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit2)).EndInit();
             this.xtraTabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl_tax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView_tax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit3)).EndInit();
             this.ResumeLayout(false);
@@ -723,8 +727,8 @@
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
         private DevExpress.XtraTab.XtraTabPage xtraTabPage2;
-        private DevExpress.XtraGrid.GridControl gridControl3;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
+        private DevExpress.XtraGrid.GridControl gridControl_fin;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView_fin;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn26;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn_ph;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn_fee;
@@ -735,8 +739,8 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn31;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit4;
         private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit2;
-        private DevExpress.XtraGrid.GridControl gridControl4;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView4;
+        private DevExpress.XtraGrid.GridControl gridControl_tax;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView_tax;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn25;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn32;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn33;
