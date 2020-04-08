@@ -332,12 +332,14 @@ namespace Brown.BusinessObject
 				bBi_remove.Enabled = true;
 				bBi_refund.Enabled = false;
 				bBi_bk.Enabled = true;
+				bBi_log.Enabled = true;
 			}
 			else
 			{
 				bBi_remove.Enabled = false;
 				bBi_refund.Enabled = true;
 				bBi_bk.Enabled = false;
+				bBi_log.Enabled = false;
 			}
 				
 		}
@@ -747,8 +749,6 @@ namespace Brown.BusinessObject
 				while (reader.Read())
 				{
 					s_invcode = MiscAction.GetItemInvoiceCode(reader["SA002"].ToString(), reader["SA004"].ToString());
- 
-
 					dec_fee =  Convert.ToDecimal(reader["SA007"]);
 					sb_content.Append(s_invcode + "\t" + Math.Abs(dec_fee).ToString() + "\t");
 					dec_sum += dec_fee;
@@ -770,7 +770,7 @@ namespace Brown.BusinessObject
 						//string s_debug = "老票据类型:" + s_old_pjlx + "老票号:" + s_old_pjh + "注册号:" + s_old_zch + "新票据号" + s_newpjh + "合计金额:" + dec_sum.ToString() + "\r\n" + sb_content.ToString();
 						
 						barEditItem1.EditValue = sb_content.ToString();
-						//XtraMessageBox.Show(s_debug);
+
 						FinInvoice.Refund(s_old_pjlx, s_old_pjh, s_old_zch, sb_content.ToString(), "F_Qt1 = xxx | F_Qt2 = xxx | F_Qt3 = xxx", fa001, s_newpjh, dec_sum);
 					}
 				}
@@ -1016,6 +1016,27 @@ namespace Brown.BusinessObject
 			if (gridView1.GetRowCellValue(rowHandle, "FA002").ToString() == "0")
 				//PrtServAction.Print_HHZM(s_ac001);
 				PrtServAction.Print_HHZM(s_ac001, Envior.mform.Handle.ToInt32());
+		}
+
+		 
+		private void barButtonItem10_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			int rowHandle = gridView1.FocusedRowHandle;
+			if (rowHandle >= 0)
+			{
+				Frm_invoiceLog frm_1 = new Frm_invoiceLog();
+				if (frm_1.ShowDialog() == DialogResult.OK)
+				{
+					this.RefreshData();
+				}
+				frm_1.Dispose();
+			}
+		}
+
+		//查找下一个需要维护的收费记录
+		private void barButtonItem3_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+
 		}
 	}
 }

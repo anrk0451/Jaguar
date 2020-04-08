@@ -183,6 +183,12 @@
     <Compile Include="BusinessObject\WorkStationList.Designer.cs">
       <DependentUpon>WorkStationList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Frm_invoiceLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Frm_invoiceLog.Designer.cs">
+      <DependentUpon>Frm_invoiceLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Frm_report_regdebt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -712,6 +718,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BusinessObject\WorkStationList.resx">
       <DependentUpon>WorkStationList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Frm_invoiceLog.resx">
+      <DependentUpon>Frm_invoiceLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_report_regdebt.resx">
       <DependentUpon>Frm_report_regdebt.cs</DependentUpon>

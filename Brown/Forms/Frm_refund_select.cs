@@ -92,11 +92,12 @@ namespace Brown.Forms
             List<string> itemTypeList = new List<string>();
  
             decimal dec_fin_sum = decimal.Zero;
+            decimal dec_temp = decimal.Zero;
  
             for(int i =0; i< gridView1.RowCount; i++)
             {
-                if (decimal.TryParse(gridView1.GetRowCellValue(i,"REFUNDFEE").ToString(), out dec_fin_sum))
-                {   if (dec_fin_sum <= 0) continue;
+                if (decimal.TryParse(gridView1.GetRowCellValue(i,"REFUNDFEE").ToString(), out dec_temp))
+                {   if (dec_temp <= 0) continue;
                     itemIdList.Add(gridView1.GetRowCellValue(i, "SA004").ToString());
                     priceList.Add(Convert.ToDecimal(gridView1.GetRowCellValue(i, "REFUNDFEE")));
                     numsList.Add(-1);
