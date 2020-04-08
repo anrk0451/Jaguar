@@ -333,6 +333,7 @@ namespace Brown.BusinessObject
 				bBi_refund.Enabled = false;
 				bBi_bk.Enabled = true;
 				bBi_log.Enabled = true;
+				bsm_invlog.Enabled = true;
 			}
 			else
 			{
@@ -340,6 +341,7 @@ namespace Brown.BusinessObject
 				bBi_refund.Enabled = true;
 				bBi_bk.Enabled = false;
 				bBi_log.Enabled = false;
+				bsm_invlog.Enabled = false;
 			}
 				
 		}
@@ -384,18 +386,26 @@ namespace Brown.BusinessObject
 		private void gridView1_MouseDown(object sender, MouseEventArgs e)
 		{
 			GridHitInfo hInfo = gridView1.CalcHitInfo(new Point(e.X, e.Y));
-			if (e.Button == MouseButtons.Left && e.Clicks == 1)
+			try
 			{
-				//判断光标是否在行范围内  
-				if (hInfo.InRow && hInfo.Column.FieldName.ToUpper() == "FA190" && gridView1.GetRowCellValue(hInfo.RowHandle,"FA190").ToString() != "00" )
+				if (e.Button == MouseButtons.Left && e.Clicks == 1)
 				{
-					string s_fa001 = gridView1.GetRowCellValue(hInfo.RowHandle, "FA001").ToString();
-					Frm_InvoiceInfo frm_1 = new Frm_InvoiceInfo();
-					frm_1.swapdata["FA001"] = s_fa001;
-					frm_1.ShowDialog();
-					frm_1.Dispose();
+					//判断光标是否在行范围内  
+					if (hInfo.InColumnPanel && hInfo.InRow && hInfo.Column.FieldName.ToUpper() == "FA190" && gridView1.GetRowCellValue(hInfo.RowHandle, "FA190").ToString() != "00")
+					{
+						string s_fa001 = gridView1.GetRowCellValue(hInfo.RowHandle, "FA001").ToString();
+						Frm_InvoiceInfo frm_1 = new Frm_InvoiceInfo();
+						frm_1.swapdata["FA001"] = s_fa001;
+						frm_1.ShowDialog();
+						frm_1.Dispose();
+					}
 				}
+			}catch(Exception ee)
+			{
+				XtraMessageBox.Show(ee.ToString(),"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+				LogUtils.Error(ee.ToString());
 			}
+			
 		}
 
 		/// <summary>
@@ -1018,13 +1028,14 @@ namespace Brown.BusinessObject
 				PrtServAction.Print_HHZM(s_ac001, Envior.mform.Handle.ToInt32());
 		}
 
-		 
+		///补充开票日志 
 		private void barButtonItem10_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
 			int rowHandle = gridView1.FocusedRowHandle;
 			if (rowHandle >= 0)
 			{
 				Frm_invoiceLog frm_1 = new Frm_invoiceLog();
+				frm_1.swapdata["fa001"] = gridView1.GetRowCellValue(rowHandle, "FA001").ToString();
 				if (frm_1.ShowDialog() == DialogResult.OK)
 				{
 					this.RefreshData();
@@ -1036,7 +1047,14 @@ namespace Brown.BusinessObject
 		//查找下一个需要维护的收费记录
 		private void barButtonItem3_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
-
+			for(int i=0;i<gridView1.RowCount - 1; i++)
+			{
+				if(gridView1.GetRowCellValue(i,"FA190").ToString() != gridView1.GetRowCellValue(i, "FA195").ToString())
+				{
+					gridView1.FocusedRowHandle = i;
+					return;
+				}
+			}
 		}
 	}
 }
