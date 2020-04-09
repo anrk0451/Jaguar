@@ -37,6 +37,13 @@ namespace Brown.Forms
                 {
                     s_fa190 = reader["FA190"].ToString();
                     s_fa195 = reader["FA195"].ToString();
+                    te_fa003.Text = reader["FA003"].ToString();
+
+                    //计算财政票据金额
+                    te_fin.Text = SqlAssist.ExecuteScalar("select nvl(sum(sa007),0) from v_sa01 where sa020 ='F' and sa010 ='" + s_fa001 + "'").ToString();
+                    //计算税务票据金额
+                    te_tax.Text = SqlAssist.ExecuteScalar("select nvl(sum(sa007),0) from v_sa01 where sa020 ='T' and sa010 ='" + s_fa001 + "'").ToString();
+
                     if (!s_fa190.Equals(s_fa195))  //应开、已开不相等
                     {
                         if(s_fa195.Substring(0,1) == s_fa190.Substring(0, 1))
