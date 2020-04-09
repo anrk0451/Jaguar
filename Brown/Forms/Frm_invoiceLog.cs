@@ -77,5 +77,10 @@ namespace Brown.Forms
         {
             this.Close();
         }
+
+        private void b_ok_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
