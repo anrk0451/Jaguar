@@ -1047,7 +1047,7 @@ namespace Brown.BusinessObject
 		//查找下一个需要维护的收费记录
 		private void barButtonItem3_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
-			for(int i=0;i<gridView1.RowCount - 1; i++)
+			for(int i=(gridView1.FocusedRowHandle>0? gridView1.FocusedRowHandle:0);i<gridView1.RowCount - 1; i++)
 			{
 				if(gridView1.GetRowCellValue(i,"FA190").ToString() != gridView1.GetRowCellValue(i, "FA195").ToString())
 				{
