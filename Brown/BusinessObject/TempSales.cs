@@ -537,7 +537,7 @@ namespace Brown.BusinessObject
 		{
 			int rowHandle = gridView1.FocusedRowHandle;
 
-			if (rowHandle <= 0)
+			if (rowHandle < 0)
 			{
 				XtraMessageBox.Show("请先选择要删除的记录!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;

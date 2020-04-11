@@ -655,5 +655,65 @@ namespace Brown.Action
 			return SqlAssist.ExecuteScalar("select pkg_business.fun_CheckWorkStationCompare(:ic_fa001,:ic_ws001,:ic_itype) from dual", new OracleParameter[] { op_fa001, op_ws001,op_itype}).ToString();
 
 		}
+
+		/// <summary>
+		/// 补填财务发票日志
+		/// </summary>
+		/// <param name="fa001"></param>
+		/// <param name="pjlx"></param>
+		/// <param name="zch"></param>
+		/// <param name="pjh"></param>
+		/// <returns></returns>
+		public static int FinReLog(string fa001,string pjlx,string zch,string pjh)
+		{
+			//结算流水号
+			OracleParameter op_fa001 = new OracleParameter("ic_fa001", OracleDbType.Varchar2, 10);
+			op_fa001.Direction = ParameterDirection.Input;
+			op_fa001.Value = fa001;
+
+			//票据类型
+			OracleParameter op_pjlx = new OracleParameter("ic_pjlx", OracleDbType.Varchar2, 20);
+			op_pjlx.Direction = ParameterDirection.Input;
+			op_pjlx.Value = pjlx;
+
+			//注册号
+			OracleParameter op_zch = new OracleParameter("ic_zch", OracleDbType.Varchar2, 20);
+			op_zch.Direction = ParameterDirection.Input;
+			op_zch.Value = zch;
+
+			//票据号
+			OracleParameter op_pjh = new OracleParameter("ic_pjh", OracleDbType.Varchar2, 20);
+			op_pjh.Direction = ParameterDirection.Input;
+			op_pjh.Value = pjh;
+
+
+			return SqlAssist.ExecuteProcedure("pkg_business.prc_FinReLog",
+				new OracleParameter[] { op_fa001,op_pjlx,op_zch,op_pjh});
+		}
+
+
+		public static int TaxReLog(string fa001,string fpdm,string fph)
+		{
+			//结算流水号
+			OracleParameter op_fa001 = new OracleParameter("ic_fa001", OracleDbType.Varchar2, 10);
+			op_fa001.Direction = ParameterDirection.Input;
+			op_fa001.Value = fa001;
+
+			//发票代码
+			OracleParameter op_fpdm = new OracleParameter("ic_fpdm", OracleDbType.Varchar2, 20);
+			op_fpdm.Direction = ParameterDirection.Input;
+			op_fpdm.Value = fpdm;
+
+			//发票号
+			OracleParameter op_fph = new OracleParameter("ic_fph", OracleDbType.Varchar2, 20);
+			op_fph.Direction = ParameterDirection.Input;
+			op_fph.Value = fph;
+
+			 
+			return SqlAssist.ExecuteProcedure("pkg_business.prc_TaxReLog",
+				new OracleParameter[] { op_fa001, op_fpdm,op_fph });
+		}
+
+
 	}
 }

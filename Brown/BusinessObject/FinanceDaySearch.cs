@@ -391,13 +391,13 @@ namespace Brown.BusinessObject
 				if (e.Button == MouseButtons.Left && e.Clicks == 1)
 				{
 					//判断光标是否在行范围内  
-					if (hInfo.InColumnPanel && hInfo.InRow && hInfo.Column.FieldName.ToUpper() == "FA190" && gridView1.GetRowCellValue(hInfo.RowHandle, "FA190").ToString() != "00")
-					{
+					if (hInfo.InRow && hInfo.Column != null && hInfo.Column.FieldName.ToUpper() == "FA190" && gridView1.GetRowCellValue(hInfo.RowHandle, "FA190").ToString() != "00")
+					{						 
 						string s_fa001 = gridView1.GetRowCellValue(hInfo.RowHandle, "FA001").ToString();
 						Frm_InvoiceInfo frm_1 = new Frm_InvoiceInfo();
 						frm_1.swapdata["FA001"] = s_fa001;
 						frm_1.ShowDialog();
-						frm_1.Dispose();
+						frm_1.Dispose();						
 					}
 				}
 			}catch(Exception ee)
