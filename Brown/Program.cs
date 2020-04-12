@@ -65,10 +65,6 @@ namespace Brown
 
 					try
 					{
-						//myProcess.StartInfo.UseShellExecute = false;
-						//myProcess.StartInfo.FileName = pname;
-						//myProcess.StartInfo.CreateNoWindow = true;
-
 						Process.Start("Upgrade.exe", curNewestVersion);
 					}
 					catch (Exception e)
