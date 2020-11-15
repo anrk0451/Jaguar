@@ -53,8 +53,8 @@ namespace Brown.Forms
                         }
                         else
                         {
-                            te_pjlx.Text = Envior.FIN_INVOICE_TYPE;  //财政票据类型
-                            te_zch.Text = GetZch();
+                            //te_pjlx.Text = Envior.FIN_INVOICE_TYPE;  //财政票据类型
+                            //te_zch.Text = GetZch();
                         }
  
                         if(s_fa195.Substring(1,1) == s_fa190.Substring(1, 1))

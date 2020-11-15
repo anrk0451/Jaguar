@@ -33,6 +33,9 @@ namespace Brown
 		[DllImport("user32.dll", EntryPoint = "SendMessage", SetLastError = true, CharSet = CharSet.Auto)]
 		private static extern int SendMessage(IntPtr hwnd, uint wMsg, int wParam, int lParam);
 
+		[DllImport("agency3intfc.dll", EntryPoint = "initParams")]
+		private static extern int initParams(string url, string appid, string appkey);
+
 		//打印服务进程
 		Process printprocess = new Process();
 
@@ -82,7 +85,7 @@ namespace Brown
 			SqlAssist.DisConnect();
 
 			//如果连接博思则断开
-			if (Envior.FIN_READY) FinInvoice.DisConnect();
+			//if (Envior.FIN_READY) FinInvoice.DisConnect();
 
 			//关闭关联的打印进程
 			if (!printprocess.HasExited) printprocess.Kill();
@@ -117,14 +120,17 @@ namespace Brown
 			this.ConnectPrtServ();
 
 			//自动连接博思服务器
-			string autoConnect = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["ConnectFinInvoice"].Value.ToString();
-			if (autoConnect == "1") FinInvoice.AutoConnectBosi();
+			//string autoConnect = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["ConnectFinInvoice"].Value.ToString();
+			//if (autoConnect == "1") FinInvoice.AutoConnectBosi();
 
 			//创建打印服务对象
 			//Envior.prtserv = new n_prtserv();
 
 			//读取 税务开票 APPID
 			Envior.TAX_APPID = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["APPID"].Value.ToString();
+			//读取 财政发票 开票点编码
+			Envior.FIN_BILL_SITE = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["BILLSITE"].Value.ToString();
+
 		}
 
 		/// <summary>
@@ -162,10 +168,27 @@ namespace Brown
 			{
 				while (reader.Read())
 				{
-					if (reader["SP002"].ToString() == "fin_invoice_title")             //发票交款人标题
-						Envior.FIN_INVOICE_TITLE = reader["SP005"].ToString();
-					else if (reader["SP002"].ToString() == "fin_invoice_type")         //发票类型	
-						Envior.FIN_INVOICE_TYPE = reader["SP005"].ToString();
+					if (reader["SP002"].ToString() == "FIN_REGION_CODE")             //财政发票-区划
+						Envior.FIN_REGION_CODE = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_VERSION")           //财政发票-接口版本
+						Envior.FIN_VERSION = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_AGENCY_CODE")       //财政发票-单位编码
+						Envior.FIN_AGENCY_CODE = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_AGENCY_NAME")       //财政发票-单位名称
+						Envior.FIN_AGENCY_NAME = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_URL")				  //财政发票-服务url
+						Envior.FIN_URL = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_APPID")             //财政发票-appid
+						Envior.FIN_APPID = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_APPKEY")            //财政发票-appkey
+						Envior.FIN_APPKEY = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_BATCH_CODE")        //财政发票-票据代码(以前的注册号)
+						Envior.FIN_BATCH_CODE = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_CODE")              //财政发票-票据种类编码(以前的票据类型)
+						Envior.FIN_CODE = reader["SP005"].ToString();
+					else if (reader["SP002"].ToString() == "FIN_BILLNAME")          //财政发票-票据名称
+						Envior.FIN_BILLNAME = reader["SP005"].ToString();
+
 					//税务发票信息
 					else if (reader["SP002"].ToString() == "tax_no")                   //纳税人识别号
 						Envior.TAX_ID = reader["SP005"].ToString();
@@ -376,11 +399,14 @@ namespace Brown
 
 		private void barButtonItem26_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			////税务发票测试
-			//TaxInvoice.WrapData();.
-			TaxDemo frm_1 = new TaxDemo();
-			frm_1.ShowDialog();
-			frm_1.Dispose();
+            ////税务发票测试
+            //TaxInvoice.WrapData();.
+
+            TaxDemo frm_1 = new TaxDemo();
+            frm_1.ShowDialog();
+            frm_1.Dispose();
+   //         int result = initParams(Envior.FIN_URL, Envior.FIN_APPID, Envior.FIN_APPKEY);
+			//XtraMessageBox.Show(result.ToString(), "结果");
 		}
 
 		/// <summary>
@@ -431,18 +457,7 @@ namespace Brown
 			if (!AppAction.CheckRight("业务收费日查询")) return;
 			openBusinessObject("FinanceDaySearch");
 		}
-
-		/// <summary>
-		/// 连接博思开票服务器
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void barButtonItem40_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			if(XtraMessageBox.Show("要连接【财政发票服务器】吗?","确认",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
-				FinInvoice.AutoConnectBosi();
-		}
-
+ 
 		/// <summary>
 		/// 保存财政发票基础信息
 		/// </summary>

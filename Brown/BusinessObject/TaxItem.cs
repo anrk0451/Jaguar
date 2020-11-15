@@ -213,12 +213,12 @@ namespace Brown.BusinessObject
 						if (gridView1.GetRowCellValue(i, "TI002") == null) continue;
 
 						//如果名字相同,则校验不通过!                        
-						if (String.Equals(gridView1.GetRowCellValue(i, "TI002").ToString(), e.Value.ToString()))
-						{
-							e.Valid = false;
-							e.ErrorText = "值已经存在!";
-							break;
-						}
+						//if (String.Equals(gridView1.GetRowCellValue(i, "TI002").ToString(), e.Value.ToString()))
+						//{
+						//	e.Valid = false;
+						//	e.ErrorText = "值已经存在!";
+						//	break;
+						//}
 					}
 				}
 			}

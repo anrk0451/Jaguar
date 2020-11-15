@@ -71,6 +71,18 @@ namespace Brown
                 return 0;
             }
         }
+        /// <summary>
+        /// 执行sql语句 无事务版本
+        /// </summary>
+        /// <param name="safeSql"></param>
+        /// <returns></returns>
+        public static int ExecuteNonQuery_NoTans(string safeSql)
+        {
+            OracleCommand cmd = new OracleCommand(safeSql, conn);
+            int result = cmd.ExecuteNonQuery();           
+            return result;             
+        }
+
 
         /// <summary>
         /// 执行带参数的sql语句

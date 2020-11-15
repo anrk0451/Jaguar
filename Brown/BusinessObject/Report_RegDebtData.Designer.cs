@@ -28,8 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Report_RegDebtData));
-			this.barManager1 = new DevExpress.XtraBars.BarManager();
+			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
@@ -113,6 +114,7 @@
 			this.barButtonItem4.Id = 3;
 			this.barButtonItem4.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem4.ImageOptions.SvgImage")));
 			this.barButtonItem4.Name = "barButtonItem4";
+			this.barButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem4_ItemClick);
 			// 
 			// barDockControlTop
 			// 

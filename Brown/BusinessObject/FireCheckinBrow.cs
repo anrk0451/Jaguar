@@ -157,11 +157,12 @@ namespace Brown.BusinessObject
 
 			if (frm_ac01.ShowDialog() == DialogResult.OK)
 			{
-				frm_ac01.Dispose();
+				
 				adapter.SelectCommand.CommandText = "select * from ac01 where ac001='" + s_ac001 + "'";
 				adapter.Fill(shadow_dt);
 				checkin_ds.Ac01.Merge(this.shadow_dt);
 			}
+			frm_ac01.Dispose();
 			//TODO 3.同步ac01与 rc01
 		}
 

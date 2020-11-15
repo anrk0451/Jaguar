@@ -318,7 +318,7 @@ namespace Brown.Action
 				}
 
 				////////// 打印发票和清单 //////////
-				if(XtraMessageBox.Show("现在打印【发票】吗?","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+				if(XtraMessageBox.Show("现在打印【税务发票】吗?","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
 				{
 					PrintInvoice(s_fpdm, s_fphm, "0");
 				}

@@ -27,7 +27,7 @@ namespace Brown.BusinessObject
 
 		public RegisterStru()
 		{
-			InitializeComponent();
+			InitializeComponent();	
 		}
 
 
@@ -625,9 +625,9 @@ namespace Brown.BusinessObject
 		/// <param name="e"></param>
 		private void barButtonItem6_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
 		{
-			//this.RefreshData();
-			int i = treeList1.FocusedNode.Nodes.Count;
-			XtraMessageBox.Show(i.ToString());
+			this.RefreshData();
+			//int i = treeList1.FocusedNode.Nodes.Count;
+			//XtraMessageBox.Show(i.ToString());
 		}
 
 		/// <summary>

@@ -184,6 +184,26 @@
         PC9zdmc+Cw==
 </value>
   </data>
+  <data name="barButtonItem9.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v18.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjE4LjIsIFZlcnNpb249MTguMi43
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAOACAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
+        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBlbmFibGUt
+        YmFja2dyb3VuZD0ibmV3IDAgMCAzMiAzMiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgaWQ9Ik9wZW4yIj4N
+        CiAgPGcgb3BhY2l0eT0iMC43NSIgY2xhc3M9InN0MCI+DQogICAgPHBhdGggZD0iTTE5LjIsMTBIMTJW
+        N2MwLTAuNi0wLjQtMS0xLTFIM0MyLjQsNiwyLDYuNSwyLDd2MThjMCwwLjIsMCwwLjMsMC4xLDAuNGMw
+        LDAsMC4xLTAuMSwwLjEtMC4ybDUuNS0xMCAgIEM4LDE0LjUsOC43LDE0LDkuNSwxNGgxMy43TDE5LjIs
+        MTB6IiBmaWxsPSIjRkZCMTE1IiBvcGFjaXR5PSIwLjc1IiBjbGFzcz0iWWVsbG93IiAvPg0KICA8L2c+
+        DQogIDxwYXRoIGQ9Ik0yOS4zLDE2SDkuNkw0LDI2aDE5LjhjMC41LDAsMS4xLTAuMiwxLjMtMC42bDQu
+        OS04LjlDMzAuMSwxNi4yLDI5LjgsMTYsMjkuMywxNnoiIGZpbGw9IiNGRkIxMTUiIGNsYXNzPSJZZWxs
+        b3ciIC8+DQogIDxwYXRoIGQ9Ik0yOCw4YzAtMy4zLTIuNy02LTYtNnMtNiwyLjctNiw2YzAtMi4yLDEu
+        OC00LDQtNHM0LDEuOCw0LDRoLTRsNiw2bDYtNkgyOHoiIGZpbGw9IiMwMzlDMjMiIGNsYXNzPSJHcmVl
+        biIgLz4NCjwvc3ZnPgs=
+</value>
+  </data>
   <data name="imageListBoxItemImageOptions2.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v18.2" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjE4LjIsIFZlcnNpb249MTguMi43

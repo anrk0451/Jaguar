@@ -243,7 +243,7 @@ namespace Brown.BusinessObject
 		{
 			if ((st01_ds.St01 as DataTable).GetChanges() != null && LOCK)
 			{
-				if (MessageBox.Show("数据已经改变,是否保存?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+				if (XtraMessageBox.Show("数据已经改变,是否保存?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 				{
 					if (Save())
 					{

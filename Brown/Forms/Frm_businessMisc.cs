@@ -241,7 +241,7 @@ namespace Brown.Forms
 			List<string> itemType_list = new List<string>();
 			List<string> itemInvoiceType_list = new List<string>();
 			List<decimal> price_list = new List<decimal>();
-			List<int> nums_list = new List<int>();
+			List<decimal> nums_list = new List<decimal>();
 
 			if (!gridView1.PostEditor()) return;
 			if (!gridView1.UpdateCurrentRow()) return;
@@ -303,7 +303,7 @@ namespace Brown.Forms
 					itemId_list.Add(gridView2.GetRowCellValue(selectedRowHandle, "ITEM_ID").ToString());
 					itemType_list.Add(gridView2.GetRowCellValue(selectedRowHandle, "ITEM_TYPE").ToString());
 					price_list.Add(decimal.Parse(gridView2.GetRowCellValue(selectedRowHandle, "PRICE").ToString()));
-					nums_list.Add(int.Parse(gridView2.GetRowCellValue(selectedRowHandle, "NUMS").ToString()));
+					nums_list.Add(decimal.Parse(gridView2.GetRowCellValue(selectedRowHandle, "NUMS").ToString()));
 				}
 			}
 

@@ -714,6 +714,13 @@ namespace Brown.Action
 				new OracleParameter[] { op_fa001, op_fpdm,op_fph });
 		}
 
-
+		/// <summary>
+		/// 返回服务器时间
+		/// </summary>
+		/// <returns></returns>
+		public static DateTime GetServerTime()
+		{
+			return Convert.ToDateTime(SqlAssist.ExecuteScalar("select sysdate from dual"));
+		}
 	}
 }

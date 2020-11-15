@@ -19,11 +19,27 @@ using Brown.Misc;
 
 namespace Brown.Forms
 {
+	
 	public partial class TaxDemo : BaseDialog
 	{
 		/// <summary>
 		/// 税务发票明细项
 		/// </summary>
+		class C_params
+		{
+			public string region_code { get; set; }
+			public string agency_code { get; set; }
+			public string format { get; set; }
+			public string datetime { get; set; }
+			public string encryption { get; set; }
+			public string message_id { get; set; }
+			public string message { get; set; }
+			public string app_id { get; set; }
+			public string version { get; set; }
+			public string method { get; set; }
+			public string sign { get; set; }
+		}
+
 		public class C_detail
 		{
 			public string xh;       //序号
@@ -317,32 +333,26 @@ namespace Brown.Forms
 		/// <param name="e"></param>
 		private void simpleButton7_Click(object sender, EventArgs e)
 		{
-			int result = FinInvoice.Connect();
-
-			if (result > 0)
-				XtraMessageBox.Show("连接开票服务器成功!");
-			else
-				XtraMessageBox.Show("连接开票服务器失败!");
+			 
 		}
 
 		private void simpleButton8_Click(object sender, EventArgs e)
 		{
-			FinInvoice.DisConnect();
+			 
 		}
 
 		private void simpleButton9_Click(object sender, EventArgs e)
 		{
-			string pjh = FinInvoice.GetCurrentPh("04007002");
-			if (!string.IsNullOrEmpty(pjh))
-			{
-				MessageBox.Show("新的票据号" + pjh);
-				memoEdit1.Text = pjh;
-			}
-			else
-			{
-				MessageBox.Show("获取票据号失败!");
-			}
-
+			//string pjh = FinInvoice.GetCurrentPh("04007002");
+			//if (!string.IsNullOrEmpty(pjh))
+			//{
+			//	MessageBox.Show("新的票据号" + pjh);
+			//	memoEdit1.Text = pjh;
+			//}
+			//else
+			//{
+			//	MessageBox.Show("获取票据号失败!");
+			//}
 		}
 
 		/// <summary>
@@ -352,11 +362,11 @@ namespace Brown.Forms
 		/// <param name="e"></param>
 		private void simpleButton10_Click(object sender, EventArgs e)
 		{
-			string s_content = "<&票据><&票据头>姓名=发票测试		</&票据头><&收费项目>收费项目=10000	计费数量=1	收费标准=100.00	金额=100	收费项目=20000	计费数量=1	收费标准=18.00	金额=18	</&收费项目></&票据>";
-			string retstr = FinInvoice.Invoice(s_content, 1, "04007002", "");
-			memoEdit2.Text = retstr;
-			///成功返回
-			///成功:04007002,56140002,118,财乙（2010) 
+			//string s_content = "<&票据><&票据头>姓名=发票测试		</&票据头><&收费项目>收费项目=10000	计费数量=1	收费标准=100.00	金额=100	收费项目=20000	计费数量=1	收费标准=18.00	金额=18	</&收费项目></&票据>";
+			//string retstr = FinInvoice.Invoice(s_content, 1, "04007002", "");
+			//memoEdit2.Text = retstr;
+			/////成功返回
+			/////成功:04007002,56140002,118,财乙（2010) 
 		}
 
 		/// <summary>
@@ -366,8 +376,8 @@ namespace Brown.Forms
 		/// <param name="e"></param>
 		private void simpleButton11_Click(object sender, EventArgs e)
 		{
-			string retstr = FinInvoice.Remove("票据类型=14004003|票据号=00040005|注册号=1114512");
-			memoEdit3.Text = retstr;
+			//string retstr = FinInvoice.Remove("票据类型=14004003|票据号=00040005|注册号=1114512");
+			//memoEdit3.Text = retstr;
 		}
 
 		private void simpleButton12_Click(object sender, EventArgs e)
@@ -378,20 +388,20 @@ namespace Brown.Forms
 
 		private void simpleButton13_Click(object sender, EventArgs e)
 		{
-			int result = FinInvoice.AdvConnect("001", "", "");
+			//int result = FinInvoice.AdvConnect("001", "", "");
 
-			if (result > 0)
-				XtraMessageBox.Show("连接开票服务器成功!");
-			else
-				XtraMessageBox.Show("连接开票服务器失败!");
+			//if (result > 0)
+			//	XtraMessageBox.Show("连接开票服务器成功!");
+			//else
+			//	XtraMessageBox.Show("连接开票服务器失败!");
 		}
 
 		private void simpleButton14_Click(object sender, EventArgs e)
 		{
-			if (FinInvoice.IsConnect())
-				XtraMessageBox.Show("已经连接!");
-			else
-				XtraMessageBox.Show("尚未连接!");
+			//if (FinInvoice.IsConnect())
+			//	XtraMessageBox.Show("已经连接!");
+			//else
+			//	XtraMessageBox.Show("尚未连接!");
 		}
 
 
@@ -460,7 +470,7 @@ namespace Brown.Forms
 			sendmsg.Add("serviceid", "DJAPP");
 			//sendmsg.Add("sid", "0000000060");                  //请求流水号	
 			sendmsg.Add("dev_key", "9011e4c9-4070-4a0e-a571-baadb7588723");
-			sendmsg.Add("app_name", "牡丹江第一殡仪馆管理系统");
+			sendmsg.Add("app_name", "牡丹江市第一殡仪馆");
 			//3.将请求报文转换为Json 字符串 并整体用公钥 加密
 			string s_msg_json = Tools.ConvertObjectToJson(sendmsg);
 			string s_fullmi = Tools.AesEncrypt(s_msg_json, Envior.TAX_PUBLIC_KEY);
@@ -487,5 +497,356 @@ namespace Brown.Forms
 
 
 		}
-	}
+
+		private void simpleButton17_Click(object sender, EventArgs e)
+		{
+			string s_appkey = "0d3ae7af6c20c68a89390a6ec445";
+			Dictionary<string, string> bdata = new Dictionary<string, string>();
+			Dictionary<string, Dictionary<string, string>> msg = new Dictionary<string, Dictionary<string, string>>();
+
+		 	bdata.Add("place_code", "001");
+			bdata.Add("bill_batch_code", "3910");
+
+			msg.Add("message", bdata);
+			memoEdit1.Text = Tools.ConvertObjectToJson(msg);
+
+
+			string s_bdata_base64 = Tools.EncodeBase64("utf-8", Tools.ConvertObjectToJson(msg));
+			memoEdit2.Text = s_bdata_base64;
+
+
+			C_params c_params = new C_params();
+			c_params.agency_code = "021099001";
+			c_params.app_id = "MDJSDYBYG7838387";
+			c_params.format = "json";
+			c_params.datetime = "20171206185418124";
+			c_params.encryption = "0";
+			c_params.message_id = "0.7576015286829508";
+			c_params.message = s_bdata_base64;
+			c_params.method = "stock.billno.get";
+			c_params.region_code = "231001";
+			c_params.version = "1.0.1";
+
+
+
+			StringBuilder s_big = new StringBuilder(100);
+			s_big.Append(c_params.agency_code);
+			s_big.Append(c_params.app_id);
+			s_big.Append(c_params.datetime);
+			s_big.Append(c_params.encryption);
+			s_big.Append(c_params.format);
+			s_big.Append(c_params.message);
+			s_big.Append(c_params.message_id);
+			s_big.Append(c_params.method);
+			s_big.Append(c_params.region_code);
+			s_big.Append(c_params.version);
+
+			string s_1 = s_appkey + s_big.ToString() + s_appkey;
+			string s_md5 = Tools.EncryptWithMD5(s_1).ToUpper();
+
+			StringBuilder sb_url = new StringBuilder(100);
+			//sb_url.Append("http://111.41.51.157:7001/mergestandard/agency3/rest.do");
+			sb_url.Append("agency_code=" + c_params.agency_code + "&");
+			sb_url.Append("app_id=" + c_params.app_id + "&");
+			sb_url.Append("datetime=" + c_params.datetime + "&");
+			sb_url.Append("encryption=" + c_params.encryption + "&");
+			sb_url.Append("format=" + c_params.format + "&");
+			sb_url.Append("message=" + s_bdata_base64 + "&");
+			sb_url.Append("message_id=" + c_params.message_id + "&");
+			sb_url.Append("method=" + c_params.method + "&");
+			sb_url.Append("region_code=" + c_params.region_code + "&");
+			sb_url.Append("security=" + s_md5 + "&");
+			sb_url.Append("version=" + c_params.version);
+
+
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://111.41.51.157:7001/mergestandard/agency3/rest.do");
+			request.Method = "POST";
+			request.ContentType = "application/x-www-form-urlencoded";
+
+			memoEdit3.Text = sb_url.ToString();
+			byte[] buf = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(sb_url.ToString());
+			request.ContentLength = buf.Length;
+
+			Stream myRequestStream = request.GetRequestStream();
+			myRequestStream.Write(buf, 0, buf.Length);
+
+			myRequestStream.Close();
+
+			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+			Stream myResponseStream = response.GetResponseStream();
+			StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+			string retString = myStreamReader.ReadToEnd();
+			myStreamReader.Close();
+			myResponseStream.Close();
+
+			memoEdit4.Text = retString;
+
+			memoEdit5.Text = Tools.DecodeBase64("utf-8",retString );
+		}
+		/// <summary>
+		/// 发票开具
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void simpleButton18_Click(object sender, EventArgs e)
+		{
+			string s_appkey = "0d3ae7af6c20c68a89390a6ec445";
+			Dictionary<string, object> bdata = new Dictionary<string, object>();
+			Dictionary<string, Dictionary<string, object>> msg = new Dictionary<string, Dictionary<string, object>>();
+
+			bdata.Add("serial_number", "0000001005");          //业务流水号 
+			bdata.Add("place_code", "001");                    //开票点
+			bdata.Add("payer", "张三");                        //缴款人单位
+			bdata.Add("date", "2020-10-31");                   //开票日期
+			bdata.Add("author", "根用户");                     //开票人
+			bdata.Add("payer_type", "1");                      //缴款人类型：1 个人 2 单位
+			bdata.Add("credit_code", "");                      //组织机构代码
+			bdata.Add("bill_code", "0202");                    //票据种类编码
+			bdata.Add("total_amt", "700");                     //合计金额
+			bdata.Add("rec_mode", "1");                        //收款方式:1现金,2转账,3其它
+
+			
+			List<Dictionary<string, object>> detail_list = new List<Dictionary<string, object>>();
+			Dictionary<string, object> detail_data = new Dictionary<string, object>();
+			detail_data.Add("item_code", "10304490801");   //项目名-接运
+			detail_data.Add("std",200);                   //单价
+			detail_data.Add("number", 2);                 //数量
+			detail_data.Add("amt", 400);                  //金额
+			detail_list.Add(detail_data);
+
+			detail_data = new Dictionary<string, object>();
+			detail_data.Add("item_code", "10304490802");   //项目名-火化
+			detail_data.Add("std", 300);                  //单价
+			detail_data.Add("number", 1);                 //数量
+			detail_data.Add("amt", 300);                  //金额
+			detail_list.Add(detail_data);
+
+			bdata.Add("item_details", detail_list);
+			 
+			msg.Add("message", bdata);
+			memoEdit1.Text = Tools.ConvertObjectToJson(msg);
+
+
+			string s_bdata_base64 = Tools.EncodeBase64("utf-8", Tools.ConvertObjectToJson(msg));
+			memoEdit2.Text = s_bdata_base64;
+
+
+			C_params c_params = new C_params();
+			c_params.agency_code = "021099001";
+			c_params.app_id = "MDJSDYBYG7838387";
+			c_params.format = "json";
+			c_params.datetime = "20201031185418128";
+			c_params.encryption = "0";
+			c_params.message_id = "0.7576015286829639";
+			c_params.message = s_bdata_base64;
+			c_params.method = "invoice.issue.do";
+			c_params.region_code = "231001";
+			c_params.version = "1.0.1";
+			 
+			StringBuilder s_big = new StringBuilder(100);
+			s_big.Append(c_params.agency_code);
+			s_big.Append(c_params.app_id);
+			s_big.Append(c_params.datetime);
+			s_big.Append(c_params.encryption);
+			s_big.Append(c_params.format);
+			s_big.Append(c_params.message);
+			s_big.Append(c_params.message_id);
+			s_big.Append(c_params.method);
+			s_big.Append(c_params.region_code);
+			s_big.Append(c_params.version);
+
+			string s_1 = s_appkey + s_big.ToString() + s_appkey;
+			string s_md5 = Tools.EncryptWithMD5(s_1).ToUpper();
+
+			StringBuilder sb_url = new StringBuilder(100);
+			//sb_url.Append("http://111.41.51.157:7001/mergestandard/agency3/rest.do");
+			sb_url.Append("agency_code=" + c_params.agency_code + "&");
+			sb_url.Append("app_id=" + c_params.app_id + "&");
+			sb_url.Append("datetime=" + c_params.datetime + "&");
+			sb_url.Append("encryption=" + c_params.encryption + "&");
+			sb_url.Append("format=" + c_params.format + "&");
+			sb_url.Append("message=" + s_bdata_base64 + "&");
+			sb_url.Append("message_id=" + c_params.message_id + "&");
+			sb_url.Append("method=" + c_params.method + "&");
+			sb_url.Append("region_code=" + c_params.region_code + "&");
+			sb_url.Append("security=" + s_md5 + "&");
+			sb_url.Append("version=" + c_params.version);
+
+
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://111.41.51.157:7001/mergestandard/agency3/rest.do");
+			request.Method = "POST";
+			request.ContentType = "application/x-www-form-urlencoded";
+
+			memoEdit3.Text = sb_url.ToString();
+			byte[] buf = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(sb_url.ToString());
+			request.ContentLength = buf.Length;
+
+			Stream myRequestStream = request.GetRequestStream();
+			myRequestStream.Write(buf, 0, buf.Length);
+
+			myRequestStream.Close();
+
+			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+			Stream myResponseStream = response.GetResponseStream();
+			StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+			string retString = myStreamReader.ReadToEnd();
+			myStreamReader.Close();
+			myResponseStream.Close();
+
+			memoEdit4.Text = retString;
+
+			memoEdit5.Text = Tools.DecodeBase64("utf-8", retString);
+			 
+		}
+
+		private void simpleButton19_Click(object sender, EventArgs e)
+		{			 
+			if(FinInvoice.GetCurrentPh() > 0)
+			{
+				XtraMessageBox.Show(Envior.FIN_NEXT_BATCH_CODE, "注册号");
+				XtraMessageBox.Show(Envior.FIN_NEXT_BILL_NO, "票号");
+			}
+		}
+
+		private void simpleButton20_Click(object sender, EventArgs e)
+		{
+			FinInvoice.PrintInvoice("3910", "00356018");
+		}
+		/// <summary>
+		/// 参数初始化
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void simpleButton21_Click(object sender, EventArgs e)
+		{
+			//int result = FinInvoice.initDll(Envior.FIN_URL, Envior.FIN_APPID, Envior.FIN_APPKEY);
+			//XtraMessageBox.Show(result.ToString(),"结果");
+			FinInvoice.PrintInvoice("1", "2");
+		}
+
+        private void simpleButton22_Click(object sender, EventArgs e)
+        {
+			int result = FinInvoice.InvoiceRemoved("3910", "00356003");
+			if(result > 0)
+            {
+				XtraMessageBox.Show("作废发票成功!");
+            } 
+        }
+
+        private void simpleButton23_Click(object sender, EventArgs e)
+        {
+			string s_state = FinInvoice.GetInvoiceState("3910", "00356006");
+			if (!string.IsNullOrEmpty(s_state))
+				XtraMessageBox.Show(s_state, "状态");
+			else
+				XtraMessageBox.Show("未获取到状态");
+        }
+		/// <summary>
+		/// 退费
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+        private void simpleButton24_Click(object sender, EventArgs e)
+        {
+			string s_appkey = "0d3ae7af6c20c68a89390a6ec445";
+
+
+			//业务数据
+			Dictionary<string, object> bdata = new Dictionary<string, object>();
+			Dictionary<string, Dictionary<string, object>> msg = new Dictionary<string, Dictionary<string, object>>();
+
+			bdata.Add("bill_batch_code", "3910");        //发票注册号
+			bdata.Add("bill_no", "00356017");            //发票号
+			bdata.Add("scarlet_bill_code", "");                    //红票票据种类编码
+			bdata.Add("scarlet_bill_batch_code", "3910");          //红票票据注册号
+			bdata.Add("scarlet_bill_no", "00356018");              //红票票据号
+			bdata.Add("writeoff_reason", "测试3");                 //冲红原因
+
+			List<Dictionary<string, object>> detail_list = new List<Dictionary<string, object>>();
+			Dictionary<string, object> detail_data = new Dictionary<string, object>();
+
+			detail_data = new Dictionary<string, object>();
+			detail_data.Add("item_code", "10304490802");   //项目名-火化
+			detail_data.Add("refund_amt", 168);            //退费金额
+			 
+			detail_list.Add(detail_data);
+			bdata.Add("item_details", detail_list);
+
+			msg.Add("message", bdata);
+
+
+			memoEdit1.Text = Tools.ConvertObjectToJson(msg);
+
+
+			string s_bdata_base64 = Tools.EncodeBase64("utf-8", Tools.ConvertObjectToJson(msg));
+			memoEdit2.Text = s_bdata_base64;
+
+
+			C_params c_params = new C_params();
+			c_params.agency_code = "021099001";
+			c_params.app_id = "MDJSDYBYG7838387";
+			c_params.format = "json";
+			c_params.datetime = "20201031185418159";
+			c_params.encryption = "0";
+			c_params.message_id = "0.75760152868295749";
+			c_params.message = s_bdata_base64;
+			c_params.method = "invoice.p.writeOff.do";
+			c_params.region_code = "231001";
+			c_params.version = "1.0.1";
+
+			StringBuilder s_big = new StringBuilder(100);
+			s_big.Append(c_params.agency_code);
+			s_big.Append(c_params.app_id);
+			s_big.Append(c_params.datetime);
+			s_big.Append(c_params.encryption);
+			s_big.Append(c_params.format);
+			s_big.Append(c_params.message);
+			s_big.Append(c_params.message_id);
+			s_big.Append(c_params.method);
+			s_big.Append(c_params.region_code);
+			s_big.Append(c_params.version);
+
+			string s_1 = s_appkey + s_big.ToString() + s_appkey;
+			string s_md5 = Tools.EncryptWithMD5(s_1).ToUpper();
+
+			StringBuilder sb_url = new StringBuilder(100);
+			//sb_url.Append("http://111.41.51.157:7001/mergestandard/agency3/rest.do");
+			sb_url.Append("agency_code=" + c_params.agency_code + "&");
+			sb_url.Append("app_id=" + c_params.app_id + "&");
+			sb_url.Append("datetime=" + c_params.datetime + "&");
+			sb_url.Append("encryption=" + c_params.encryption + "&");
+			sb_url.Append("format=" + c_params.format + "&");
+			sb_url.Append("message=" + s_bdata_base64 + "&");
+			sb_url.Append("message_id=" + c_params.message_id + "&");
+			sb_url.Append("method=" + c_params.method + "&");
+			sb_url.Append("region_code=" + c_params.region_code + "&");
+			sb_url.Append("security=" + s_md5 + "&");
+			sb_url.Append("version=" + c_params.version);
+
+
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://111.41.51.157:7001/mergestandard/agency3/rest.do");
+			request.Method = "POST";
+			request.ContentType = "application/x-www-form-urlencoded";
+
+			memoEdit3.Text = sb_url.ToString();
+			byte[] buf = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(sb_url.ToString());
+			request.ContentLength = buf.Length;
+
+			Stream myRequestStream = request.GetRequestStream();
+			myRequestStream.Write(buf, 0, buf.Length);
+
+			myRequestStream.Close();
+
+			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+			Stream myResponseStream = response.GetResponseStream();
+			StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+			string retString = myStreamReader.ReadToEnd();
+			myStreamReader.Close();
+			myResponseStream.Close();
+
+			memoEdit4.Text = retString;
+
+			memoEdit5.Text = Tools.DecodeBase64("utf-8", retString);
+		}
+    }
 }

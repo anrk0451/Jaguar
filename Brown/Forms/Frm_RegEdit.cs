@@ -157,7 +157,7 @@ namespace Brown.Forms
 			if (string.IsNullOrWhiteSpace(txtEdit_rc051.Text))
 			{
 				txtEdit_rc051.ErrorImageOptions.Alignment = ErrorIconAlignment.MiddleRight;
-				txtEdit_rc051.ErrorText = "联系人必须输入!";
+				txtEdit_rc051.ErrorText = "联系电话必须输入!";
 				txtEdit_rc051.Focus();
 				return false;
 			}

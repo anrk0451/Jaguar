@@ -162,7 +162,7 @@ namespace Brown.Forms
 			string last_fa001 = RegisterAction.GetREGLastSettleId(rc001);     //获取最后一次缴费 结算流水号
 
 			//补退情况
-			if (checkEdit1.Checked)
+			if (checkEdit1.Checked && (!string.IsNullOrEmpty(txtEdit_nums.Text)))
 			{
 				nums = decimal.Parse(txtEdit_nums.Text);
 			}
@@ -172,11 +172,11 @@ namespace Brown.Forms
 			}
 
 			if (XtraMessageBox.Show("确认要继续办理迁出吗？本业务将不能回退!", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No) return;
-			if ((!string.IsNullOrEmpty(txtEdit_fee.Text)) && Convert.ToDecimal(txtEdit_fee.Text) > 0 && Envior.cur_userId != AppInfo.ROOTID && !isrefund )
-			{
-				XtraMessageBox.Show("当前记录已经欠费,不能迁出!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return;
-			}
+			//if ((!string.IsNullOrEmpty(txtEdit_fee.Text)) && Convert.ToDecimal(txtEdit_fee.Text) > 0 && Envior.cur_userId != AppInfo.ROOTID && !isrefund )
+			//{
+			//	XtraMessageBox.Show("当前记录已经欠费,不能迁出!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			//	return;
+			//}
 			 
 			int re = RegisterAction.RegisterOut(rc001,
 												 s_oc003,
@@ -196,23 +196,15 @@ namespace Brown.Forms
 				if (!isrefund && nums  > 0)
 				{
 					if (XtraMessageBox.Show("现在开具【发票】吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
-					{
-						if (!Envior.FIN_READY)
-							XtraMessageBox.Show("未连接到博思开票服务器!请稍后补开!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-						else
-						{
-							string s_pjh = FinInvoice.GetCurrentPh(Envior.FIN_INVOICE_TYPE);
-							if (String.IsNullOrEmpty(s_pjh))
-								XtraMessageBox.Show("未获取到下一张财政发票号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-							else
+					{                         
+                        if(FinInvoice.GetCurrentPh() > 0)
+                        {
+							if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 							{
-								if (XtraMessageBox.Show("下一张财政发票号码:" + s_pjh + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-								{
-									FinInvoice.Invoice(fa001);
-								}
+								FinInvoice.Invoice(fa001);
 							}
-						}
-					}
+						}						 
+                    }
 				}
 				else if(isrefund && Math.Abs(nums) > 0)    //退费发票
 				{
@@ -236,22 +228,22 @@ namespace Brown.Forms
 					if(frm_refund.ShowDialog() == DialogResult.OK)
 					{
 						s_old_zch = frm_refund.swapdata["zch"].ToString(); //注册号
-						if (!Envior.FIN_READY)
-							XtraMessageBox.Show("未连接到博思开票服务器!请稍后补开!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-						else
-						{
-							string s_newpjh = FinInvoice.GetCurrentPh(Envior.FIN_INVOICE_TYPE);
-							if (String.IsNullOrEmpty(s_newpjh))
-								XtraMessageBox.Show("未获取到下一张财政发票号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-							else
-							{
-								if (XtraMessageBox.Show("下一张财政发票号码:" + s_newpjh + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-								{
-									string s_tkitem = MiscAction.GetItemInvoiceCode("08", "") + "	" + Math.Abs(nums * price) + "	";
-									FinInvoice.Refund(s_old_pjlx, s_old_pjh, s_old_zch, s_tkitem, "F_Qt1=xxx|F_Qt2=xxx|F_Qt3=xxx",fa001, s_newpjh,nums * price);
-								}
-							}
-						}
+						//if (!Envior.FIN_READY)
+						//	XtraMessageBox.Show("未连接到博思开票服务器!请稍后补开!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						//else
+						//{
+						//	string s_newpjh = FinInvoice.GetCurrentPh(Envior.FIN_INVOICE_TYPE);
+						//	if (String.IsNullOrEmpty(s_newpjh))
+						//		XtraMessageBox.Show("未获取到下一张财政发票号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						//	else
+						//	{
+						//		if (XtraMessageBox.Show("下一张财政发票号码:" + s_newpjh + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+						//		{
+						//			string s_tkitem = MiscAction.GetItemInvoiceCode("08", "") + "	" + Math.Abs(nums * price) + "	";
+						//			FinInvoice.Refund(s_old_pjlx, s_old_pjh, s_old_zch, s_tkitem, "F_Qt1=xxx|F_Qt2=xxx|F_Qt3=xxx",fa001, s_newpjh,nums * price);
+						//		}
+						//	}
+						//}
 					}
 					frm_refund.Dispose();
 				}

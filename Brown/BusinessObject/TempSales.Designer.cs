@@ -499,7 +499,7 @@
             // gridColumn3
             // 
             this.gridColumn3.Caption = "数量";
-            this.gridColumn3.DisplayFormat.FormatString = "N0";
+            this.gridColumn3.DisplayFormat.FormatString = "N1";
             this.gridColumn3.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn3.FieldName = "NUMS";
             this.gridColumn3.Name = "gridColumn3";

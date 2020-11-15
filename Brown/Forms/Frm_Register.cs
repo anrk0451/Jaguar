@@ -548,25 +548,17 @@ namespace Brown.Forms
 				txtEdit_rc109.EditValue = s_rc109;
 				XtraMessageBox.Show("寄存登记成功!现在开始开具发票!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-				///开财政票
-				if (!Envior.FIN_READY)
-					XtraMessageBox.Show("未连接到博思开票服务器!请稍后补开!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				else
-				{
-					string s_pjh = FinInvoice.GetCurrentPh(Envior.FIN_INVOICE_TYPE);
-					if (String.IsNullOrEmpty(s_pjh))
-						XtraMessageBox.Show("未获取到下一张财政发票号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					else
+                ///开财政票                 
+                if(FinInvoice.GetCurrentPh() > 0)
+                {					 
+					if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 					{
-						if (XtraMessageBox.Show("下一张财政发票号码:" + s_pjh + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-						{
-							FinInvoice.Invoice(s_fa001);
-						}
-					}
+						FinInvoice.Invoice(s_fa001);
+					}					 
 				}
-
-				//// 开税票
-				if (dec_tax_sum > 0)
+                 
+                //// 开税票
+                if (dec_tax_sum > 0)
 				{
 					//获取税务客户信息
 					Frm_TaxClientInfo frm_taxClient = new Frm_TaxClientInfo(s_rc003);

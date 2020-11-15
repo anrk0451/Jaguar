@@ -114,7 +114,6 @@ namespace Brown.Forms
             string s_fa001 = Tools.GetEntityPK("FA01");
             string s_memo = te_memo.Text;
 
-
             try
             {
                 int re = MiscAction.FinRefundSettle(s_fa001, itemIdList.ToArray(), itemTypeList.ToArray(), priceList.ToArray(), numsList.ToArray(), Envior.cur_userId, s_memo, s_sa010);
@@ -125,74 +124,15 @@ namespace Brown.Forms
                     string s_fa190 = SqlAssist.ExecuteScalar("select fa190 from fa01 where fa001='" + s_sa010 + "'").ToString();
                     if( s_fa190.Substring(0,1) == "1")  //原收费记录  财政发票已开
                     {
-                        string s_pjlx = string.Empty;
-                        string s_pjh = string.Empty;
-                        string s_zch = string.Empty;
-                        string s_invcode = string.Empty;
-                        OracleDataReader reader_fin = SqlAssist.ExecuteReader("select * from fin_log where settleId='" + s_sa010 + "'");
+                        if (FinInvoice.GetCurrentPh() > 0)
                         {
-                            reader_fin.Read();
-                            s_pjlx = reader_fin["INVOICEKIND"].ToString();
-                            s_pjh = reader_fin["INVOICENO"].ToString();
-                            s_zch = reader_fin["INVOICEZCH"].ToString();
-                            if (string.IsNullOrEmpty(s_zch))
+                            if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                Frm_Zch_input frm_zch = new Frm_Zch_input();
-                                if(frm_zch.ShowDialog() == DialogResult.OK)
-                                {
-                                    s_zch = frm_zch.swapdata["zch"].ToString();
-                                }
-                                frm_zch.Dispose();
+                                FinInvoice.Refund(s_fa001);
                             }
-                        }
-                        reader_fin.Dispose();
-                            
-                        StringBuilder sb_content = new StringBuilder();
-                        decimal dec_fee = decimal.Zero;
-                        ///获取原票据号、类型成功!!!
-                        if (!string.IsNullOrEmpty(s_zch) && !string.IsNullOrEmpty(s_pjlx) && !string.IsNullOrEmpty(s_pjh))
-                        {
-                            for(int i = 0 ; i < itemIdList.Count;i++ )
-                            {
-                                if (MiscAction.GetItemInvoiceType(itemIdList[i]) != "F") continue;
-                                s_invcode = MiscAction.GetItemInvoiceCode(itemTypeList[i], itemIdList[i]);
-                                dec_fee = Math.Abs(priceList[i] * numsList[i]);
-                                sb_content.Append(s_invcode + "	" + dec_fee.ToString() + "	");
-                            }
-
-                            if (!Envior.FIN_READY)
-                                XtraMessageBox.Show("未连接到博思开票服务器!请稍后补开!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            else
-                            {
-                                string s_newpjh = FinInvoice.GetCurrentPh(Envior.FIN_INVOICE_TYPE);
-                                if (String.IsNullOrEmpty(s_newpjh))
-                                    XtraMessageBox.Show("未获取到下一张财政发票号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                else
-                                {
-                                    if (XtraMessageBox.Show("下一张财政发票号码:" + s_newpjh + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                                    {
-                                        FinInvoice.Refund(s_pjlx, s_pjh, s_zch, sb_content.ToString(), "F_Qt1 = xxx | F_Qt2 = xxx | F_Qt3 = xxx", s_fa001, s_newpjh, dec_fin_sum);
-                                    }
-                                }
-                            }
-                        }
+                        }                        
                     }
-                    //else if (Math.Abs(dec_tax_sum) > 0 && s_fa190.Substring(1, 1) == "1")  //退费项目含税票项目 并且税务发票已开
-                    //{
-                    //    //获取税务客户信息
-                    //    Frm_TaxClientInfo frm_taxClient = new Frm_TaxClientInfo();
-                    //    if (frm_taxClient.ShowDialog() == DialogResult.OK)
-                    //    {
-                    //        TaxClientInfo clientInfo = frm_taxClient.swapdata["taxclientinfo"] as TaxClientInfo;
-                    //        if (TaxInvoice.GetNextInvoiceNo() > 0)
-                    //        {
-                    //            if (XtraMessageBox.Show("下一张税票代码:" + Envior.NEXT_BILL_CODE + "\r\n" + "票号:" + Envior.NEXT_BILL_NUM + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    //            {
-                    //                TaxInvoice.Invoice(s_fa001, clientInfo);
-                    //            }
-                    //        }
-                    //    }
-                    //}
+                     
                 }
 
                 this.DialogResult = DialogResult.OK;

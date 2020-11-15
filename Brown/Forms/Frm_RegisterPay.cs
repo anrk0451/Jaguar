@@ -135,22 +135,15 @@ namespace Brown.Forms
 
 				if (XtraMessageBox.Show("缴费成功!现在打印【发票】吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
 				{
-					if (!Envior.FIN_READY)
-						XtraMessageBox.Show("未连接到博思开票服务器!请稍后补开!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					else
-					{
-						string s_pjh = FinInvoice.GetCurrentPh(Envior.FIN_INVOICE_TYPE);
-						if (String.IsNullOrEmpty(s_pjh))
-							XtraMessageBox.Show("未获取到下一张财政发票号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-						else
+                    
+                    if(FinInvoice.GetCurrentPh() > 0)
+                    {
+						if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 						{
-							if (XtraMessageBox.Show("下一张财政发票号码:" + s_pjh + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-							{
-								FinInvoice.Invoice(fa001);
-							}
+							FinInvoice.Invoice(fa001);
 						}
-					}
-				}
+					}                     
+                }
 
 				if (XtraMessageBox.Show("现在打印缴费记录吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
 				{

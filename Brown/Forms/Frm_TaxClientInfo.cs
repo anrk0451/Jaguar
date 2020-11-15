@@ -41,8 +41,8 @@ namespace Brown.Forms
 
         private void Frm_TaxClientInfo_Load(object sender, EventArgs e)
         {
-            txtedit_infocashier.Text = Envior.cur_userName;  //收款人
-            txtedit_infochecker.Text = Envior.cur_userName;  //复核人
+            txtedit_infocashier.Text = Envior.TAX_CASHIER;  //收款人
+            txtedit_infochecker.Text = Envior.TAX_CHECKER;  //复核人
             txtedit_clientName.Focus();
         }
 

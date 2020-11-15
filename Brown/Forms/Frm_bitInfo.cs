@@ -22,7 +22,7 @@ namespace Brown.Forms
         {
             InitializeComponent();
             bitAdapter.SelectCommand.CommandText = "select bi003,bi009,pkg_business.fun_getBitFullName(rg001,bi003) position,rc003,rc140,rc150,a.status status from bi01 a,rc01 b " +
-                                                        "where a.bi001 = b.rc130(+)  and rg001 = :rg001 and bi003= :bi003 ";
+                                                        "where a.bi001 = b.rc130(+)  and rg001 = :rg001 and bi003= :bi003 and b.status = '1'";
             OracleParameter op_rg001 = new OracleParameter("rg001", OracleDbType.Varchar2, 10);
             op_rg001.Direction = ParameterDirection.Input;
             op_rg001.Value = regionId;
