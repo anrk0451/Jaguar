@@ -175,7 +175,7 @@ namespace Brown.BusinessObject
 
             if (MiscAction.GrantRights(s_ro001, ri001_list.ToArray(), right_list.ToArray()) > 0)
             {
-                MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 isUpdate = false;
                 return 1;
             }

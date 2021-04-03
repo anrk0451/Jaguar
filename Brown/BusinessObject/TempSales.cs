@@ -97,10 +97,10 @@ namespace Brown.BusinessObject
 				dr["SA003"] = MiscAction.GetItemFullName(s_itemId);
 				dr["SA002"] = "02";                                                                  //类型：冷藏柜
 				dr["SA004"] = s_itemId;
-				dr["PRICE"] = MiscAction.GetItemFixPrice(s_itemId);                                  //单价
+				dr["PRICE"] = MiscAction.GetItemFixPrice(s_itemId);                                 //单价
 				dr["SA005"] = "1";                                                                   //临时性销售
-				dr["NUMS"] = Convert.ToDecimal(frm_1.swapdata["NUMS"]);                              //数量
-				dr["SA007"] = Convert.ToDecimal(dr["PRICE"]) * Convert.ToDecimal(dr["NUMS"]);        //金额
+				dr["NUMS"] = Convert.ToDecimal(frm_1.swapdata["NUMS"]);                             //数量
+				dr["SA007"] = Convert.ToDecimal(dr["PRICE"]) * Convert.ToDecimal(dr["NUMS"]);      //金额
 				dr["SA020"] = "F";
 
 				dr.EndEdit();
@@ -536,6 +536,11 @@ namespace Brown.BusinessObject
 			}
 
 			gridView1.DeleteRow(rowHandle);
+		}
+
+		private void barButtonItem4_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+
 		}
 	}
 }

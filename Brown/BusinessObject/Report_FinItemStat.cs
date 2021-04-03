@@ -79,13 +79,14 @@ namespace Brown.BusinessObject
         {
             if(e.Column.FieldName.ToUpper() == "INVCODE")
             {
-                if (e.Value.ToString() == AppInfo.FIN_FIRE)
+                string s_value = e.Value.ToString();
+                if (s_value == AppInfo.FIN_FIRE)
                     e.DisplayText = "火化";
-                else if (e.Value.ToString() == AppInfo.FIN_REGISTER)
+                else if (s_value == AppInfo.FIN_REGISTER)
                     e.DisplayText = "骨灰寄存";
-                else if (e.Value.ToString() == AppInfo.FIN_STORE)
+                else if (s_value == AppInfo.FIN_STORE)
                     e.DisplayText = "存放";
-                else if (e.Value.ToString() == AppInfo.FIN_TRAFFIC)
+                else if (s_value == AppInfo.FIN_TRAFFIC)
                     e.DisplayText = "接运";
             }
         }

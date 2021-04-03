@@ -1,21 +1,18 @@
 ﻿using DevExpress.XtraSplashScreen;
-using ICSharpCode.SharpZipLib.Zip;
 using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Net;
+using ICSharpCode.SharpZipLib.Zip;
+
 namespace Brown
 {
-    public class Tools
+	public class Tools
     {
         private static string KeyContainerName = "zico";
 

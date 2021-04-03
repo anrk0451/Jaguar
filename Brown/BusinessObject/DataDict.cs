@@ -195,12 +195,12 @@ namespace Brown.BusinessObject
 			try
 			{
 				st01_ds.st01Adapter.Update(st01_ds.St01);
-				MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				XtraMessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return true;
 			}
 			catch (Exception ee)
 			{
-				MessageBox.Show(ee.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				XtraMessageBox.Show(ee.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return false;
 			}
 		}

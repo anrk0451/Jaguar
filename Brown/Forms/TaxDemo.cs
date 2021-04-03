@@ -470,7 +470,8 @@ namespace Brown.Forms
 			sendmsg.Add("serviceid", "DJAPP");
 			//sendmsg.Add("sid", "0000000060");                  //请求流水号	
 			sendmsg.Add("dev_key", "9011e4c9-4070-4a0e-a571-baadb7588723");
-			sendmsg.Add("app_name", "牡丹江市第一殡仪馆");
+			//sendmsg.Add("app_name", "鸡西市殡葬事务服务中心");
+			sendmsg.Add("app_name", "牡丹江市龙凤公墓服务站");
 			//3.将请求报文转换为Json 字符串 并整体用公钥 加密
 			string s_msg_json = Tools.ConvertObjectToJson(sendmsg);
 			string s_fullmi = Tools.AesEncrypt(s_msg_json, Envior.TAX_PUBLIC_KEY);
@@ -710,7 +711,7 @@ namespace Brown.Forms
 
 		private void simpleButton20_Click(object sender, EventArgs e)
 		{
-			FinInvoice.PrintInvoice("3910", "00356018");
+			FinInvoice.PrintInvoice("3910", "00356022");
 		}
 		/// <summary>
 		/// 参数初始化
@@ -735,7 +736,7 @@ namespace Brown.Forms
 
         private void simpleButton23_Click(object sender, EventArgs e)
         {
-			string s_state = FinInvoice.GetInvoiceState("3910", "00356006");
+			string s_state = FinInvoice.GetInvoiceState("3910", "00356025");
 			if (!string.IsNullOrEmpty(s_state))
 				XtraMessageBox.Show(s_state, "状态");
 			else

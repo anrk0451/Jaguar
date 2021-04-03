@@ -138,7 +138,7 @@ namespace Brown.Forms
 			newrow["RG030"] = combo_rg030.SelectedIndex.ToString();
 			newrow["RG033"] = combo_rg033.SelectedIndex.ToString();
 			newrow["RG009"] = (this.swapdata["pnode"] as TreeListNode).Id;  //父节点编号
-			newrow["RG100"] = radioGroup1.EditValue.ToString();				//排列方案
+			newrow["RG100"] = radioGroup1.EditValue.ToString();			 //排列方案
 			newrow["STATUS"] = "1";          //状态
 
 			rs.swapdata["nodedata"] = newrow;

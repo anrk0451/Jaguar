@@ -106,7 +106,7 @@ namespace Brown.BusinessObject
 		{
 			if (gridView1.FocusedRowHandle >= 0)
 			{
-				if (MessageBox.Show("确认要删除当前的记录吗", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
+				if (XtraMessageBox.Show("确认要删除当前的记录吗", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
 				{
 					return;
 				}
@@ -129,12 +129,12 @@ namespace Brown.BusinessObject
 			try
 			{
 				ti01Adapter.Update(dt_ti01);
-				MessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				XtraMessageBox.Show("保存成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
 			catch (Exception ee)
 			{
-				MessageBox.Show(ee.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				XtraMessageBox.Show(ee.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 		}

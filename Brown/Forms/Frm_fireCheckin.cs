@@ -41,6 +41,8 @@ namespace Brown.Forms
 		/// <param name="e"></param>
 		private void Frm_fireCheckin_Load(object sender, EventArgs e)
 		{
+			sb_idc.Enabled = Envior.IDC_Reader_State;
+
 			//获取传入 数据集
 			checkin_ds = this.swapdata["dataset"] as Checkin_ds;        
 			action = this.swapdata["action"].ToString();
@@ -312,8 +314,14 @@ namespace Brown.Forms
 			if (lookUp_ac060.EditValue != null)
 				ac01.ac060 = lookUp_ac060.EditValue.ToString(); //灵车司机
 
-			ac01.ac100 = Envior.cur_userId;                 //经办人
-			ac01.ac200 = DateTime.Now;                      //经办日期
+
+			if (action.Equals("add"))
+			{
+				ac01.ac100 = Envior.cur_userId;                 //经办人
+				ac01.ac200 = DateTime.Now;                      //经办日期
+			}
+			 
+
 			ac01.ac110 = Envior.cur_userId;                 //最后经办人
 			ac01.ac220 = DateTime.Now;                      //最后经办日期
 			ac01.ac099 = mem_ac099.Text;                    //备注
@@ -350,6 +358,39 @@ namespace Brown.Forms
 			{
 				XtraMessageBox.Show("保存数据失败!\n" + ee.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
+		}
+		/// <summary>
+		/// 读取身份证
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void sb_idc_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				int authenticate = CVRSDK.CVR_Authenticate();
+				if (authenticate == 1)
+				{
+					int readContent = CVRSDK.CVR_Read_Content(4);
+					if (readContent == 1)
+					{
+						 
+					}
+					else
+					{
+						XtraMessageBox.Show("读卡失败!","错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+					}
+				}
+				else
+				{
+					XtraMessageBox.Show("未放卡或卡片放置不正确","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+				}
+			}
+			catch (Exception ex)
+			{
+				XtraMessageBox.Show(ex.ToString(),"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+			}
+			 
 		}
 	}
 }

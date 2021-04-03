@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using DevExpress.UserSkins;
 using DevExpress.Skins;
@@ -23,15 +21,16 @@ namespace Brown
 		{
 			try
 			{
-				bool bCreate;
-				System.Threading.Mutex mutex = new System.Threading.Mutex(false, "SINGILE_INSTANCE_MUTEX", out bCreate);
+                bool bCreate;
+                System.Threading.Mutex mutex = new System.Threading.Mutex(false, "SINGILE_INSTANCE_MUTEX", out bCreate);
 
-				if (!bCreate)
-				{
-					MessageBox.Show("程序已经启动!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					Application.Exit();
-					return;
-				}
+                if (!bCreate)
+                {
+                    MessageBox.Show("程序已经启动!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    Application.Exit();
+                    return;
+                }
+ 
 
 				//设置应用程序处理异常方式：ThreadException处理
 				Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
@@ -46,15 +45,14 @@ namespace Brown
 
 				BonusSkins.Register();
 				SkinManager.EnableFormSkins();
-				UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
+				//	UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
+
 
 				///// 连接数据库 //////
 				SqlAssist.ConnectDb();
 
 				///// 检查版本  ///////
-				//MessageBox.Show(AppInfo.AppVersion,"当前版本");
 				string curNewestVersion = Tools.getNewVersion();
-				//MessageBox.Show(curNewestVersion, "服务器版本");
 				if (string.Compare(curNewestVersion, AppInfo.AppVersion) > 0)
 				{
 					MessageBox.Show("服务器发现更新的版本!系统需要升级", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -75,11 +73,13 @@ namespace Brown
 					Application.Exit();
 					return;
 				}
-
+ 
 				/// 检查 工作站是否进行登记
 				Envior.WORKSTATIONID = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["workstationID"].Value.ToString();
+ 
 				string hostname = string.Empty;
 				string ipaddress = string.Empty;
+
 				Tools.GetIpAddress(out hostname, out ipaddress);
 				if(!string.IsNullOrEmpty(Envior.WORKSTATIONID))
 				{
@@ -107,7 +107,9 @@ namespace Brown
 					Application.Exit();
 					return;
 				}
- 
+
+				
+
 				Application.Run(new MainForm());
 				#endregion
 			}
@@ -115,7 +117,7 @@ namespace Brown
 			{
 				string str = GetExceptionMsg(ex, string.Empty);
 				LogUtils.Error(str);
-				MessageBox.Show(str, "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(ex.ToString(), "系统错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 

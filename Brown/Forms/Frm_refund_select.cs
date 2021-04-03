@@ -124,7 +124,12 @@ namespace Brown.Forms
                     string s_fa190 = SqlAssist.ExecuteScalar("select fa190 from fa01 where fa001='" + s_sa010 + "'").ToString();
                     if( s_fa190.Substring(0,1) == "1")  //原收费记录  财政发票已开
                     {
-                        if (FinInvoice.GetCurrentPh() > 0)
+                        //如果是新版接口上线前开具的原发票
+                        if (MiscAction.FinRefundBeforeOnline(s_fa001)) 
+                        {
+                            XtraMessageBox.Show("原发票在财政新接口上线前开具,不能开具对应退费发票,请在财政发票系统内完成发票开具.\r\n 开具成功后请更新发票号!","提示",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                        }
+                        else if(FinInvoice.GetCurrentPh() > 0)
                         {
                             if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {

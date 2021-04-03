@@ -65,17 +65,17 @@
 			this.labelControl1.AppearanceDisabled.Image = null;
 			this.labelControl1.AppearanceHovered.Image = null;
 			this.labelControl1.AppearancePressed.Image = null;
-			this.labelControl1.Location = new System.Drawing.Point(79, 79);
+			this.labelControl1.Location = new System.Drawing.Point(89, 79);
 			this.labelControl1.Name = "labelControl1";
-			this.labelControl1.Size = new System.Drawing.Size(95, 18);
+			this.labelControl1.Size = new System.Drawing.Size(94, 18);
 			this.labelControl1.TabIndex = 0;
 			this.labelControl1.Text = "纳税人识别号:";
 			// 
 			// te_id
 			// 
-			this.te_id.Location = new System.Drawing.Point(220, 75);
+			this.te_id.Location = new System.Drawing.Point(248, 75);
 			this.te_id.Name = "te_id";
-			this.te_id.Size = new System.Drawing.Size(335, 24);
+			this.te_id.Size = new System.Drawing.Size(377, 24);
 			this.te_id.TabIndex = 1;
 			// 
 			// labelControl2
@@ -84,17 +84,17 @@
 			this.labelControl2.AppearanceDisabled.Image = null;
 			this.labelControl2.AppearanceHovered.Image = null;
 			this.labelControl2.AppearancePressed.Image = null;
-			this.labelControl2.Location = new System.Drawing.Point(79, 128);
+			this.labelControl2.Location = new System.Drawing.Point(89, 128);
 			this.labelControl2.Name = "labelControl2";
-			this.labelControl2.Size = new System.Drawing.Size(95, 18);
+			this.labelControl2.Size = new System.Drawing.Size(94, 18);
 			this.labelControl2.TabIndex = 2;
 			this.labelControl2.Text = "单位地址电话:";
 			// 
 			// te_addr_tele
 			// 
-			this.te_addr_tele.Location = new System.Drawing.Point(220, 125);
+			this.te_addr_tele.Location = new System.Drawing.Point(248, 125);
 			this.te_addr_tele.Name = "te_addr_tele";
-			this.te_addr_tele.Size = new System.Drawing.Size(335, 24);
+			this.te_addr_tele.Size = new System.Drawing.Size(377, 24);
 			this.te_addr_tele.TabIndex = 3;
 			// 
 			// labelControl3
@@ -103,17 +103,17 @@
 			this.labelControl3.AppearanceDisabled.Image = null;
 			this.labelControl3.AppearanceHovered.Image = null;
 			this.labelControl3.AppearancePressed.Image = null;
-			this.labelControl3.Location = new System.Drawing.Point(79, 177);
+			this.labelControl3.Location = new System.Drawing.Point(89, 177);
 			this.labelControl3.Name = "labelControl3";
-			this.labelControl3.Size = new System.Drawing.Size(95, 18);
+			this.labelControl3.Size = new System.Drawing.Size(94, 18);
 			this.labelControl3.TabIndex = 4;
 			this.labelControl3.Text = "单位银行账号:";
 			// 
 			// te_bank_account
 			// 
-			this.te_bank_account.Location = new System.Drawing.Point(220, 173);
+			this.te_bank_account.Location = new System.Drawing.Point(248, 173);
 			this.te_bank_account.Name = "te_bank_account";
-			this.te_bank_account.Size = new System.Drawing.Size(335, 24);
+			this.te_bank_account.Size = new System.Drawing.Size(377, 24);
 			this.te_bank_account.TabIndex = 5;
 			// 
 			// labelControl5
@@ -122,15 +122,15 @@
 			this.labelControl5.AppearanceDisabled.Image = null;
 			this.labelControl5.AppearanceHovered.Image = null;
 			this.labelControl5.AppearancePressed.Image = null;
-			this.labelControl5.Location = new System.Drawing.Point(79, 226);
+			this.labelControl5.Location = new System.Drawing.Point(89, 226);
 			this.labelControl5.Name = "labelControl5";
-			this.labelControl5.Size = new System.Drawing.Size(65, 18);
+			this.labelControl5.Size = new System.Drawing.Size(64, 18);
 			this.labelControl5.TabIndex = 8;
 			this.labelControl5.Text = "发票类型:";
 			// 
 			// combo_type
 			// 
-			this.combo_type.Location = new System.Drawing.Point(220, 223);
+			this.combo_type.Location = new System.Drawing.Point(248, 223);
 			this.combo_type.Name = "combo_type";
 			this.combo_type.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -139,7 +139,7 @@
             "专票",
             "电子票"});
 			this.combo_type.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-			this.combo_type.Size = new System.Drawing.Size(335, 24);
+			this.combo_type.Size = new System.Drawing.Size(377, 24);
 			this.combo_type.TabIndex = 9;
 			// 
 			// simpleButton2
@@ -150,10 +150,10 @@
 			this.simpleButton2.Appearance.Options.UseForeColor = true;
 			this.simpleButton2.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.HotFlat;
 			this.simpleButton2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.simpleButton2.Location = new System.Drawing.Point(584, 76);
+			this.simpleButton2.Location = new System.Drawing.Point(657, 76);
 			this.simpleButton2.LookAndFeel.UseDefaultLookAndFeel = false;
 			this.simpleButton2.Name = "simpleButton2";
-			this.simpleButton2.Size = new System.Drawing.Size(144, 29);
+			this.simpleButton2.Size = new System.Drawing.Size(162, 29);
 			this.simpleButton2.TabIndex = 12;
 			this.simpleButton2.Text = "取消";
 			this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
@@ -165,10 +165,10 @@
 			this.simpleButton1.Appearance.Options.UseBackColor = true;
 			this.simpleButton1.Appearance.Options.UseForeColor = true;
 			this.simpleButton1.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.HotFlat;
-			this.simpleButton1.Location = new System.Drawing.Point(584, 32);
+			this.simpleButton1.Location = new System.Drawing.Point(657, 32);
 			this.simpleButton1.LookAndFeel.UseDefaultLookAndFeel = false;
 			this.simpleButton1.Name = "simpleButton1";
-			this.simpleButton1.Size = new System.Drawing.Size(144, 29);
+			this.simpleButton1.Size = new System.Drawing.Size(162, 29);
 			this.simpleButton1.TabIndex = 11;
 			this.simpleButton1.Text = "确定";
 			this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
@@ -179,17 +179,17 @@
 			this.labelControl6.AppearanceDisabled.Image = null;
 			this.labelControl6.AppearanceHovered.Image = null;
 			this.labelControl6.AppearancePressed.Image = null;
-			this.labelControl6.Location = new System.Drawing.Point(79, 277);
+			this.labelControl6.Location = new System.Drawing.Point(89, 277);
 			this.labelControl6.Name = "labelControl6";
-			this.labelControl6.Size = new System.Drawing.Size(35, 18);
+			this.labelControl6.Size = new System.Drawing.Size(34, 18);
 			this.labelControl6.TabIndex = 13;
 			this.labelControl6.Text = "公钥:";
 			// 
 			// te_publickey
 			// 
-			this.te_publickey.Location = new System.Drawing.Point(220, 272);
+			this.te_publickey.Location = new System.Drawing.Point(248, 272);
 			this.te_publickey.Name = "te_publickey";
-			this.te_publickey.Size = new System.Drawing.Size(335, 24);
+			this.te_publickey.Size = new System.Drawing.Size(377, 24);
 			this.te_publickey.TabIndex = 14;
 			// 
 			// labelControl7
@@ -198,17 +198,17 @@
 			this.labelControl7.AppearanceDisabled.Image = null;
 			this.labelControl7.AppearanceHovered.Image = null;
 			this.labelControl7.AppearancePressed.Image = null;
-			this.labelControl7.Location = new System.Drawing.Point(79, 326);
+			this.labelControl7.Location = new System.Drawing.Point(89, 326);
 			this.labelControl7.Name = "labelControl7";
-			this.labelControl7.Size = new System.Drawing.Size(35, 18);
+			this.labelControl7.Size = new System.Drawing.Size(34, 18);
 			this.labelControl7.TabIndex = 15;
 			this.labelControl7.Text = "私钥:";
 			// 
 			// te_privatekey
 			// 
-			this.te_privatekey.Location = new System.Drawing.Point(220, 322);
+			this.te_privatekey.Location = new System.Drawing.Point(248, 322);
 			this.te_privatekey.Name = "te_privatekey";
-			this.te_privatekey.Size = new System.Drawing.Size(335, 24);
+			this.te_privatekey.Size = new System.Drawing.Size(377, 24);
 			this.te_privatekey.TabIndex = 16;
 			// 
 			// labelControl8
@@ -217,17 +217,17 @@
 			this.labelControl8.AppearanceDisabled.Image = null;
 			this.labelControl8.AppearanceHovered.Image = null;
 			this.labelControl8.AppearancePressed.Image = null;
-			this.labelControl8.Location = new System.Drawing.Point(79, 30);
+			this.labelControl8.Location = new System.Drawing.Point(89, 30);
 			this.labelControl8.Name = "labelControl8";
-			this.labelControl8.Size = new System.Drawing.Size(121, 18);
+			this.labelControl8.Size = new System.Drawing.Size(124, 18);
 			this.labelControl8.TabIndex = 17;
 			this.labelControl8.Text = "税务发票服务URL:";
 			// 
 			// te_url
 			// 
-			this.te_url.Location = new System.Drawing.Point(220, 27);
+			this.te_url.Location = new System.Drawing.Point(248, 27);
 			this.te_url.Name = "te_url";
-			this.te_url.Size = new System.Drawing.Size(335, 24);
+			this.te_url.Size = new System.Drawing.Size(377, 24);
 			this.te_url.TabIndex = 18;
 			// 
 			// labelControl4
@@ -236,9 +236,9 @@
 			this.labelControl4.AppearanceDisabled.Image = null;
 			this.labelControl4.AppearanceHovered.Image = null;
 			this.labelControl4.AppearancePressed.Image = null;
-			this.labelControl4.Location = new System.Drawing.Point(79, 376);
+			this.labelControl4.Location = new System.Drawing.Point(89, 376);
 			this.labelControl4.Name = "labelControl4";
-			this.labelControl4.Size = new System.Drawing.Size(50, 18);
+			this.labelControl4.Size = new System.Drawing.Size(49, 18);
 			this.labelControl4.TabIndex = 19;
 			this.labelControl4.Text = "收款人:";
 			// 
@@ -248,31 +248,31 @@
 			this.labelControl9.AppearanceDisabled.Image = null;
 			this.labelControl9.AppearanceHovered.Image = null;
 			this.labelControl9.AppearancePressed.Image = null;
-			this.labelControl9.Location = new System.Drawing.Point(79, 425);
+			this.labelControl9.Location = new System.Drawing.Point(89, 425);
 			this.labelControl9.Name = "labelControl9";
-			this.labelControl9.Size = new System.Drawing.Size(50, 18);
+			this.labelControl9.Size = new System.Drawing.Size(49, 18);
 			this.labelControl9.TabIndex = 20;
 			this.labelControl9.Text = "审核人:";
 			// 
 			// te_cashier
 			// 
-			this.te_cashier.Location = new System.Drawing.Point(220, 373);
+			this.te_cashier.Location = new System.Drawing.Point(248, 373);
 			this.te_cashier.Name = "te_cashier";
-			this.te_cashier.Size = new System.Drawing.Size(335, 24);
+			this.te_cashier.Size = new System.Drawing.Size(377, 24);
 			this.te_cashier.TabIndex = 21;
 			// 
 			// te_checker
 			// 
-			this.te_checker.Location = new System.Drawing.Point(220, 422);
+			this.te_checker.Location = new System.Drawing.Point(248, 422);
 			this.te_checker.Name = "te_checker";
-			this.te_checker.Size = new System.Drawing.Size(335, 24);
+			this.te_checker.Size = new System.Drawing.Size(377, 24);
 			this.te_checker.TabIndex = 22;
 			// 
 			// Frm_TaxBaseInfo
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(753, 481);
+			this.ClientSize = new System.Drawing.Size(847, 481);
 			this.Controls.Add(this.te_checker);
 			this.Controls.Add(this.te_cashier);
 			this.Controls.Add(this.labelControl9);

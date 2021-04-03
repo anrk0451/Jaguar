@@ -185,6 +185,7 @@ namespace Brown.Action
 			
 			return Tools.DecodeBase64("utf-8", retString); 
 		}
+		
 		/// <summary>
 		/// 计算Md5 security
 		/// </summary>
@@ -219,6 +220,9 @@ namespace Brown.Action
 		///// <returns></returns>
 		public static int Invoice(string fa001)
 		{
+			//做开具财政发票前的预处理!!!
+			if (FinInvoicePrePare(fa001) < 0) return -1;
+
 			OracleParameter op_fa001 = new OracleParameter("fa001", OracleDbType.Varchar2, 10);
 			op_fa001.Direction = ParameterDirection.Input;
 			op_fa001.Value = fa001;
@@ -231,54 +235,55 @@ namespace Brown.Action
 			{
 				//读取交款人
 				s_head =  reader_fa01["FA003"].ToString();
-				s_memo = reader_fa01["FA180"].ToString();
+				s_memo = reader_fa01["FA180"].ToString() + "	" + GetMemoAtMixedMode(fa001);
 			}
 			reader_fa01.Dispose();
 
 			Dictionary<string, object> bdata = new Dictionary<string, object>();
 			Dictionary<string, Dictionary<string, object>> msg = new Dictionary<string, Dictionary<string, object>>();
 
-			bdata.Add("serial_number", fa001);				  //业务流水号 
+			bdata.Add("serial_number", fa001);				     //业务流水号 
 			bdata.Add("place_code", Envior.FIN_BILL_SITE);    //开票点
-			bdata.Add("payer", s_head);                       //缴款人单位
+			bdata.Add("payer", s_head);                        //缴款人单位
 			bdata.Add("date", string.Format("{0:yyyy-MM-dd}", MiscAction.GetServerTime())); //开票日期
 			bdata.Add("author",Envior.cur_userName);          //开票人
-			bdata.Add("payer_type", "1");                     //缴款人类型：1 个人 2 单位
-			bdata.Add("credit_code", "");                     //组织机构代码
-			bdata.Add("bill_code", Envior.FIN_CODE);          //票据种类编码			
-			bdata.Add("rec_mode", "1");                       //收款方式:1现金,2转账,3其它
-			bdata.Add("memo", s_memo);						  //备注
-			 
-			string s_sql = @"select sa002,
-		                            sa004,
-		                            sa003,
-		                            price,
-		                            nums,
-		                            sa020,
-		                            sa007,
-		                            pkg_business.fun_GetInvoiceCode(sa002,sa004) invcode
-		                     from v_sa01
-		                    where sa010 = :fa001 order by sa001";
-			OracleDataReader reader_sa01 = SqlAssist.ExecuteReader(s_sql, new OracleParameter[] { op_fa001 });
+			bdata.Add("payer_type", "1");                       //缴款人类型：1 个人 2 单位
+			bdata.Add("credit_code", "");                       //组织机构代码
+			bdata.Add("bill_code", Envior.FIN_CODE);           //票据种类编码			
+			bdata.Add("rec_mode", "1");                         //收款方式:1现金,2转账,3其它
+			bdata.Add("memo", s_memo);                           //备注
+
+			//string s_sql = @"select sa002,
+			//                           sa004,
+			//                           sa003,
+			//                           price,
+			//                           nums,
+			//                           sa020,
+			//                           sa007,
+			//                           pkg_business.fun_GetInvoiceCode(sa002,sa004) invcode
+			//                    from v_sa01
+			//                   where sa010 = :fa001 order by sa001";
+
+			string s_sql = @"select * from fa05 where fa001 = :fa001" ;			 
+			OracleDataReader reader_fa05 = SqlAssist.ExecuteReader(s_sql, new OracleParameter[] { op_fa001 });
 
 			List<Dictionary<string, object>> detail_list = new List<Dictionary<string, object>>();
 			Dictionary<string, object> detail_data = null;
-			while (reader_sa01.Read())
+			while (reader_fa05.Read())
 			{
-				if (reader_sa01["SA020"].ToString() != "F") continue;  //如果不是财政发票,忽略				
+				//if (reader_sa01["SA020"].ToString() != "F") continue;  //如果不是财政发票,忽略				
 				detail_data = new Dictionary<string, object>();
-				detail_data.Add("item_code", reader_sa01["INVCODE"].ToString());   //项目名 
-				detail_data.Add("std", reader_sa01["PRICE"]);					   //单价
-				detail_data.Add("number",reader_sa01["NUMS"]);					   //数量
-				detail_data.Add("amt", reader_sa01["SA007"]);					   //金额
+				detail_data.Add("item_code", reader_fa05["INVOICECODE"].ToString());   //项目名 
+				detail_data.Add("std", reader_fa05["PRICE"]);					   //单价
+				detail_data.Add("number",reader_fa05["NUMS"]);					   //数量
+				detail_data.Add("amt", reader_fa05["FEE"]);					       //金额
 				detail_list.Add(detail_data);
-
-				dec_hjje += Convert.ToDecimal(reader_sa01["SA007"]);				 
+				dec_hjje += Convert.ToDecimal(reader_fa05["FEE"]);				 
 			}
-			reader_sa01.Dispose();
-
+			reader_fa05.Dispose();
+			 
 			bdata.Add("item_details", detail_list);
-			bdata.Add("total_amt", dec_hjje);                                         //合计金额
+			bdata.Add("total_amt", dec_hjje);                                        //合计金额
 			msg.Add("message", bdata);
 
 			string s_json = Tools.ConvertObjectToJson(msg);
@@ -378,10 +383,13 @@ namespace Brown.Action
 						   "ServiceUnit=ServiceUnit";
 
 
-            //string s_url2 = @"http://127.0.0.1:13526/NontaxAgencyActuator?dllName=NontaxIndustry&Method=CallRemote&Params=eyJQYXJhbXNTdHIiOiJhcHBfaWQ9TURKU0RZQllHNzgzODM4NyZzZWN1cml0eT01QzZBREE3NjEzRkNGQUE3ODhEMkVGN0QxNUY4RTVDRiZhZ2VuY3lfY29kZT0wMjEwOTkwMDEmZGF0ZXRpbWU9MjAyMDExMDgyMDEwMTUxMjMmZW5jcnlwdGlvbj0wJmZvcm1hdD1qc29uJm1ldGhvZD1pbnZvaWNlLnByaW50LmNhbGwmbWVzc2FnZT1ld29nSUNKdFpYTnpZV2RsSWlBNklIc0tJQ0FnSUNKaWFXeHNYMkpoZEdOb1gyTnZaR1VpSURvZ0lqTTVNVEFpTEFvZ0lDQWdJbUpwYkd4ZmJtOGlJRG9nSWpBd016VTJNREEwSWdvZ0lIMEtmUT09Jm1lc3NhZ2VfaWQ9MC42MDA4NjExNTk2ODI3MzY1JnJlZ2lvbl9jb2RlPTIzMTAwMSZ2ZXJzaW9uPTEuMC4xIn0=&Random=0.659813784025407&ServiceUnit=ServiceUnit";
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(s_url);
+			//string s_url2 = @"http://127.0.0.1:13526/NontaxAgencyActuator?dllName=NontaxIndustry&Method=CallRemote&Params=eyJQYXJhbXNTdHIiOiJhcHBfaWQ9TURKU0RZQllHNzgzODM4NyZzZWN1cml0eT01QzZBREE3NjEzRkNGQUE3ODhEMkVGN0QxNUY4RTVDRiZhZ2VuY3lfY29kZT0wMjEwOTkwMDEmZGF0ZXRpbWU9MjAyMDExMDgyMDEwMTUxMjMmZW5jcnlwdGlvbj0wJmZvcm1hdD1qc29uJm1ldGhvZD1pbnZvaWNlLnByaW50LmNhbGwmbWVzc2FnZT1ld29nSUNKdFpYTnpZV2RsSWlBNklIc0tJQ0FnSUNKaWFXeHNYMkpoZEdOb1gyTnZaR1VpSURvZ0lqTTVNVEFpTEFvZ0lDQWdJbUpwYkd4ZmJtOGlJRG9nSWpBd016VTJNREEwSWdvZ0lIMEtmUT09Jm1lc3NhZ2VfaWQ9MC42MDA4NjExNTk2ODI3MzY1JnJlZ2lvbl9jb2RlPTIzMTAwMSZ2ZXJzaW9uPTEuMC4xIn0=&Random=0.659813784025407&ServiceUnit=ServiceUnit";
+			LogUtils.Info(s_url);
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(s_url);
             request.Method = "GET";
-            request.ContentType = "application/json";
+			//request.ContentType = "application/json";
+			request.ContentType = "text/html";
+
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream myResponseStream = response.GetResponseStream();
@@ -430,7 +438,10 @@ namespace Brown.Action
 			if (retdata != null)
 			{
 				if (retdata.ContainsKey("message"))
+                {
+					XtraMessageBox.Show("财政发票作废成功! \r\n" + "注册号:" + batch_code + "\r\n" + "发票号:" + bill_no ,"提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
 					return 1;
+                }					 
 				else
 				{
 					Dictionary<string, string> error_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["error_message"].ToString());
@@ -444,6 +455,8 @@ namespace Brown.Action
 				return -1;
 			}
 		}
+		
+		
 		/// <summary>
 		/// 开退费发票
 		/// </summary>
@@ -457,15 +470,22 @@ namespace Brown.Action
 			decimal dec_hjje = decimal.Zero;
 
 			//检索原发票注册号和票号
-			OracleDataReader inv_reader = SqlAssist.ExecuteReader("select * from fin_log where settleId = (select rf300 from refund where rf001 = '" + fa001 + "')");
+			OracleDataReader inv_reader = SqlAssist.ExecuteReader("select * from fin_log where flag = '1' and settleId = (select rf300 from refund where rf001 = '" + fa001 + "')");
 			if(inv_reader.HasRows && inv_reader.Read())
             {
 				s_ori_batch = inv_reader["INVOICEZCH"].ToString();
 				s_ori_billno = inv_reader["INVOICENO"].ToString();
-				s_refund_reason = inv_reader["RF003"].ToString();
+				s_refund_reason = SqlAssist.ExecuteScalar("select rf003 from refund where rf001='" + fa001 + "'").ToString();					 
             }
+            else
+            {
+				inv_reader.Dispose();
+				XtraMessageBox.Show("读取财政发票日志错误,未找到数据!","错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+				return -1;
+            }
+
 			inv_reader.Dispose();
-			  
+
 			//业务数据
 			Dictionary<string, object> bdata = new Dictionary<string, object>();
 			Dictionary<string, Dictionary<string, object>> msg = new Dictionary<string, Dictionary<string, object>>();
@@ -487,8 +507,8 @@ namespace Brown.Action
 					if (sa01_reader["SA020"].ToString() == "F")
                     {
 						detail_data = new Dictionary<string, object>();
-						detail_data.Add("item_code", sa01_reader["INVOICECODE"]);   //项目发票代码
-						detail_data.Add("refund_amt",sa01_reader["SA007"]);         //退费金额
+						detail_data.Add("item_code", sa01_reader["INVOICECODE"]);								 //项目发票代码
+						detail_data.Add("refund_amt",Math.Abs(Convert.ToDecimal(sa01_reader["SA007"])));         //退费金额
 						detail_list.Add(detail_data);
 						dec_hjje += Convert.ToDecimal(sa01_reader["SA007"]);
 					}					
@@ -508,20 +528,23 @@ namespace Brown.Action
 					string s_batch_code = string.Empty;
 					string s_bill_no = string.Empty;
 					Dictionary<string, string> success_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["message"].ToString());
-					s_batch_code = success_msg["bill_batch_code"];
-					s_bill_no = success_msg["bill_no"];
+					s_batch_code = success_msg["scarlet_bill_batch_code"];
+					s_bill_no = success_msg["scarlet_bill_no"];
 
 					if (FinInvoiceLog(fa001, Envior.FIN_CODE, s_bill_no, s_batch_code, dec_hjje, Envior.cur_userId) > 0)
 					{
-						XtraMessageBox.Show("退费发票开具成功!\r\n" + "注册号:" + s_batch_code + "\r\n" + "票据号:" + s_bill_no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-						return 1;
+						XtraMessageBox.Show("退费发票开具成功!\r\n" + "注册号:" + s_batch_code + "\r\n" + "票据号:" + s_bill_no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);						 
 					}
 					else
 					{
 						XtraMessageBox.Show("退费发票开具成功!!!但记录日志失败，请与管理员联系！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-						XtraMessageBox.Show("票据号:" + s_bill_no + "\r\n注册号:" + s_batch_code + "\r\n");
-						return 1;
+						XtraMessageBox.Show("票据号:" + s_bill_no + "\r\n注册号:" + s_batch_code + "\r\n");					 
 					}
+					if (XtraMessageBox.Show("现在打印【财政发票】吗?" + "\r\n" + "发票号:" + s_bill_no, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+					{
+						PrintInvoice(s_batch_code, s_bill_no);
+					}
+					return 1;
 				}
 				else
 				{
@@ -576,6 +599,33 @@ namespace Brown.Action
 				return "";
 			}
 		}
+
+
+
+		/// <summary>
+		/// 发票作废
+		/// </summary>
+		/// <param name="fa001"></param>
+		/// <returns></returns>
+		public static int InvoiceRemoved(string fa001) 
+		{
+			OracleDataReader reader = SqlAssist.ExecuteReader("select INVOICENO,INVOICEZCH from fin_log where settleId ='" + fa001 + "'");
+			if(reader.HasRows && reader.Read())
+            {
+				string s_batch_code = reader["INVOICEZCH"].ToString();
+				string s_billno = reader["INVOICENO"].ToString();
+				reader.Dispose();
+				return InvoiceRemoved(s_batch_code, s_billno);
+            }
+            else
+            {
+				XtraMessageBox.Show("未找到财政发票日志!","提示",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+				return 0;
+            }			
+		}
+
+
+		 
 
 		///// <summary>
 		///// 发票开具
@@ -822,6 +872,30 @@ namespace Brown.Action
 		//    }
 		// PrtServAction.ConnectBosi(Envior.cur_userBosi, Envior.cur_pwdBosi, Envior.mform.Handle.ToInt32());
 
-
+		/// <summary>
+		/// 财政发票开具预处理
+		/// </summary>
+		/// <param name="fa001"></param>
+		/// <returns></returns>
+		public static int FinInvoicePrePare(string fa001)
+		{
+			//服务请求url
+			OracleParameter op_fa001 = new OracleParameter("ic_fa001", OracleDbType.Varchar2, 10);
+			op_fa001.Direction = ParameterDirection.Input;
+			op_fa001.Value = fa001;
+			return SqlAssist.ExecuteProcedure("pkg_business.prc_FinInvoicePrePare", new OracleParameter[] { op_fa001 });
+		}
+		/// <summary>
+		/// 财政发票混合模式下获取备注
+		/// </summary>
+		/// <param name="fa001"></param>
+		/// <returns></returns>
+		public static string GetMemoAtMixedMode(string fa001)
+		{
+			OracleParameter op_fa001 = new OracleParameter("ic_fa001", OracleDbType.Varchar2, 10);
+			op_fa001.Direction = ParameterDirection.Input;
+			op_fa001.Value = fa001;
+			return SqlAssist.ExecuteFunction("pkg_business.fun_GetMemoAtMixedMode", new OracleParameter[] { op_fa001 }).ToString();
+		}
 	}
 }

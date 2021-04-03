@@ -646,8 +646,15 @@ namespace Brown.BusinessObject
 				if (!gridView1.IsRowSelected(i) || gridView1.GetRowCellValue(i, "SA008").ToString() == "1") continue;
 				if (Convert.ToDecimal(gridView1.GetRowCellValue(i, "PRICE")) == 0)
 				{
-					XtraMessageBox.Show("第" + (i + 1).ToString() + "行项目未输入价格!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return;
+					if(gridView1.GetRowCellValue(i,"SA002").ToString() == "06")  //如果是火化 价格位0 是低保
+					{
+						if (XtraMessageBox.Show("本次结算含有0元火化费,是否为低保火化?","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No) return;
+					}
+					else
+					{
+						XtraMessageBox.Show("第" + (i + 1).ToString() + "行项目未输入价格!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						return;
+					}					
 				}
 				if (gridView1.GetRowCellValue(i, "INVOICECODE") is DBNull)
 				{

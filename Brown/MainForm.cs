@@ -14,7 +14,6 @@ using Brown.Misc;
 using DevExpress.XtraSplashScreen;
 using System.Threading;
 using Brown.Forms;
-using Oracle.ManagedDataAccess.Client;
 using Brown.Action;
 using DevExpress.XtraEditors;
 using DevExpress.XtraTab.ViewInfo;
@@ -22,8 +21,8 @@ using Brown.DataSet;
 using System.Configuration;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-//using PrtServ;
-
+using Oracle.ManagedDataAccess.Client;
+ 
 namespace Brown
 {
 	public partial class MainForm : DevExpress.XtraBars.Ribbon.RibbonForm
@@ -32,9 +31,6 @@ namespace Brown
 		private extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
 		[DllImport("user32.dll", EntryPoint = "SendMessage", SetLastError = true, CharSet = CharSet.Auto)]
 		private static extern int SendMessage(IntPtr hwnd, uint wMsg, int wParam, int lParam);
-
-		[DllImport("agency3intfc.dll", EntryPoint = "initParams")]
-		private static extern int initParams(string url, string appid, string appkey);
 
 		//打印服务进程
 		Process printprocess = new Process();
@@ -50,9 +46,7 @@ namespace Brown
 			public string bo003 { get; set; }   //业务名称
 			public string bo004 { get; set; }   //业务对象类型 w-窗口 x-xtratabpage对象
 		}
-
-
-
+		 
 		public Dictionary<string, Object> swapdata { get; set; }                                          //交换数据对象
 
 		//追踪已经打开的Tab页
@@ -83,12 +77,15 @@ namespace Brown
 
 			//断开数据库
 			SqlAssist.DisConnect();
-
-			//如果连接博思则断开
-			//if (Envior.FIN_READY) FinInvoice.DisConnect();
-
+			 
 			//关闭关联的打印进程
 			if (!printprocess.HasExited) printprocess.Kill();
+
+			//关闭身份证读卡器
+			if (Envior.IDC_Reader_State)
+			{
+				CVRSDK.CVR_CloseComm();
+			}
 
 			//关闭打印服务对象
 			//if (Envior.prtserv != null)	Envior.prtserv.Dispose();
@@ -108,29 +105,65 @@ namespace Brown
 
 			if (f_login.DialogResult == DialogResult.OK)  //登录成功处理..........
 			{
-				barStaticItem2.Caption = Envior.cur_userName;
+				bsi_userName.Caption = Envior.cur_userName;
 				bs_version.Caption = AppInfo.AppVersion;
+
+
 				f_login.Dispose();
 
 				//读取发票基础信息
 				this.ReadInvoiceBaseInfo();
-			}
- 
-			//连接打印进程
-			this.ConnectPrtServ();
 
-			//自动连接博思服务器
-			//string autoConnect = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["ConnectFinInvoice"].Value.ToString();
-			//if (autoConnect == "1") FinInvoice.AutoConnectBosi();
+				//连接打印进程
+				this.ConnectPrtServ();
 
-			//创建打印服务对象
-			//Envior.prtserv = new n_prtserv();
+				//自动连接博思服务器
+				//string autoConnect = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["ConnectFinInvoice"].Value.ToString();
+				//if (autoConnect == "1") FinInvoice.AutoConnectBosi();
 
-			//读取 税务开票 APPID
-			Envior.TAX_APPID = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["APPID"].Value.ToString();
-			//读取 财政发票 开票点编码
-			Envior.FIN_BILL_SITE = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["BILLSITE"].Value.ToString();
+				//创建打印服务对象
+				//Envior.prtserv = new n_prtserv();
 
+				//读取 税务开票 APPID
+				Envior.TAX_APPID = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["APPID"].Value.ToString();
+				//读取 财政发票 开票点编码
+				Envior.FIN_BILL_SITE = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["BILLSITE"].Value.ToString();
+
+				//打开身份证读取器
+				Envior.IDC_Reader_State = false;
+				if (ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["IDC_Reader"].Value.ToString() == "1")
+				{
+					Envior.IDC_Reader_Rate = int.Parse(ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["IDC_Reader_Rate"].Value.ToString());
+					Envior.IDC_Reader_Port = int.Parse(ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings["IDC_Reader_Port"].Value.ToString());
+					CVRSDK.CVR_SetComBaudrate(Envior.IDC_Reader_Rate);// 设置波特率
+					if (0 == Envior.IDC_Reader_Port)    //usb
+					{
+						for (int i = 1001; i <= 1016; i++)
+						{
+							if (1 == CVRSDK.CVR_InitComm(i))
+							{
+								Envior.IDC_Reader_State = true;
+								Envior.IDC_Reader_Port = i;
+								break;
+							}
+						}
+					}
+					else if (CVRSDK.CVR_InitComm(Envior.IDC_Reader_Port) == 1)  //UART
+					{
+						Envior.IDC_Reader_State = true;
+					}
+
+					if (!Envior.IDC_Reader_State) XtraMessageBox.Show("打开身份证读卡器失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				}
+				else
+					Envior.IDC_Reader_State = false;
+
+				if (Envior.IDC_Reader_State)
+					bsi_idc.Caption = "已连接";
+				else
+					bsi_idc.Caption = "未连接";
+
+			}              
 		}
 
 		/// <summary>
@@ -681,7 +714,7 @@ namespace Brown
 			Frm_login frm_login = new Frm_login();
 			frm_login.ShowDialog();
 			frm_login.Dispose();
-			Bs_CURUSER.Caption = Envior.cur_userName;
+			bsi_userName.Caption = Envior.cur_userName;
 		}
 
 		private void barButtonItem38_ItemClick(object sender, ItemClickEventArgs e)

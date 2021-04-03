@@ -69,6 +69,9 @@ namespace Brown.Misc
 		//public static bool FIN_READY { get; set; }		   // 博思开票状态
 
 		//public static n_prtserv prtserv { get; set; }      //打印服务对象
- 
+         
+        public static bool IDC_Reader_State { get; set; }    //身份证读卡器状态
+        public static int IDC_Reader_Rate { get; set; }      //身份证读卡器速率
+        public static int IDC_Reader_Port { get; set; }      //身份证读卡器端口
 	}
 }
