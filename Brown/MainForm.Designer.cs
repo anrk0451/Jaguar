@@ -76,6 +76,10 @@
 			this.skinRibbonGalleryBarItem1 = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
 			this.barButtonItem41 = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonItem42 = new DevExpress.XtraBars.BarButtonItem();
+			this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
+			this.bs_version = new DevExpress.XtraBars.BarStaticItem();
+			this.barStaticItem3 = new DevExpress.XtraBars.BarStaticItem();
+			this.bsi_idc = new DevExpress.XtraBars.BarStaticItem();
 			this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
 			this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -90,10 +94,6 @@
 			this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
 			this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
 			this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
-			this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
-			this.bs_version = new DevExpress.XtraBars.BarStaticItem();
-			this.barStaticItem3 = new DevExpress.XtraBars.BarStaticItem();
-			this.bsi_idc = new DevExpress.XtraBars.BarStaticItem();
 			((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
 			this.xtraTabControl1.SuspendLayout();
@@ -167,7 +167,7 @@
             this.ribbonPage3});
 			this.ribbon.QuickToolbarItemLinks.Add(this.barButtonItem39);
 			this.ribbon.QuickToolbarItemLinks.Add(this.barButtonItem41);
-			this.ribbon.Size = new System.Drawing.Size(1772, 177);
+			this.ribbon.Size = new System.Drawing.Size(1772, 179);
 			this.ribbon.StatusBar = this.ribbonStatusBar;
 			// 
 			// barButtonItem1
@@ -397,7 +397,6 @@
 			this.barButtonItem26.Id = 27;
 			this.barButtonItem26.ImageOptions.SvgImage = global::Brown.Properties.Resources.shopping_barcode;
 			this.barButtonItem26.Name = "barButtonItem26";
-			this.barButtonItem26.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
 			this.barButtonItem26.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem26_ItemClick);
 			// 
 			// barButtonItem27
@@ -567,6 +566,31 @@
 			this.barButtonItem42.Name = "barButtonItem42";
 			this.barButtonItem42.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem42_ItemClick);
 			// 
+			// barStaticItem2
+			// 
+			this.barStaticItem2.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+			this.barStaticItem2.Caption = "版本号:";
+			this.barStaticItem2.Id = 52;
+			this.barStaticItem2.Name = "barStaticItem2";
+			// 
+			// bs_version
+			// 
+			this.bs_version.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+			this.bs_version.Caption = "版本";
+			this.bs_version.Id = 53;
+			this.bs_version.Name = "bs_version";
+			// 
+			// barStaticItem3
+			// 
+			this.barStaticItem3.Caption = "                  身份证读卡器:";
+			this.barStaticItem3.Id = 54;
+			this.barStaticItem3.Name = "barStaticItem3";
+			// 
+			// bsi_idc
+			// 
+			this.bsi_idc.Id = 55;
+			this.bsi_idc.Name = "bsi_idc";
+			// 
 			// ribbonPage1
 			// 
 			this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -676,19 +700,19 @@
 			this.ribbonStatusBar.ItemLinks.Add(this.bs_version);
 			this.ribbonStatusBar.ItemLinks.Add(this.barStaticItem3);
 			this.ribbonStatusBar.ItemLinks.Add(this.bsi_idc);
-			this.ribbonStatusBar.Location = new System.Drawing.Point(0, 570);
+			this.ribbonStatusBar.Location = new System.Drawing.Point(0, 571);
 			this.ribbonStatusBar.Name = "ribbonStatusBar";
 			this.ribbonStatusBar.Ribbon = this.ribbon;
-			this.ribbonStatusBar.Size = new System.Drawing.Size(1772, 39);
+			this.ribbonStatusBar.Size = new System.Drawing.Size(1772, 38);
 			// 
 			// xtraTabControl1
 			// 
 			this.xtraTabControl1.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InActiveTabPageHeaderAndOnMouseHover;
 			this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.xtraTabControl1.Location = new System.Drawing.Point(0, 177);
+			this.xtraTabControl1.Location = new System.Drawing.Point(0, 179);
 			this.xtraTabControl1.Name = "xtraTabControl1";
 			this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-			this.xtraTabControl1.Size = new System.Drawing.Size(1772, 393);
+			this.xtraTabControl1.Size = new System.Drawing.Size(1772, 392);
 			this.xtraTabControl1.TabIndex = 2;
 			this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1});
@@ -699,7 +723,7 @@
 			this.xtraTabPage1.Controls.Add(this.pictureEdit1);
 			this.xtraTabPage1.Name = "xtraTabPage1";
 			this.xtraTabPage1.ShowCloseButton = DevExpress.Utils.DefaultBoolean.False;
-			this.xtraTabPage1.Size = new System.Drawing.Size(1770, 352);
+			this.xtraTabPage1.Size = new System.Drawing.Size(1765, 357);
 			this.xtraTabPage1.Text = "欢迎";
 			// 
 			// pictureEdit1
@@ -714,33 +738,8 @@
 			this.pictureEdit1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
 			this.pictureEdit1.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
 			this.pictureEdit1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Stretch;
-			this.pictureEdit1.Size = new System.Drawing.Size(1770, 352);
+			this.pictureEdit1.Size = new System.Drawing.Size(1765, 357);
 			this.pictureEdit1.TabIndex = 0;
-			// 
-			// barStaticItem2
-			// 
-			this.barStaticItem2.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-			this.barStaticItem2.Caption = "版本号:";
-			this.barStaticItem2.Id = 52;
-			this.barStaticItem2.Name = "barStaticItem2";
-			// 
-			// bs_version
-			// 
-			this.bs_version.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-			this.bs_version.Caption = "版本";
-			this.bs_version.Id = 53;
-			this.bs_version.Name = "bs_version";
-			// 
-			// barStaticItem3
-			// 
-			this.barStaticItem3.Caption = "                  身份证读卡器:";
-			this.barStaticItem3.Id = 54;
-			this.barStaticItem3.Name = "barStaticItem3";
-			// 
-			// bsi_idc
-			// 
-			this.bsi_idc.Id = 55;
-			this.bsi_idc.Name = "bsi_idc";
 			// 
 			// MainForm
 			// 

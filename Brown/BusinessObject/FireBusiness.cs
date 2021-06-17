@@ -16,6 +16,7 @@ using Brown.Forms;
 using Brown.Misc;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraPrinting;
+using System.IO;
 
 namespace Brown.BusinessObject
 {
@@ -102,6 +103,23 @@ namespace Brown.BusinessObject
 
 			reader.Dispose();
 
+			//读入照片		
+			if (MiscAction.HasIDC(AC001))
+			{
+				OracleDataReader photo_reader = SqlAssist.ExecuteReader("select ic020 from ic01 where ic000 = '0' and ac001 ='" + AC001 + "'");
+				if (photo_reader.HasRows && photo_reader.Read())
+				{
+					MemoryStream ms = new MemoryStream((byte[])photo_reader["IC020"]);//把照片读到MemoryStream里  
+					Image imageBlob = Image.FromStream(ms, true);//用流创建Image  
+					pictureEdit1.Image = imageBlob;//输出图片   
+				}
+				photo_reader.Dispose();
+			}
+			else
+			{
+				pictureEdit1.Image = null;
+			}
+			 
 			///刷新销售数据
 			this.RefreshSalesData();
 		}

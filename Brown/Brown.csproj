@@ -222,6 +222,7 @@
     <Compile Include="BusinessObject\WorkStationList.Designer.cs">
       <DependentUpon>WorkStationList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dao\Ic01_dao.cs" />
     <Compile Include="Domain\Ic01.cs" />
     <Compile Include="Forms\Frm_invoiceLog.cs">
       <SubType>Form</SubType>
@@ -234,6 +235,12 @@
     </Compile>
     <Compile Include="Forms\Frm_report_regdebt.Designer.cs">
       <DependentUpon>Frm_report_regdebt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Frm_SingleSideRemoved.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Frm_SingleSideRemoved.Designer.cs">
+      <DependentUpon>Frm_SingleSideRemoved.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Frm_wsStat.cs">
       <SubType>Form</SubType>
@@ -765,6 +772,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_report_regdebt.resx">
       <DependentUpon>Frm_report_regdebt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Frm_SingleSideRemoved.resx">
+      <DependentUpon>Frm_SingleSideRemoved.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_wsStat.resx">
       <DependentUpon>Frm_wsStat.cs</DependentUpon>

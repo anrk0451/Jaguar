@@ -1008,5 +1008,50 @@ namespace Brown.Action
 		}
 
 
+		/// <summary>
+		/// 发票作废(单边)
+		/// </summary>
+		/// <param name="fpdm"></param>
+		/// <param name="fphm"></param>
+		/// <returns></returns>
+		public static int Remove(string invcode,string invnum,decimal hjje, string zfr)
+		{			 
+			try
+			{ 				
+				//1.组装业务数据
+				Dictionary<string, Object> bdata = new Dictionary<string, object>();
+				bdata.Add("fplxdm", Envior.TAX_INVOICE_TYPE);             //发票类型代码
+				bdata.Add("fpdm", invcode);                               //发票代码
+				bdata.Add("fphm", invnum);                                //发票号码
+				bdata.Add("hjje", hjje.ToString());						  //合计金额
+				bdata.Add("zfr", zfr);                                    //作废人
+
+				//2.将业务数据转换为Json字符串
+				string s_json = Tools.ConvertObjectToJson(bdata);
+				string s_req_sid = Tools.GetEntityPK("TAXREQ"); //报文请求ID
+				string s_retstr = WrapData("FPZF", s_req_sid, s_json);
+
+				//3.分析返回结果
+				Object obj = JsonConvert.DeserializeObject(s_retstr);
+				Newtonsoft.Json.Linq.JObject js = obj as Newtonsoft.Json.Linq.JObject;
+				if (js["code"].ToString() == "00000")   //成功
+				{
+					XtraMessageBox.Show("作废税务发票成功!\r\n" + "发票代码:" + invcode + "," + "发票号码:" + invnum, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					return 1;
+				}
+				else
+				{
+					XtraMessageBox.Show("作废发票失败,请与管理员联系!\r\n" + js["msg"], "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return -1;
+				}			 
+			}
+			catch (Exception ee)
+			{
+				XtraMessageBox.Show(ee.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}			 
+			return -1;
+		}
+
+
 	}
 }

@@ -62,7 +62,7 @@
 			// 
 			// simpleButton2
 			// 
-			this.simpleButton2.Appearance.BackColor = System.Drawing.SystemColors.ActiveCaption;
+			this.simpleButton2.Appearance.BackColor = System.Drawing.Color.Gray;
 			this.simpleButton2.Appearance.ForeColor = System.Drawing.Color.White;
 			this.simpleButton2.Appearance.Options.UseBackColor = true;
 			this.simpleButton2.Appearance.Options.UseForeColor = true;
@@ -78,7 +78,7 @@
 			// 
 			// simpleButton1
 			// 
-			this.simpleButton1.Appearance.BackColor = System.Drawing.Color.Lime;
+			this.simpleButton1.Appearance.BackColor = System.Drawing.Color.Blue;
 			this.simpleButton1.Appearance.ForeColor = System.Drawing.Color.White;
 			this.simpleButton1.Appearance.Options.UseBackColor = true;
 			this.simpleButton1.Appearance.Options.UseForeColor = true;

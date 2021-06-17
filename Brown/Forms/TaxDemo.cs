@@ -466,12 +466,14 @@ namespace Brown.Forms
 
 			//2.打包发送请求数据
 			Dictionary<string, object> sendmsg = new Dictionary<string, object>();
-		
+
 			sendmsg.Add("serviceid", "DJAPP");
 			//sendmsg.Add("sid", "0000000060");                  //请求流水号	
 			sendmsg.Add("dev_key", "9011e4c9-4070-4a0e-a571-baadb7588723");
-			//sendmsg.Add("app_name", "鸡西市殡葬事务服务中心");
+			 
 			sendmsg.Add("app_name", "牡丹江市龙凤公墓服务站");
+			//sendmsg.Add("app_name", "鸡西市殡葬事务服务中心");
+			//sendmsg.Add("app_name", "牡丹江市龙凤坡公墓服务站");
 			//3.将请求报文转换为Json 字符串 并整体用公钥 加密
 			string s_msg_json = Tools.ConvertObjectToJson(sendmsg);
 			string s_fullmi = Tools.AesEncrypt(s_msg_json, Envior.TAX_PUBLIC_KEY);

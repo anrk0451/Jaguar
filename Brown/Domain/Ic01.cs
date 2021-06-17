@@ -16,7 +16,7 @@ namespace Brown.Domain
 		public string ic003 { get; set; } //姓名
 		public string ic002 { get; set; } //性别
 
-		public DateTime? ic004 { get; set; }  //出生日期
+		public DateTime ic004 { get; set; }  //出生日期
 		public string ic014 { get; set; }	  //身份证号
 		public string ic016 { get; set; }	  //地址
 		public string ic017 { get; set; }	  //签发机关

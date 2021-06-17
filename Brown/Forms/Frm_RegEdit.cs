@@ -12,6 +12,7 @@ using Brown.BaseObject;
 using Brown.DataSet;
 using Brown.Action;
 using Oracle.ManagedDataAccess.Client;
+using System.IO;
 
 namespace Brown.Forms
 {
@@ -49,6 +50,20 @@ namespace Brown.Forms
 				lookUp_rc052.EditValue = reader["RC052"];
 				txtEdit_ac055.EditValue = reader["RC055"];
 				mem_rc099.EditValue = reader["RC099"];
+
+				//如果从火化转来并且有照片
+				if (MiscAction.HasIDC(ac001))
+				{
+					OracleDataReader photo_reader = SqlAssist.ExecuteReader("select ic020 from ic01 where ic000 = '0' and ac001 ='" + ac001 + "'");
+					if (photo_reader.HasRows && photo_reader.Read())
+					{
+						MemoryStream ms = new MemoryStream((byte[])photo_reader["IC020"]);//把照片读到MemoryStream里  
+						Image imageBlob = Image.FromStream(ms, true);//用流创建Image  
+						pictureEdit1.Image = imageBlob;//输出图片   
+					}
+					photo_reader.Dispose();					 
+				}
+
 			}
 
 			lookUp_rc052.Properties.DataSource = register_ds.Relation;

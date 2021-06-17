@@ -1019,5 +1019,17 @@ namespace Brown.BusinessObject
                 }
             }
         }
-    }
+
+		/// <summary>
+		/// 作废单边发票
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void barButtonItem12_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+		{
+			Frm_SingleSideRemoved frm_1 = new Frm_SingleSideRemoved();
+			frm_1.ShowDialog();
+			frm_1.Dispose();
+		}
+	}
 }

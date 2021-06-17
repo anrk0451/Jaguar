@@ -28,12 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FireBusiness));
 			DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
 			this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
 			this.te_tax = new DevExpress.XtraEditors.TextEdit();
-			this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+			this.barManager1 = new DevExpress.XtraBars.BarManager();
 			this.bar1 = new DevExpress.XtraBars.Bar();
 			this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
 			this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
@@ -110,6 +109,7 @@
 			this.gridColumn11 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
 			this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+			this.pictureEdit1 = new DevExpress.XtraEditors.PictureEdit();
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
 			this.groupControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.te_tax.Properties)).BeginInit();
@@ -134,6 +134,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lookup_sa100)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupControl1
@@ -147,6 +148,7 @@
 			this.groupControl1.AppearanceCaption.Options.UseImage = true;
 			this.groupControl1.AppearanceCaption.Options.UseTextOptions = true;
 			this.groupControl1.AppearanceCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.groupControl1.Controls.Add(this.pictureEdit1);
 			this.groupControl1.Controls.Add(this.te_tax);
 			this.groupControl1.Controls.Add(this.labelControl16);
 			this.groupControl1.Controls.Add(this.te_fin);
@@ -180,15 +182,15 @@
 			this.groupControl1.Controls.Add(this.lookup_store);
 			this.groupControl1.Controls.Add(this.txtedit_ac052);
 			this.groupControl1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupControl1.Location = new System.Drawing.Point(0, 34);
+			this.groupControl1.Location = new System.Drawing.Point(0, 37);
 			this.groupControl1.Name = "groupControl1";
-			this.groupControl1.Size = new System.Drawing.Size(1316, 230);
+			this.groupControl1.Size = new System.Drawing.Size(1697, 230);
 			this.groupControl1.TabIndex = 23;
 			this.groupControl1.Text = "逝者信息";
 			// 
 			// te_tax
 			// 
-			this.te_tax.Location = new System.Drawing.Point(1118, 180);
+			this.te_tax.Location = new System.Drawing.Point(1255, 184);
 			this.te_tax.MenuManager = this.barManager1;
 			this.te_tax.Name = "te_tax";
 			this.te_tax.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -380,7 +382,7 @@
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
 			this.barDockControlTop.Manager = this.barManager1;
-			this.barDockControlTop.Size = new System.Drawing.Size(1316, 34);
+			this.barDockControlTop.Size = new System.Drawing.Size(1697, 37);
 			// 
 			// barDockControlBottom
 			// 
@@ -388,23 +390,23 @@
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.barDockControlBottom.Location = new System.Drawing.Point(0, 531);
 			this.barDockControlBottom.Manager = this.barManager1;
-			this.barDockControlBottom.Size = new System.Drawing.Size(1316, 0);
+			this.barDockControlBottom.Size = new System.Drawing.Size(1697, 0);
 			// 
 			// barDockControlLeft
 			// 
 			this.barDockControlLeft.CausesValidation = false;
 			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-			this.barDockControlLeft.Location = new System.Drawing.Point(0, 34);
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 37);
 			this.barDockControlLeft.Manager = this.barManager1;
-			this.barDockControlLeft.Size = new System.Drawing.Size(0, 497);
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 494);
 			// 
 			// barDockControlRight
 			// 
 			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-			this.barDockControlRight.Location = new System.Drawing.Point(1316, 34);
+			this.barDockControlRight.Location = new System.Drawing.Point(1697, 37);
 			this.barDockControlRight.Manager = this.barManager1;
-			this.barDockControlRight.Size = new System.Drawing.Size(0, 497);
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 494);
 			// 
 			// barButtonItem1
 			// 
@@ -469,8 +471,12 @@
 			// labelControl16
 			// 
 			this.labelControl16.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl16.Appearance.Image = null;
 			this.labelControl16.Appearance.Options.UseFont = true;
-			this.labelControl16.Location = new System.Drawing.Point(1014, 183);
+			this.labelControl16.AppearanceDisabled.Image = null;
+			this.labelControl16.AppearanceHovered.Image = null;
+			this.labelControl16.AppearancePressed.Image = null;
+			this.labelControl16.Location = new System.Drawing.Point(1151, 187);
 			this.labelControl16.Name = "labelControl16";
 			this.labelControl16.Size = new System.Drawing.Size(69, 18);
 			this.labelControl16.TabIndex = 31;
@@ -478,7 +484,7 @@
 			// 
 			// te_fin
 			// 
-			this.te_fin.Location = new System.Drawing.Point(1118, 138);
+			this.te_fin.Location = new System.Drawing.Point(1255, 142);
 			this.te_fin.MenuManager = this.barManager1;
 			this.te_fin.Name = "te_fin";
 			this.te_fin.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -492,8 +498,12 @@
 			// labelControl15
 			// 
 			this.labelControl15.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl15.Appearance.Image = null;
 			this.labelControl15.Appearance.Options.UseFont = true;
-			this.labelControl15.Location = new System.Drawing.Point(1014, 138);
+			this.labelControl15.AppearanceDisabled.Image = null;
+			this.labelControl15.AppearanceHovered.Image = null;
+			this.labelControl15.AppearancePressed.Image = null;
+			this.labelControl15.Location = new System.Drawing.Point(1151, 142);
 			this.labelControl15.Name = "labelControl15";
 			this.labelControl15.Size = new System.Drawing.Size(85, 18);
 			this.labelControl15.TabIndex = 29;
@@ -501,7 +511,7 @@
 			// 
 			// textEdit1
 			// 
-			this.textEdit1.Location = new System.Drawing.Point(784, 180);
+			this.textEdit1.Location = new System.Drawing.Point(921, 184);
 			this.textEdit1.MenuManager = this.barManager1;
 			this.textEdit1.Name = "textEdit1";
 			this.textEdit1.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -513,8 +523,12 @@
 			// labelControl14
 			// 
 			this.labelControl14.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl14.Appearance.Image = null;
 			this.labelControl14.Appearance.Options.UseFont = true;
-			this.labelControl14.Location = new System.Drawing.Point(687, 183);
+			this.labelControl14.AppearanceDisabled.Image = null;
+			this.labelControl14.AppearanceHovered.Image = null;
+			this.labelControl14.AppearancePressed.Image = null;
+			this.labelControl14.Location = new System.Drawing.Point(824, 187);
 			this.labelControl14.Name = "labelControl14";
 			this.labelControl14.Size = new System.Drawing.Size(45, 18);
 			this.labelControl14.TabIndex = 27;
@@ -522,7 +536,7 @@
 			// 
 			// lookUp_gbt
 			// 
-			this.lookUp_gbt.Location = new System.Drawing.Point(454, 138);
+			this.lookUp_gbt.Location = new System.Drawing.Point(591, 142);
 			this.lookUp_gbt.MenuManager = this.barManager1;
 			this.lookUp_gbt.Name = "lookUp_gbt";
 			this.lookUp_gbt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -538,7 +552,7 @@
 			// 
 			// txtedit_ac001
 			// 
-			this.txtedit_ac001.Location = new System.Drawing.Point(1118, 92);
+			this.txtedit_ac001.Location = new System.Drawing.Point(1255, 96);
 			this.txtedit_ac001.MenuManager = this.barManager1;
 			this.txtedit_ac001.Name = "txtedit_ac001";
 			this.txtedit_ac001.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -550,8 +564,12 @@
 			// labelControl13
 			// 
 			this.labelControl13.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl13.Appearance.Image = null;
 			this.labelControl13.Appearance.Options.UseFont = true;
-			this.labelControl13.Location = new System.Drawing.Point(1014, 95);
+			this.labelControl13.AppearanceDisabled.Image = null;
+			this.labelControl13.AppearanceHovered.Image = null;
+			this.labelControl13.AppearancePressed.Image = null;
+			this.labelControl13.Location = new System.Drawing.Point(1151, 99);
 			this.labelControl13.Name = "labelControl13";
 			this.labelControl13.Size = new System.Drawing.Size(60, 18);
 			this.labelControl13.TabIndex = 24;
@@ -559,7 +577,7 @@
 			// 
 			// txtedit_ac015
 			// 
-			this.txtedit_ac015.Location = new System.Drawing.Point(454, 180);
+			this.txtedit_ac015.Location = new System.Drawing.Point(591, 184);
 			this.txtedit_ac015.MenuManager = this.barManager1;
 			this.txtedit_ac015.Name = "txtedit_ac015";
 			this.txtedit_ac015.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -574,8 +592,12 @@
 			// labelControl12
 			// 
 			this.labelControl12.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl12.Appearance.Image = null;
 			this.labelControl12.Appearance.Options.UseFont = true;
-			this.labelControl12.Location = new System.Drawing.Point(344, 181);
+			this.labelControl12.AppearanceDisabled.Image = null;
+			this.labelControl12.AppearanceHovered.Image = null;
+			this.labelControl12.AppearancePressed.Image = null;
+			this.labelControl12.Location = new System.Drawing.Point(481, 185);
 			this.labelControl12.Name = "labelControl12";
 			this.labelControl12.Size = new System.Drawing.Size(60, 18);
 			this.labelControl12.TabIndex = 22;
@@ -583,7 +605,7 @@
 			// 
 			// txtedit_ac018
 			// 
-			this.txtedit_ac018.Location = new System.Drawing.Point(144, 180);
+			this.txtedit_ac018.Location = new System.Drawing.Point(281, 184);
 			this.txtedit_ac018.MenuManager = this.barManager1;
 			this.txtedit_ac018.Name = "txtedit_ac018";
 			this.txtedit_ac018.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -598,8 +620,12 @@
 			// labelControl11
 			// 
 			this.labelControl11.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl11.Appearance.Image = null;
 			this.labelControl11.Appearance.Options.UseFont = true;
-			this.labelControl11.Location = new System.Drawing.Point(52, 181);
+			this.labelControl11.AppearanceDisabled.Image = null;
+			this.labelControl11.AppearanceHovered.Image = null;
+			this.labelControl11.AppearancePressed.Image = null;
+			this.labelControl11.Location = new System.Drawing.Point(189, 185);
 			this.labelControl11.Name = "labelControl11";
 			this.labelControl11.Size = new System.Drawing.Size(60, 18);
 			this.labelControl11.TabIndex = 20;
@@ -607,7 +633,7 @@
 			// 
 			// txtedit_xxs
 			// 
-			this.txtedit_xxs.Location = new System.Drawing.Point(784, 138);
+			this.txtedit_xxs.Location = new System.Drawing.Point(921, 142);
 			this.txtedit_xxs.MenuManager = this.barManager1;
 			this.txtedit_xxs.Name = "txtedit_xxs";
 			this.txtedit_xxs.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -619,8 +645,12 @@
 			// labelControl10
 			// 
 			this.labelControl10.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl10.Appearance.Image = null;
 			this.labelControl10.Appearance.Options.UseFont = true;
-			this.labelControl10.Location = new System.Drawing.Point(687, 138);
+			this.labelControl10.AppearanceDisabled.Image = null;
+			this.labelControl10.AppearanceHovered.Image = null;
+			this.labelControl10.AppearancePressed.Image = null;
+			this.labelControl10.Location = new System.Drawing.Point(824, 142);
 			this.labelControl10.Name = "labelControl10";
 			this.labelControl10.Size = new System.Drawing.Size(45, 18);
 			this.labelControl10.TabIndex = 18;
@@ -629,8 +659,12 @@
 			// labelControl9
 			// 
 			this.labelControl9.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl9.Appearance.Image = null;
 			this.labelControl9.Appearance.Options.UseFont = true;
-			this.labelControl9.Location = new System.Drawing.Point(344, 138);
+			this.labelControl9.AppearanceDisabled.Image = null;
+			this.labelControl9.AppearanceHovered.Image = null;
+			this.labelControl9.AppearancePressed.Image = null;
+			this.labelControl9.Location = new System.Drawing.Point(481, 142);
 			this.labelControl9.Name = "labelControl9";
 			this.labelControl9.Size = new System.Drawing.Size(45, 18);
 			this.labelControl9.TabIndex = 16;
@@ -639,8 +673,12 @@
 			// labelControl8
 			// 
 			this.labelControl8.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl8.Appearance.Image = null;
 			this.labelControl8.Appearance.Options.UseFont = true;
-			this.labelControl8.Location = new System.Drawing.Point(52, 138);
+			this.labelControl8.AppearanceDisabled.Image = null;
+			this.labelControl8.AppearanceHovered.Image = null;
+			this.labelControl8.AppearancePressed.Image = null;
+			this.labelControl8.Location = new System.Drawing.Point(189, 142);
 			this.labelControl8.Name = "labelControl8";
 			this.labelControl8.Size = new System.Drawing.Size(60, 18);
 			this.labelControl8.TabIndex = 14;
@@ -648,7 +686,7 @@
 			// 
 			// txtedit_ac051
 			// 
-			this.txtedit_ac051.Location = new System.Drawing.Point(784, 96);
+			this.txtedit_ac051.Location = new System.Drawing.Point(921, 100);
 			this.txtedit_ac051.MenuManager = this.barManager1;
 			this.txtedit_ac051.Name = "txtedit_ac051";
 			this.txtedit_ac051.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -659,7 +697,7 @@
 			// 
 			// txtedit_ac020
 			// 
-			this.txtedit_ac020.Location = new System.Drawing.Point(1118, 50);
+			this.txtedit_ac020.Location = new System.Drawing.Point(1255, 54);
 			this.txtedit_ac020.MenuManager = this.barManager1;
 			this.txtedit_ac020.Name = "txtedit_ac020";
 			this.txtedit_ac020.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -674,8 +712,12 @@
 			// labelControl7
 			// 
 			this.labelControl7.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl7.Appearance.Image = null;
 			this.labelControl7.Appearance.Options.UseFont = true;
-			this.labelControl7.Location = new System.Drawing.Point(687, 95);
+			this.labelControl7.AppearanceDisabled.Image = null;
+			this.labelControl7.AppearanceHovered.Image = null;
+			this.labelControl7.AppearancePressed.Image = null;
+			this.labelControl7.Location = new System.Drawing.Point(824, 99);
 			this.labelControl7.Name = "labelControl7";
 			this.labelControl7.Size = new System.Drawing.Size(60, 18);
 			this.labelControl7.TabIndex = 10;
@@ -684,8 +726,12 @@
 			// labelControl6
 			// 
 			this.labelControl6.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl6.Appearance.Image = null;
 			this.labelControl6.Appearance.Options.UseFont = true;
-			this.labelControl6.Location = new System.Drawing.Point(344, 95);
+			this.labelControl6.AppearanceDisabled.Image = null;
+			this.labelControl6.AppearanceHovered.Image = null;
+			this.labelControl6.AppearancePressed.Image = null;
+			this.labelControl6.Location = new System.Drawing.Point(481, 99);
 			this.labelControl6.Name = "labelControl6";
 			this.labelControl6.Size = new System.Drawing.Size(75, 18);
 			this.labelControl6.TabIndex = 9;
@@ -693,7 +739,7 @@
 			// 
 			// txtedit_ac050
 			// 
-			this.txtedit_ac050.Location = new System.Drawing.Point(144, 96);
+			this.txtedit_ac050.Location = new System.Drawing.Point(281, 100);
 			this.txtedit_ac050.MenuManager = this.barManager1;
 			this.txtedit_ac050.Name = "txtedit_ac050";
 			this.txtedit_ac050.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -705,8 +751,12 @@
 			// labelControl5
 			// 
 			this.labelControl5.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl5.Appearance.Image = null;
 			this.labelControl5.Appearance.Options.UseFont = true;
-			this.labelControl5.Location = new System.Drawing.Point(52, 95);
+			this.labelControl5.AppearanceDisabled.Image = null;
+			this.labelControl5.AppearanceHovered.Image = null;
+			this.labelControl5.AppearancePressed.Image = null;
+			this.labelControl5.Location = new System.Drawing.Point(189, 99);
 			this.labelControl5.Name = "labelControl5";
 			this.labelControl5.Size = new System.Drawing.Size(45, 18);
 			this.labelControl5.TabIndex = 7;
@@ -715,8 +765,12 @@
 			// labelControl4
 			// 
 			this.labelControl4.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl4.Appearance.Image = null;
 			this.labelControl4.Appearance.Options.UseFont = true;
-			this.labelControl4.Location = new System.Drawing.Point(1014, 52);
+			this.labelControl4.AppearanceDisabled.Image = null;
+			this.labelControl4.AppearanceHovered.Image = null;
+			this.labelControl4.AppearancePressed.Image = null;
+			this.labelControl4.Location = new System.Drawing.Point(1151, 56);
 			this.labelControl4.Name = "labelControl4";
 			this.labelControl4.Size = new System.Drawing.Size(60, 18);
 			this.labelControl4.TabIndex = 6;
@@ -724,7 +778,7 @@
 			// 
 			// txtedit_ac004
 			// 
-			this.txtedit_ac004.Location = new System.Drawing.Point(784, 50);
+			this.txtedit_ac004.Location = new System.Drawing.Point(921, 54);
 			this.txtedit_ac004.MenuManager = this.barManager1;
 			this.txtedit_ac004.Name = "txtedit_ac004";
 			this.txtedit_ac004.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -736,8 +790,12 @@
 			// labelControl3
 			// 
 			this.labelControl3.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl3.Appearance.Image = null;
 			this.labelControl3.Appearance.Options.UseFont = true;
-			this.labelControl3.Location = new System.Drawing.Point(687, 52);
+			this.labelControl3.AppearanceDisabled.Image = null;
+			this.labelControl3.AppearanceHovered.Image = null;
+			this.labelControl3.AppearancePressed.Image = null;
+			this.labelControl3.Location = new System.Drawing.Point(824, 56);
 			this.labelControl3.Name = "labelControl3";
 			this.labelControl3.Size = new System.Drawing.Size(30, 18);
 			this.labelControl3.TabIndex = 4;
@@ -745,10 +803,12 @@
 			// 
 			// rg_ac002
 			// 
-			this.rg_ac002.Location = new System.Drawing.Point(452, 53);
+			this.rg_ac002.Location = new System.Drawing.Point(589, 57);
 			this.rg_ac002.MenuManager = this.barManager1;
 			this.rg_ac002.Name = "rg_ac002";
+			this.rg_ac002.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
 			this.rg_ac002.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.rg_ac002.Properties.Appearance.Options.UseBackColor = true;
 			this.rg_ac002.Properties.Appearance.Options.UseFont = true;
 			this.rg_ac002.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
 			this.rg_ac002.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
@@ -762,8 +822,12 @@
 			// labelControl2
 			// 
 			this.labelControl2.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl2.Appearance.Image = null;
 			this.labelControl2.Appearance.Options.UseFont = true;
-			this.labelControl2.Location = new System.Drawing.Point(344, 52);
+			this.labelControl2.AppearanceDisabled.Image = null;
+			this.labelControl2.AppearanceHovered.Image = null;
+			this.labelControl2.AppearancePressed.Image = null;
+			this.labelControl2.Location = new System.Drawing.Point(481, 56);
 			this.labelControl2.Name = "labelControl2";
 			this.labelControl2.Size = new System.Drawing.Size(30, 18);
 			this.labelControl2.TabIndex = 2;
@@ -771,7 +835,7 @@
 			// 
 			// txtedit_ac003
 			// 
-			this.txtedit_ac003.Location = new System.Drawing.Point(144, 54);
+			this.txtedit_ac003.Location = new System.Drawing.Point(281, 58);
 			this.txtedit_ac003.MenuManager = this.barManager1;
 			this.txtedit_ac003.Name = "txtedit_ac003";
 			this.txtedit_ac003.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -783,8 +847,12 @@
 			// labelControl1
 			// 
 			this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelControl1.Appearance.Image = null;
 			this.labelControl1.Appearance.Options.UseFont = true;
-			this.labelControl1.Location = new System.Drawing.Point(52, 52);
+			this.labelControl1.AppearanceDisabled.Image = null;
+			this.labelControl1.AppearanceHovered.Image = null;
+			this.labelControl1.AppearancePressed.Image = null;
+			this.labelControl1.Location = new System.Drawing.Point(189, 56);
 			this.labelControl1.Name = "labelControl1";
 			this.labelControl1.Size = new System.Drawing.Size(60, 18);
 			this.labelControl1.TabIndex = 0;
@@ -792,7 +860,7 @@
 			// 
 			// lookup_store
 			// 
-			this.lookup_store.Location = new System.Drawing.Point(144, 138);
+			this.lookup_store.Location = new System.Drawing.Point(281, 142);
 			this.lookup_store.MenuManager = this.barManager1;
 			this.lookup_store.Name = "lookup_store";
 			this.lookup_store.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -808,7 +876,7 @@
 			// 
 			// txtedit_ac052
 			// 
-			this.txtedit_ac052.Location = new System.Drawing.Point(454, 96);
+			this.txtedit_ac052.Location = new System.Drawing.Point(591, 100);
 			this.txtedit_ac052.MenuManager = this.barManager1;
 			this.txtedit_ac052.Name = "txtedit_ac052";
 			this.txtedit_ac052.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -823,14 +891,14 @@
 			gridLevelNode1.RelationName = "Level1";
 			this.gridControl1.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
             gridLevelNode1});
-			this.gridControl1.Location = new System.Drawing.Point(0, 264);
+			this.gridControl1.Location = new System.Drawing.Point(0, 267);
 			this.gridControl1.MainView = this.gridView1;
 			this.gridControl1.Name = "gridControl1";
 			this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckEdit1,
             this.lookup_sa100,
             this.repositoryItemTextEdit2});
-			this.gridControl1.Size = new System.Drawing.Size(1316, 267);
+			this.gridControl1.Size = new System.Drawing.Size(1697, 264);
 			this.gridControl1.TabIndex = 29;
 			this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -1041,6 +1109,14 @@
 			this.repositoryItemCheckEdit1.CheckStyle = DevExpress.XtraEditors.Controls.CheckStyles.Style1;
 			this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
 			// 
+			// pictureEdit1
+			// 
+			this.pictureEdit1.Location = new System.Drawing.Point(17, 42);
+			this.pictureEdit1.Name = "pictureEdit1";
+			this.pictureEdit1.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
+			this.pictureEdit1.Size = new System.Drawing.Size(149, 171);
+			this.pictureEdit1.TabIndex = 112;
+			// 
 			// FireBusiness
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
@@ -1052,7 +1128,7 @@
 			this.Controls.Add(this.barDockControlBottom);
 			this.Controls.Add(this.barDockControlTop);
 			this.Name = "FireBusiness";
-			this.Size = new System.Drawing.Size(1316, 531);
+			this.Size = new System.Drawing.Size(1697, 531);
 			this.Load += new System.EventHandler(this.FireBusiness_Load);
 			((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
 			this.groupControl1.ResumeLayout(false);
@@ -1079,6 +1155,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lookup_sa100)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1165,5 +1242,6 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItem19;
         private DevExpress.XtraEditors.TextEdit txtedit_ac052;
 		private DevExpress.XtraBars.BarButtonItem barButtonItem20;
+		private DevExpress.XtraEditors.PictureEdit pictureEdit1;
 	}
 }

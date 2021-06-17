@@ -41,8 +41,8 @@
 			// 
 			// simpleButton3
 			// 
-			this.simpleButton3.Appearance.BackColor = System.Drawing.SystemColors.ActiveCaption;
-			this.simpleButton3.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			this.simpleButton3.Appearance.BackColor = System.Drawing.Color.Blue;
+			this.simpleButton3.Appearance.ForeColor = System.Drawing.Color.White;
 			this.simpleButton3.Appearance.Options.UseBackColor = true;
 			this.simpleButton3.Appearance.Options.UseForeColor = true;
 			this.simpleButton3.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.HotFlat;
@@ -56,8 +56,8 @@
 			// 
 			// simpleButton2
 			// 
-			this.simpleButton2.Appearance.BackColor = System.Drawing.SystemColors.ActiveCaption;
-			this.simpleButton2.Appearance.ForeColor = System.Drawing.Color.SlateGray;
+			this.simpleButton2.Appearance.BackColor = System.Drawing.Color.Gray;
+			this.simpleButton2.Appearance.ForeColor = System.Drawing.Color.White;
 			this.simpleButton2.Appearance.Options.UseBackColor = true;
 			this.simpleButton2.Appearance.Options.UseForeColor = true;
 			this.simpleButton2.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.HotFlat;
@@ -72,7 +72,7 @@
 			// 
 			// simpleButton1
 			// 
-			this.simpleButton1.Appearance.BackColor = System.Drawing.Color.Lime;
+			this.simpleButton1.Appearance.BackColor = System.Drawing.Color.Blue;
 			this.simpleButton1.Appearance.ForeColor = System.Drawing.Color.White;
 			this.simpleButton1.Appearance.Options.UseBackColor = true;
 			this.simpleButton1.Appearance.Options.UseForeColor = true;

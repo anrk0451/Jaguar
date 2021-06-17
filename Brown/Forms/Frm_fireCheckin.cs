@@ -13,6 +13,9 @@ using Brown.DataSet;
 using Brown.Domain;
 using Brown.Misc;
 using Brown.Dao;
+using Brown.Action;
+using System.IO;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Brown.Forms
 {
@@ -20,13 +23,16 @@ namespace Brown.Forms
 	{
 		Checkin_ds checkin_ds = null;
 		Ac01_dao ac01_dao = new Ac01_dao();
+		Ic01_dao ic01_dao = new Ic01_dao();
+
 		Ac01 ac01 = null;
+		Ic01 ic01 = null;
 
 		string action = string.Empty;
 		string AC001 = string.Empty;
 
 		BaseBusiness businessObject = null;
-
+		private bool IDC_FLAG = false;
 
 		public Frm_fireCheckin()
 		{
@@ -105,6 +111,19 @@ namespace Brown.Forms
  
 				txtEdit_ac055.EditValue = ac01.ac055;
 				mem_ac099.EditValue = ac01.ac099;
+
+				//读入照片		
+				if (MiscAction.HasIDC(AC001))
+				{
+					OracleDataReader photo_reader = SqlAssist.ExecuteReader("select ic020 from ic01 where ic000 = '0' and ac001 ='" + AC001 + "'");
+					if (photo_reader.HasRows && photo_reader.Read())
+					{
+						MemoryStream ms = new MemoryStream((byte[])photo_reader["IC020"]);//把照片读到MemoryStream里  
+						Image imageBlob = Image.FromStream(ms, true);//用流创建Image  
+						pictureEdit1.Image = imageBlob;//输出图片   
+					}
+					photo_reader.Dispose();
+				}					 
 			}
 			else
 			{
@@ -276,8 +295,7 @@ namespace Brown.Forms
 			{
 				ac01.ac001 = Tools.GetEntityPK("AC01");
 			}
-
-
+			 
 			ac01.ac002 = rg_ac002.EditValue.ToString();     //性别
 			ac01.ac003 = txtEdit_ac003.Text;                //逝者姓名
 			ac01.ac004 = int.Parse(txtEdit_ac004.Text);     //年龄
@@ -285,6 +303,9 @@ namespace Brown.Forms
 			ac01.ac014 = txtedit_ac014.Text;                //身份证号
 			ac01.ac007 = lookUp_ac007.EditValue.ToString(); //籍贯-所属区县
 			ac01.ac008 = txtEdit_ac008.Text;                //籍贯-详细地址
+
+			if (ic01 != null) ic01.ac001 = ac01.ac001;
+
 
 
 			if (dateEdit_ac010.EditValue != null)
@@ -326,19 +347,31 @@ namespace Brown.Forms
 			ac01.ac220 = DateTime.Now;                      //最后经办日期
 			ac01.ac099 = mem_ac099.Text;                    //备注
 			ac01.status = "1";                              //当前状态 
-
+			 
 			try
 			{
 				string s_tip = "保存成功!";
 				if (action.Equals("add"))
 				{
 					ac01_dao.Insert(ac01);
+					if(IDC_FLAG) ic01_dao.Insert(ic01);
 				}
 				else
 				{
 					ac01_dao.Update(ac01);
+					if(IDC_FLAG) ic01_dao.Update(ic01);
 				}
 
+				///更新身份证照片
+				if(IDC_FLAG && ic01 != null)
+				{
+					FileStream file = new FileStream("zp.bmp", FileMode.Open, FileAccess.Read);
+					Byte[] imgByte = new Byte[file.Length];//把图片转成 Byte型 二进制流
+					file.Read(imgByte, 0, imgByte.Length);//把二进制流读入缓冲区
+					file.Close();
+					MiscAction.Update_IDC_Photo(ic01.ic001, imgByte);
+				}
+				 
 				XtraMessageBox.Show(s_tip, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 				//TODO 1.登记完成立即办理业务！
@@ -366,6 +399,10 @@ namespace Brown.Forms
 		/// <param name="e"></param>
 		private void sb_idc_Click(object sender, EventArgs e)
 		{
+			if(action == "edit" && MiscAction.HasIDC(AC001))
+			{
+				if (XtraMessageBox.Show("是否替换已有的身份证信息?","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No) return;
+			}
 			try
 			{
 				int authenticate = CVRSDK.CVR_Authenticate();
@@ -374,7 +411,7 @@ namespace Brown.Forms
 					int readContent = CVRSDK.CVR_Read_Content(4);
 					if (readContent == 1)
 					{
-						 
+						FillData();
 					}
 					else
 					{
@@ -391,6 +428,161 @@ namespace Brown.Forms
 				XtraMessageBox.Show(ex.ToString(),"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
 			}
 			 
+		}
+
+		private void FillData()
+		{
+			try
+			{
+				int length;
+
+				IDC_FLAG = true;
+				
+				// 照片保存在当前目录
+				String szXPPath = "zp.bmp";
+				System.Drawing.Image img = System.Drawing.Image.FromFile(szXPPath);
+				System.Drawing.Image bmp = new System.Drawing.Bitmap(img);
+				img.Dispose();
+				pictureEdit1.Image = bmp;
+
+
+				byte[] name = new byte[128];
+				length = 128;
+				CVRSDK.GetPeopleName(ref name[0], ref length);
+
+				byte[] cnName = new byte[128];
+				length = 128;
+				CVRSDK.GetPeopleChineseName(ref cnName[0], ref length);
+
+				byte[] number = new byte[128];
+				length = 128;
+				CVRSDK.GetPeopleIDCode(ref number[0], ref length);
+
+				byte[] peopleNation = new byte[128];
+				length = 128;
+				CVRSDK.GetPeopleNation(ref peopleNation[0], ref length);
+
+				byte[] peopleNationCode = new byte[128];
+				length = 128;
+				CVRSDK.GetNationCode(ref peopleNationCode[0], ref length);
+
+				byte[] validtermOfStart = new byte[128];
+				length = 128;
+				CVRSDK.GetStartDate(ref validtermOfStart[0], ref length);
+
+				byte[] birthday = new byte[128];
+				length = 128;
+				CVRSDK.GetPeopleBirthday(ref birthday[0], ref length);
+
+				byte[] address = new byte[128];
+				length = 128;
+				CVRSDK.GetPeopleAddress(ref address[0], ref length);
+
+				byte[] validtermOfEnd = new byte[128];
+				length = 128;
+				CVRSDK.GetEndDate(ref validtermOfEnd[0], ref length);
+
+				byte[] signdate = new byte[128];
+				length = 128;
+				CVRSDK.GetDepartment(ref signdate[0], ref length);
+
+				byte[] sex = new byte[128];
+				length = 128;
+				CVRSDK.GetPeopleSex(ref sex[0], ref length);
+
+				byte[] Uid = new byte[128];
+				length = 128;
+
+				//CVRSDK.GetIDCardUID(ref Uid[0], 128);
+
+				bool bCivic = true;
+				byte[] certType = new byte[32];
+				length = 32;
+				CVRSDK.GetCertType(ref certType[0], ref length);
+
+				string strType = System.Text.Encoding.ASCII.GetString(certType);
+				int nStart = strType.IndexOf("I");
+				if (nStart != -1) bCivic = false;
+
+				if (ic01 == null) 
+				{
+					ic01 = new Ic01();
+					ic01.ic001 = Tools.GetEntityPK("IC01");
+				}
+				
+				ic01.ic000 = "0";  //0-逝者 1-家属
+				ic01.ic003 = System.Text.Encoding.GetEncoding("GB2312").GetString(name).Trim();    //姓名
+				ic01.ic002 = System.Text.Encoding.GetEncoding("GB2312").GetString(sex).Replace("\0", "").Trim() == "男" ? "0" : "1";
+
+				//出生日期
+				string s_birth = System.Text.Encoding.GetEncoding("GB2312").GetString(birthday).Replace("\0", "").Trim();
+				ic01.ic004 = Convert.ToDateTime(s_birth.Substring(0, 4) + "-" + s_birth.Substring(4, 2) + "-" + s_birth.Substring(6));
+
+				//身份证号
+				ic01.ic014 = System.Text.Encoding.GetEncoding("GB2312").GetString(number).Replace("\0", "").Trim();
+							
+				//地址
+				ic01.ic016 = System.Text.Encoding.GetEncoding("GB2312").GetString(address).Replace("\0", "").Trim();
+
+				//签发机关
+				ic01.ic017 = System.Text.Encoding.GetEncoding("GB2312").GetString(signdate).Replace("\0", "").Trim();
+
+				//有效期限
+				ic01.ic018 = System.Text.Encoding.GetEncoding("GB2312").GetString(validtermOfStart).Replace("\0", "").Trim() + "-" + System.Text.Encoding.GetEncoding("GB2312").GetString(validtermOfEnd).Replace("\0", "").Trim();
+
+				txtEdit_ac003.EditValue = ic01.ic003.Trim();
+				rg_ac002.EditValue = ic01.ic002;
+
+				//MessageBox.Show(ic01.ic003);
+				//MessageBox.Show(ic01.ic003.Length.ToString());
+				//MessageBox.Show(ic01.ic004.ToString("yyyy-MM-dd"));
+
+				txtEdit_ac004.EditValue = MiscAction.Calc_Age_Via_Birth(ic01.ic004.ToString("yyyy-MM-dd"));
+				txtEdit_ac008.EditValue = ic01.ic016.Trim();
+				txtedit_ac014.EditValue = ic01.ic014.Trim();
+				 
+			}
+			catch (Exception ex)
+			{
+				XtraMessageBox.Show(ex.ToString(),"读卡错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+			}
+		}
+		/// <summary>
+		/// 读取身份证
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void txtedit_ac014_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+		{
+			if (action == "edit" && MiscAction.HasIDC(AC001))
+			{
+				if (XtraMessageBox.Show("是否替换已有的身份证信息?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;
+			}
+			try
+			{
+				int authenticate = CVRSDK.CVR_Authenticate();
+				if (authenticate == 1)
+				{
+					int readContent = CVRSDK.CVR_Read_Content(4);
+					if (readContent == 1)
+					{
+						FillData();
+						dateEdit_ac010.Focus();
+					}
+					else
+					{
+						XtraMessageBox.Show("读卡失败!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
+				else
+				{
+					XtraMessageBox.Show("未放卡或卡片放置不正确", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+			}
+			catch (Exception ex)
+			{
+				XtraMessageBox.Show(ex.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 	}
 }
