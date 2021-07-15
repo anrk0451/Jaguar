@@ -16,6 +16,8 @@ using System.IO;
 using RestSharp;
 using Newtonsoft.Json;
 using Brown.Misc;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Drawing.Printing;
 
 namespace Brown.Forms
 {
@@ -471,7 +473,7 @@ namespace Brown.Forms
 			//sendmsg.Add("sid", "0000000060");                  //请求流水号	
 			sendmsg.Add("dev_key", "9011e4c9-4070-4a0e-a571-baadb7588723");
 			 
-			sendmsg.Add("app_name", "牡丹江市龙凤公墓服务站");
+			sendmsg.Add("app_name", "牡丹江市第二殡仪馆");
 			//sendmsg.Add("app_name", "鸡西市殡葬事务服务中心");
 			//sendmsg.Add("app_name", "牡丹江市龙凤坡公墓服务站");
 			//3.将请求报文转换为Json 字符串 并整体用公钥 加密
@@ -851,5 +853,97 @@ namespace Brown.Forms
 
 			memoEdit5.Text = Tools.DecodeBase64("utf-8", retString);
 		}
-    }
+		/// <summary>
+		/// 获取电子票据号
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void simpleButton25_Click(object sender, EventArgs e)
+		{
+			if (FinInvoice.GetCurrentElecPh() > 0)
+			{
+				XtraMessageBox.Show(Envior.FIN_NEXT_BATCH_CODE);
+				XtraMessageBox.Show(Envior.FIN_NEXT_BILL_NO);
+			}
+		}
+
+		private void simpleButton26_Click(object sender, EventArgs e)
+		{
+			FinInvoice.InvoiceElec();
+		}
+
+		private void simpleButton27_Click(object sender, EventArgs e)
+		{
+			memoEdit6.Text = FinInvoice.GetInvoiceImageBase64("23013321", "0000255805");
+
+			string base64 = memoEdit6.Text;
+
+			byte[] bytes = Convert.FromBase64String(base64);
+
+			//System.IO.File.WriteAllBytes(@"c:\test.jpg", bytes);
+
+			MemoryStream ms = new MemoryStream(bytes,true);
+
+			//ms.Write(bytes, 0, bytes.Length);
+			ms.Write(bytes, 0, bytes.Length);
+			pictureBox1.Image = new Bitmap(ms);
+
+			////byte[] bytes = Convert.FromBase64String(base64);
+			////MemoryStream memStream = new MemoryStream(bytes);
+			//BinaryFormatter binFormatter = new BinaryFormatter();
+			//Image img = (Image)binFormatter.Deserialize(ms);
+			//pictureEdit1.Image = img;
+		}
+		/// <summary>
+		/// 打印电子票据
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void simpleButton28_Click(object sender, EventArgs e)
+		{
+			//打印预览
+			//PrintPreviewDialog ppd = new PrintPreviewDialog();
+			PrintDocument pd = new PrintDocument();
+			//设置边距
+			Margins margin = new Margins(60, 20, 60, 30);
+			pd.DefaultPageSettings.Margins = margin;
+			pd.DefaultPageSettings.Landscape = true;
+			////纸张设置默认
+			//PaperSize pageSize = new PaperSize("First custom size", 826, 1129);
+			//pd.DefaultPageSettings.PaperSize = pageSize;
+			//打印事件设置
+			pd.PrintPage += new PrintPageEventHandler(this.pd_PrintPage);
+			//ppd.Document = pd;
+			//ppd.ShowDialog();
+			try
+			{
+				pd.Print();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "打印出错", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				pd.PrintController.OnEndPrint(pd, new PrintEventArgs());
+			}
+		}
+		 
+		//打印事件处理
+		private void pd_PrintPage(object sender, PrintPageEventArgs e)
+		{
+
+			//读取图片模板
+			Image temp = pictureBox1.Image; // Image.FromFile(@"Receipts.jpg");
+		 
+			int x = e.MarginBounds.X;
+			int y = e.MarginBounds.Y;
+			int width = temp.Width;
+			int height = temp.Height;
+			Rectangle destRect = new Rectangle(x, y, width, height-80);
+			e.Graphics.DrawImage(temp, destRect, 0, 0, temp.Width, temp.Height, System.Drawing.GraphicsUnit.Pixel);
+		}
+
+		private void simpleButton29_Click(object sender, EventArgs e)
+		{
+			FinInvoice.SendElecInvoiceNotice("23013321", "0000255805", "", "");
+		}
+	}
 }
