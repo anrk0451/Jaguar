@@ -410,14 +410,15 @@ namespace Brown.BusinessObject
 
 			////开财政票!
 			if(dec_fin > 0)
-			{               
-                if(FinInvoice.GetCurrentPh() > 0)
-                {					 
-					if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-					{
-						FinInvoice.Invoice(s_fa001);
-					}				 
-				}                      
+			{
+				//            if(FinInvoice.GetCurrentPh() > 0)
+				//            {					 
+				//	if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+				//	{
+				//		FinInvoice.Invoice(s_fa001);
+				//	}				 
+				//}
+				FinInvoice.InvoiceElec(s_fa001);
             }
 
 			//// 开税票

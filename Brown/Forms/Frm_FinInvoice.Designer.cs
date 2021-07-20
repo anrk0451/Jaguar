@@ -1,0 +1,154 @@
+﻿
+namespace Brown.Forms
+{
+	partial class Frm_FinInvoice
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
+
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		#region Windows Form Designer generated code
+
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
+			this.radioGroup1 = new DevExpress.XtraEditors.RadioGroup();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+			this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
+			this.simpleButton29 = new DevExpress.XtraEditors.SimpleButton();
+			this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+			this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+			this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+			((System.ComponentModel.ISupportInitialize)(this.radioGroup1.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
+			this.SuspendLayout();
+			// 
+			// radioGroup1
+			// 
+			this.radioGroup1.EditValue = "1202";
+			this.radioGroup1.Location = new System.Drawing.Point(91, 438);
+			this.radioGroup1.Name = "radioGroup1";
+			this.radioGroup1.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+			this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
+			this.radioGroup1.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+			this.radioGroup1.Properties.Columns = 2;
+			this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
+            new DevExpress.XtraEditors.Controls.RadioGroupItem("1202", "电子邮件"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem("1201", "移动电话")});
+			this.radioGroup1.Size = new System.Drawing.Size(206, 34);
+			this.radioGroup1.TabIndex = 1;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(880, 432);
+			this.pictureBox1.TabIndex = 0;
+			this.pictureBox1.TabStop = false;
+			// 
+			// labelControl1
+			// 
+			this.labelControl1.Appearance.Image = null;
+			this.labelControl1.AppearanceDisabled.Image = null;
+			this.labelControl1.AppearanceHovered.Image = null;
+			this.labelControl1.AppearancePressed.Image = null;
+			this.labelControl1.Location = new System.Drawing.Point(12, 446);
+			this.labelControl1.Name = "labelControl1";
+			this.labelControl1.Size = new System.Drawing.Size(60, 18);
+			this.labelControl1.TabIndex = 2;
+			this.labelControl1.Text = "通知类型";
+			// 
+			// textEdit1
+			// 
+			this.textEdit1.Location = new System.Drawing.Point(300, 444);
+			this.textEdit1.Name = "textEdit1";
+			this.textEdit1.Size = new System.Drawing.Size(333, 24);
+			this.textEdit1.TabIndex = 3;
+			// 
+			// simpleButton29
+			// 
+			this.simpleButton29.Location = new System.Drawing.Point(12, 486);
+			this.simpleButton29.Name = "simpleButton29";
+			this.simpleButton29.Size = new System.Drawing.Size(168, 29);
+			this.simpleButton29.TabIndex = 43;
+			this.simpleButton29.Text = "发送电子票通知";
+			// 
+			// simpleButton1
+			// 
+			this.simpleButton1.Location = new System.Drawing.Point(185, 486);
+			this.simpleButton1.Name = "simpleButton1";
+			this.simpleButton1.Size = new System.Drawing.Size(168, 29);
+			this.simpleButton1.TabIndex = 44;
+			this.simpleButton1.Text = "打印电子票";
+			// 
+			// simpleButton2
+			// 
+			this.simpleButton2.Location = new System.Drawing.Point(538, 486);
+			this.simpleButton2.Name = "simpleButton2";
+			this.simpleButton2.Size = new System.Drawing.Size(168, 29);
+			this.simpleButton2.TabIndex = 45;
+			this.simpleButton2.Text = "关闭";
+			// 
+			// simpleButton3
+			// 
+			this.simpleButton3.Location = new System.Drawing.Point(359, 486);
+			this.simpleButton3.Name = "simpleButton3";
+			this.simpleButton3.Size = new System.Drawing.Size(168, 29);
+			this.simpleButton3.TabIndex = 46;
+			this.simpleButton3.Text = "另存为......";
+			// 
+			// Frm_FinInvoice
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(880, 534);
+			this.Controls.Add(this.simpleButton3);
+			this.Controls.Add(this.simpleButton2);
+			this.Controls.Add(this.simpleButton1);
+			this.Controls.Add(this.simpleButton29);
+			this.Controls.Add(this.textEdit1);
+			this.Controls.Add(this.labelControl1);
+			this.Controls.Add(this.radioGroup1);
+			this.Controls.Add(this.pictureBox1);
+			this.Name = "Frm_FinInvoice";
+			this.Text = "打印财政电子发票";
+			((System.ComponentModel.ISupportInitialize)(this.radioGroup1.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
+			this.ResumeLayout(false);
+			this.PerformLayout();
+
+		}
+
+		#endregion
+
+		private System.Windows.Forms.PictureBox pictureBox1;
+		private DevExpress.XtraEditors.RadioGroup radioGroup1;
+		private DevExpress.XtraEditors.LabelControl labelControl1;
+		private DevExpress.XtraEditors.TextEdit textEdit1;
+		private DevExpress.XtraEditors.SimpleButton simpleButton29;
+		private DevExpress.XtraEditors.SimpleButton simpleButton1;
+		private DevExpress.XtraEditors.SimpleButton simpleButton2;
+		private DevExpress.XtraEditors.SimpleButton simpleButton3;
+	}
+}

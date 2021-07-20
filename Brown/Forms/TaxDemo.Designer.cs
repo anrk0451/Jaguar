@@ -71,6 +71,7 @@
 			this.printDocument1 = new System.Drawing.Printing.PrintDocument();
 			this.simpleButton28 = new DevExpress.XtraEditors.SimpleButton();
 			this.simpleButton29 = new DevExpress.XtraEditors.SimpleButton();
+			this.simpleButton30 = new DevExpress.XtraEditors.SimpleButton();
 			((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.memoEdit2.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.memoEdit3.Properties)).BeginInit();
@@ -460,11 +461,21 @@
 			this.simpleButton29.Text = "发送电子票通知";
 			this.simpleButton29.Click += new System.EventHandler(this.simpleButton29_Click);
 			// 
+			// simpleButton30
+			// 
+			this.simpleButton30.Location = new System.Drawing.Point(1061, 13);
+			this.simpleButton30.Name = "simpleButton30";
+			this.simpleButton30.Size = new System.Drawing.Size(94, 29);
+			this.simpleButton30.TabIndex = 43;
+			this.simpleButton30.Text = "参数初始化";
+			this.simpleButton30.Click += new System.EventHandler(this.simpleButton30_Click);
+			// 
 			// TaxDemo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1363, 698);
+			this.Controls.Add(this.simpleButton30);
 			this.Controls.Add(this.simpleButton29);
 			this.Controls.Add(this.simpleButton28);
 			this.Controls.Add(this.pictureBox1);
@@ -568,5 +579,6 @@
 		private System.Drawing.Printing.PrintDocument printDocument1;
 		private DevExpress.XtraEditors.SimpleButton simpleButton28;
 		private DevExpress.XtraEditors.SimpleButton simpleButton29;
+		private DevExpress.XtraEditors.SimpleButton simpleButton30;
 	}
 }

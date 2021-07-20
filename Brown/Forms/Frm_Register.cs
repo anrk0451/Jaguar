@@ -582,15 +582,18 @@ namespace Brown.Forms
 				txtEdit_rc109.EditValue = s_rc109;
 				XtraMessageBox.Show("寄存登记成功!现在开始开具发票!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                ///开财政票                 
-                if(FinInvoice.GetCurrentPh() > 0)
-                {					 
-					if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-					{
-						FinInvoice.Invoice(s_fa001);
-					}					 
-				}
-                 
+				///开财政票                 
+				//            if(FinInvoice.GetCurrentPh() > 0)
+				//            {					 
+				//	if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+				//	{
+				//		FinInvoice.Invoice(s_fa001);
+				//	}					 
+				//}
+				FinInvoice.InvoiceElec(s_fa001);
+
+
+				 
                 //// 开税票
                 if (dec_tax_sum > 0)
 				{

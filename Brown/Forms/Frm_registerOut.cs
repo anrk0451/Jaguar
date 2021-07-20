@@ -219,14 +219,15 @@ namespace Brown.Forms
 				if (!isrefund && nums  > 0)
 				{
 					if (XtraMessageBox.Show("现在开具【发票】吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
-					{                         
-                        if(FinInvoice.GetCurrentPh() > 0)
-                        {
-							if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-							{
-								FinInvoice.Invoice(fa001);
-							}
-						}						 
+					{
+						//                  if(FinInvoice.GetCurrentPh() > 0)
+						//                  {
+						//	if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+						//	{
+						//		FinInvoice.Invoice(fa001);
+						//	}
+						//}		
+						FinInvoice.InvoiceElec(fa001);				 
                     }
 				}
 				else if(isrefund && Math.Abs(nums) > 0)    //退费发票
@@ -236,13 +237,14 @@ namespace Brown.Forms
 					{
 						XtraMessageBox.Show("原发票在财政新接口上线前开具,不能开具对应退费发票,请在财政发票系统内完成发票开具.\r\n 开具成功后请更新发票号!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					}
-					else if (FinInvoice.GetCurrentPh() > 0)
-					{
-						if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-						{
-							FinInvoice.Refund(fa001);
-						}
-					}
+					//else if (FinInvoice.GetCurrentPh() > 0)
+					//{
+					//	if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+					//	{
+					//		FinInvoice.Refund(fa001);
+					//	}
+					//}
+					XtraMessageBox.Show("功能暂不支持!");
 				}
 			}
 			DialogResult = DialogResult.OK;

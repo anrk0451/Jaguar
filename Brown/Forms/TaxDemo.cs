@@ -869,7 +869,36 @@ namespace Brown.Forms
 
 		private void simpleButton26_Click(object sender, EventArgs e)
 		{
-			FinInvoice.InvoiceElec();
+			//FinInvoice.InvoiceElec();
+
+			string s_url = "{\"ParamsStr\":\"" + "agency_code=021099001&app_id=MDJSDYBYG5537156&datetime=20210717093928000&encryption=0&format=json&message=eyJtZXNzYWdlIjp7InNlcmlhbF9udW1iZXIiOiIwMDAyNzgwNTcxIiwicGxhY2VfY29kZSI6IjAwMiIsInBheWVyIjoi5rWL6K+VZCIsImRhdGUiOiIyMDIxLTA3LTE3IiwiYXV0aG9yIjoi5qC555So5oi3IiwicGF5ZXJfdHlwZSI6IjEiLCJjcmVkaXRfY29kZSI6IiAiLCJiaWxsX2NvZGUiOiIwMTMzIiwicmVjX21vZGUiOiIxIiwibWVtbyI6Ilx0ICIsIml0ZW1fZGV0YWlscyI6W3siaXRlbV9jb2RlIjoiMTAzMDQ0OTA4MDQiLCJzdGQiOjEuMCwibnVtYmVyIjoxLjAsImFtdCI6MS4wfV0sInRvdGFsX2FtdCI6MS4wfX0=&message_id=0000000286&method=invoice.e.issue.do&region_code=231001&security=7490CE8A0DA82F13C7D1A332E3E48D00&version=1.0.1\"}";
+			
+			StringBuilder sb_res = new StringBuilder(500);
+			//Dictionary<string, object> bdata = new Dictionary<string, object>();
+			//bdata.Add("agency_code", "021099001");                   //单位编号
+			//bdata.Add("app_id", "MDJSDYBYG5537156");                 //单位编号	
+			//bdata.Add("datetime", "20210717093928000");
+			//bdata.Add("encryption", "0");
+			//bdata.Add("format", "json");
+			//bdata.Add("message", "eyJtZXNzYWdlIjp7InNlcmlhbF9udW1iZXIiOiIwMDAyNzgwNTcxIiwicGxhY2VfY29kZSI6IjAwMiIsInBheWVyIjoi5rWL6K+VZCIsImRhdGUiOiIyMDIxLTA3LTE3IiwiYXV0aG9yIjoi5qC555So5oi3IiwicGF5ZXJfdHlwZSI6IjEiLCJjcmVkaXRfY29kZSI6IiAiLCJiaWxsX2NvZGUiOiIwMTMzIiwicmVjX21vZGUiOiIxIiwibWVtbyI6Ilx0ICIsIml0ZW1fZGV0YWlscyI6W3siaXRlbV9jb2RlIjoiMTAzMDQ0OTA4MDQiLCJzdGQiOjEuMCwibnVtYmVyIjoxLjAsImFtdCI6MS4wfV0sInRvdGFsX2FtdCI6MS4wfX0=");
+			//bdata.Add("message_id", "9000000286");
+			//bdata.Add("method", "invoice.e.issue.do");
+			//bdata.Add("region_code", "231001");
+			//bdata.Add("security", "7490CE8A0DA82F13C7D1A332E3E48D00");
+			//bdata.Add("version", "1.0.1");
+
+			//string s_json = Tools.ConvertObjectToJson(bdata);
+
+			if (FinInvoice.CallinitParams(Envior.FIN_URL, Envior.FIN_APPID, Envior.FIN_APPKEY) > 0)
+			{
+				memoEdit1.Text = s_url;
+				FinInvoice.CallService(s_url, sb_res);
+				memoEdit2.Text = sb_res.ToString();
+			}
+			else
+			{
+				XtraMessageBox.Show("初始化失败");
+			}	
 		}
 
 		private void simpleButton27_Click(object sender, EventArgs e)
@@ -944,6 +973,14 @@ namespace Brown.Forms
 		private void simpleButton29_Click(object sender, EventArgs e)
 		{
 			FinInvoice.SendElecInvoiceNotice("23013321", "0000255805", "", "");
+		}
+
+		private void simpleButton30_Click(object sender, EventArgs e)
+		{
+			if (FinInvoice.CallinitParams(Envior.FIN_URL, Envior.FIN_APPID, Envior.FIN_APPKEY) > 0)
+				XtraMessageBox.Show("初始化成功!");
+			else
+				XtraMessageBox.Show("初始化失败!");
 		}
 	}
 }

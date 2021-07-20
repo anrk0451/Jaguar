@@ -133,16 +133,18 @@ namespace Brown.Forms
 				dt_rc04.Rows.Clear();
 				rc04Adapter.Fill(dt_rc04);
 
-				if (XtraMessageBox.Show("缴费成功!现在打印【发票】吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+				if (XtraMessageBox.Show("缴费成功!现在开具【发票】吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
 				{
-                    
-                    if(FinInvoice.GetCurrentPh() > 0)
-                    {
-						if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-						{
-							FinInvoice.Invoice(fa001);
-						}
-					}                     
+
+					//               if(FinInvoice.GetCurrentPh() > 0)
+					//               {
+					//	if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+					//	{
+					//		FinInvoice.Invoice(fa001);
+					//	}
+					//}
+					FinInvoice.InvoiceElec(fa001);
+
                 }
 
 				if (XtraMessageBox.Show("现在打印缴费记录吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)

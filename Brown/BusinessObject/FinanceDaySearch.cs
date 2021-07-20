@@ -498,13 +498,16 @@ namespace Brown.BusinessObject
 							XtraMessageBox.Show("此笔收费发票不是在当前工作站开具,不能继续!","提示",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
 							return;
 						}
-						//如果开具财政发票,且在新接口上线前
-						if (s_fa190.Substring(0, 1) == "1" && MiscAction.FinRefundBeforeOnline(s_fa001))
-						{
-							if (XtraMessageBox.Show("此笔收费在新接口上线前开具财政发票,此财政发票不能通过接口作废,是否继续?","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
-								return;
-						}
 
+						//如果开具财政发票,且在新接口上线前
+						if (s_fa190.Substring(0, 1) == "1" /* && MiscAction.FinRefundBeforeOnline(s_fa001) */)
+						{
+							//if (XtraMessageBox.Show("此笔收费在新接口上线前开具财政发票,此财政发票不能通过接口作废,是否继续?","提示",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
+							//	return;
+							XtraMessageBox.Show("功能暂不支持！");
+							return;
+						}
+						 
 
 						Frm_RemoveFinReason frm_reason = new Frm_RemoveFinReason();
 						if (frm_reason.ShowDialog() == DialogResult.OK)
@@ -639,8 +642,10 @@ namespace Brown.BusinessObject
 				//需要补开财政发票
 				if(gridView1.GetRowCellValue(rowHandle,"FA190").ToString().Substring(0,1) == "0" && gridView1.GetRowCellValue(rowHandle, "FA195").ToString().Substring(0, 1) == "1")
 				{
-					XtraMessageBox.Show("现在开始补开【财政发票】!","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
-					ReInvoiceFinRefund(s_fa001);
+					//XtraMessageBox.Show("现在开始补开【财政发票】!","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+					//ReInvoiceFinRefund(s_fa001);
+					XtraMessageBox.Show("功能暂不支持!");
+					return;
 				}
 				//需要补开税务发票
 				if (gridView1.GetRowCellValue(rowHandle, "FA190").ToString().Substring(1, 1) == "0" && gridView1.GetRowCellValue(rowHandle, "FA195").ToString().Substring(1, 1) == "1")
@@ -659,13 +664,14 @@ namespace Brown.BusinessObject
 				gridView1.GetRowCellValue(rowHandle, "FA195").ToString().Substring(0, 1) == "1")
 			{
 				XtraMessageBox.Show("现在准备开具财政发票!","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
-				if(FinInvoice.GetCurrentPh() > 0)
-				{
-					if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-					{
-						FinInvoice.Invoice(s_fa001);
-					}
-				}				 
+				//if(FinInvoice.GetCurrentPh() > 0)
+				//{
+				//	if (XtraMessageBox.Show("下一张财政发票号码:" + Envior.FIN_NEXT_BILL_NO + ",是否继续?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+				//	{
+				//		FinInvoice.Invoice(s_fa001);
+				//	}
+				//}				 
+				FinInvoice.InvoiceElec(s_fa001);
 			}
 
 			///开税票
@@ -919,7 +925,11 @@ namespace Brown.BusinessObject
 			BaseDialog frm_1 = null;
 
 			if (s_billType == "F")
-				frm_1 = new Frm_refund_select();
+			{
+				//frm_1 = new Frm_refund_select();
+				XtraMessageBox.Show("功能暂不支持!");
+				return;
+			}				
 			else
 				frm_1 = new Frm_refund_select2();
 
@@ -988,6 +998,8 @@ namespace Brown.BusinessObject
 		/// <param name="e"></param>
         private void barButtonItem11_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+			XtraMessageBox.Show("功能暂不支持!");
+			return;
 			int rowHandle = gridView1.FocusedRowHandle;
 			if(rowHandle >= 0)
             {

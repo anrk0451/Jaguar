@@ -21,15 +21,17 @@ namespace Brown.Action
     /// </summary>
     class FinInvoice
     {
-		
+
 		//[DllImport("nkpjk.dll", EntryPoint = "PLoginSuccess")]
 		//private extern static int PLoginSuccess();
 
 
-		//[DllImport("nkpjk.dll", EntryPoint = "PGetCurPh", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
-		//private extern static int GetCurPh(string ptype, [MarshalAs(UnmanagedType.LPStr)]StringBuilder res);
+		[DllImport("agency3intfc.dll", EntryPoint = "initParams", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
+		private extern static int initParams(string url, string appId,string appKey);
 
 
+		[DllImport("agency3intfc.dll", EntryPoint = "callagency3intfc", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
+		private extern static int callagency3intfc(string sendata, [MarshalAs(UnmanagedType.LPStr)]StringBuilder res);
 
 		//[DllImport("nkpjk.dll", EntryPoint = "PZrPj", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
 		//private extern static int PZrPj(string invdata,int ifprt,string pjlx,string bz, [MarshalAs(UnmanagedType.LPStr)]StringBuilder res);
@@ -138,15 +140,17 @@ namespace Brown.Action
 		{
 			StringBuilder s_big = new StringBuilder(200);
 			StringBuilder sb_url = new StringBuilder(100);
-			string s_datetime = string.Format("{0:yyyyMMddHHmmssfff}", MiscAction.GetServerTime());
+
+
+			string s_datetime = string.Format("{0:yyyyMMddHHmmssfff}", MiscAction.GetServerTime());			 
 			string s_msg_64 = Tools.EncodeBase64("utf-8", b_json);
-			string s_msg_id = Tools.GetEntityPK("FINREQ");
+			string s_msg_id = "0000000000202";   // Tools.GetEntityPK("FINREQ");
 
 			s_big.Append(Envior.FIN_AGENCY_CODE);
 			s_big.Append(Envior.FIN_APPID);
 			s_big.Append(s_datetime);
-			s_big.Append("0");                                            //是否加密
-			s_big.Append("json");
+			s_big.Append("0");                                         //是否加密
+			s_big.Append("JSON");
 			s_big.Append(s_msg_64);									   //message
 			s_big.Append(s_msg_id);									   //message_id	
 			s_big.Append(method);										   //method	
@@ -158,7 +162,7 @@ namespace Brown.Action
 			sb_url.Append("app_id=" + Envior.FIN_APPID + "&");
 			sb_url.Append("datetime=" + s_datetime + "&");
 			sb_url.Append("encryption=" + "0" + "&");
-			sb_url.Append("format=" + "json" + "&");
+			sb_url.Append("format=" + "JSON" + "&");
 			sb_url.Append("message=" + s_msg_64 + "&");
 			sb_url.Append("message_id=" + s_msg_id + "&");
 			sb_url.Append("method=" + method + "&");
@@ -938,82 +942,361 @@ namespace Brown.Action
 				return -1;
 			}
 		}
+		/// <summary>
+		/// 开具电子票据
+		/// </summary>
+		/// <param name="fa001"></param>
+		/// <returns></returns>
+		public static int InvoiceElec(string fa001)
+		{
+			//做开具财政发票前的预处理!!!
+			if (FinInvoicePrePare(fa001) < 0) return -1;
 
+			OracleParameter op_fa001 = new OracleParameter("fa001", OracleDbType.Varchar2, 10);
+			op_fa001.Direction = ParameterDirection.Input;
+			op_fa001.Value = fa001;
+			OracleDataReader reader_fa01 = SqlAssist.ExecuteReader("select fa003,fa180 from fa01 where fa001 = :fa001", new OracleParameter[] { op_fa001 });
+
+			string s_head = string.Empty;
+			string s_memo = string.Empty;  //备注
+			decimal dec_hjje = decimal.Zero;
+			while (reader_fa01.Read())
+			{
+				//读取交款人
+				s_head = reader_fa01["FA003"].ToString();
+				s_memo = reader_fa01["FA180"].ToString() + "	" + GetMemoAtMixedMode(fa001);
+			}
+			reader_fa01.Dispose();
+
+			///生成发送的数据
+
+			Dictionary<string, object> bdata = new Dictionary<string, object>();
+			Dictionary<string, Dictionary<string, object>> msg = new Dictionary<string, Dictionary<string, object>>();
+
+			List<Dictionary<string, object>> detail_list = new List<Dictionary<string, object>>();
+			Dictionary<string, object> detail_data = null;
+
+			//bdata.Add("serial_number", fa001);                            //业务流水号 
+			//bdata.Add("place_code", Envior.FIN_BILL_SITE);                //开票点
+			//bdata.Add("payer", s_head);                                   //缴款人单位
+			//bdata.Add("payer_tel", "13399998888");                        //缴款人电话
+			//bdata.Add("date", string.Format("{0:yyyy-MM-dd}", MiscAction.GetServerTime())); //开票日期
+			//bdata.Add("author", Envior.cur_userName);                     //开票人
+			//bdata.Add("payer_type", "1");                                 //缴款人类型：1 个人 2 单位
+			//bdata.Add("credit_code", "");                                 //组织机构代码
+			//bdata.Add("bill_code", Envior.FIN_CODE);                      //票据种类编码			
+			//bdata.Add("bill_no", "");                                     //票据号
+			//bdata.Add("rec_mode", "1");                                   //收款方式:1现金,2转账,3其它 
+			//bdata.Add("memo", s_memo);                                    //备注
+
+			bdata.Add("serial_number", "2021072000009");                  //业务流水号 
+			bdata.Add("place_code", Envior.FIN_BILL_SITE);                //开票点
+			bdata.Add("payer", "测试q");                                  //缴款人单位
+			bdata.Add("payer_tel", "13399996666");                        //缴款人电话
+			bdata.Add("date", "2021-07-20");							  //开票日期
+			bdata.Add("author", "根用户");								  //开票人
+			bdata.Add("payer_type", "1");                                 //缴款人类型：1 个人 2 单位
+			bdata.Add("credit_code", "");                                 //组织机构代码
+			bdata.Add("bill_code", "0133");								  //票据种类编码			
+			bdata.Add("bill_no", "");                                     //票据号
+			bdata.Add("rec_mode", "1");                                   //收款方式:1现金,2转账,3其它 
+			bdata.Add("memo", s_memo);                                    //备注
+
+
+
+
+
+			//bdata.Add("print_info", "");                                  // 
+
+			//List<Dictionary<string, object>> notice_infos = new List<Dictionary<string, object>>();
+			//List<Dictionary<string, object>> assist_infos = new List<Dictionary<string, object>>();
+			//List<Dictionary<string, object>> extend_infos = new List<Dictionary<string, object>>();
+
+			//bdata.Add("notice_infos", notice_infos);
+			//bdata.Add("assist_infos", assist_infos);
+			//bdata.Add("extend_infos", extend_infos);
+
+
+			/////读取销售明细
+			string s_sql = @"select * from fa05 where fa001 = :fa001";
+			OracleDataReader reader_fa05 = SqlAssist.ExecuteReader(s_sql, new OracleParameter[] { op_fa001 });
+
+			//List<Dictionary<string, object>> item_extend_infos = new List<Dictionary<string, object>>();
+			while (reader_fa05.Read())
+			{
+				detail_data = new Dictionary<string, object>();
+				detail_data.Add("item_code", "10304490801");   //项目名    //detail_data.Add("item_code", reader_fa05["INVOICECODE"].ToString());   //项目名 
+				detail_data.Add("std", 0.5);                               //detail_data.Add("std", reader_fa05["PRICE"]);                      //单价
+				detail_data.Add("number", 1.0);							   //detail_data.Add("number", reader_fa05["NUMS"]);                    //数量
+				detail_data.Add("unit", "");									   //单位
+				detail_data.Add("amt", 0.5);							   //金额detail_data.Add("amt", reader_fa05["FEE"]);                        //金额
+				//detail_data.Add("extend_infos", item_extend_infos);
+				detail_list.Add(detail_data);
+				dec_hjje += Convert.ToDecimal(reader_fa05["FEE"]);				 
+			}
+			reader_fa05.Dispose();
+
+			bdata.Add("item_details", detail_list);
+
+			bdata.Add("total_amt", 0.5);    //bdata.Add("total_amt", dec_hjje);                                        //合计金额
+			msg.Add("message", bdata);
+
+			string s_json = Tools.ConvertObjectToJson(msg);
+			LogUtils.Error(s_json);
+
+			//string s_ret = SendRequest("invoice.e.issue.do", s_json);			 
+			//Dictionary<string, object> retdata = JsonConvert.DeserializeObject<Dictionary<string, object>>(s_ret);
+			//if (retdata != null)
+			//{
+			//	if (retdata.ContainsKey("message"))
+			//	{
+			//		string s_batch_code = string.Empty;
+			//		string s_bill_no = string.Empty;
+			//		Dictionary<string, string> success_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["message"].ToString());
+			//		s_batch_code = success_msg["bill_batch_code"];
+			//		s_bill_no = success_msg["bill_no"];
+
+			//		if (FinInvoiceLog(fa001, Envior.FIN_CODE, s_bill_no, s_batch_code, dec_hjje, Envior.cur_userId) > 0)
+			//		{
+			//			XtraMessageBox.Show("发票开具成功!\r\n" + "注册号:" + s_batch_code + "\r\n" + "票据号:" + s_bill_no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			//		}
+			//		else
+			//		{
+			//			XtraMessageBox.Show("发票开具成功!!!但记录日志失败，请与管理员联系！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			//			XtraMessageBox.Show("票据号:" + s_bill_no + "\r\n注册号:" + s_batch_code + "\r\n");
+			//		}
+
+			//		return 1;
+			//	}
+			//	else
+			//	{
+			//		Dictionary<string, string> error_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["error_message"].ToString());
+			//		XtraMessageBox.Show("开财政发票失败!" + error_msg["error_msg"] + "\r\n" + "错误代码:" + error_msg["error_code"], "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			//		return -1;
+			//	}
+			//}
+			//else
+			//{
+			//	XtraMessageBox.Show("未获取到数据!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			//	return -1;
+			//}
+
+
+
+
+
+
+
+			StringBuilder sb_paras = new StringBuilder(500);
+			StringBuilder sb_big = new StringBuilder(500);
+			string s_datetime = string.Format("{0:yyyyMMddHHmmssfff}", MiscAction.GetServerTime());
+			string s_bjson = Tools.ConvertObjectToJson(msg);
+			string s_msg_64 = Tools.EncodeBase64("utf-8", s_bjson);
+			string s_msg_id = "0000000000203";          //////Tools.GetEntityPK("FINREQ");
+
+			////// 计算 MD5 
+			sb_big.Append(Envior.FIN_AGENCY_CODE);
+			sb_big.Append(Envior.FIN_APPID);
+			sb_big.Append(s_datetime);
+			sb_big.Append("0");                                          //是否加密
+			sb_big.Append("JSON");
+			sb_big.Append(s_msg_64);                                     //message
+			sb_big.Append(s_msg_id);                                     //message_id	
+			sb_big.Append("invoice.e.issue.do");                         //method	
+			sb_big.Append(Envior.FIN_REGION_CODE);                       //region_code
+			sb_big.Append(Envior.FIN_VERSION);                           //version
+			string s_md5 = Tools.EncryptWithMD5(Envior.FIN_APPKEY + sb_big.ToString() + Envior.FIN_APPKEY).ToUpper();
+
+			StringBuilder sb_pdata = new StringBuilder(500);
+			sb_pdata.Append("{\"ParamsStr\":\"" + "agency_code=" + Envior.FIN_AGENCY_CODE + "&" + "app_id=" + Envior.FIN_APPID + "&");
+			sb_pdata.Append("datetime=" + s_datetime + "&");
+			sb_pdata.Append("encryption=0&");
+			sb_pdata.Append("format=JSON&");
+			sb_pdata.Append("message=" + s_msg_64 + "&");
+			sb_pdata.Append("message_id=" + s_msg_id + "&");
+			sb_pdata.Append("method=invoice.e.issue.do&");
+			sb_pdata.Append("region_code=" + Envior.FIN_REGION_CODE + "&");
+			sb_pdata.Append("security=" + s_md5 + "&");
+			sb_pdata.Append("version=" + Envior.FIN_VERSION + "\"}");
+			 
+			if (CallinitParams(Envior.FIN_URL, Envior.FIN_APPID, Envior.FIN_APPKEY) > 0)
+			{
+				StringBuilder sb_res = new StringBuilder(600);
+				LogUtils.Debug(sb_pdata.ToString());
+				FinInvoice.CallService(sb_pdata.ToString(), sb_res);
+				///XtraMessageBox.Show(sb_res.ToString());
+				LogUtils.Debug(sb_res.ToString());
+				return 1;
+			}
+			else
+			{
+				XtraMessageBox.Show("初始化失败");
+				return -1;
+			}
+
+
+
+			//string s_url = @"http://127.0.0.1:13526/NontaxAgencyActuator?dllName=NontaxIndustry&Method=CallRemote&Params=" +
+			//			   Tools.EncodeBase64("utf-8", sb_pdata.ToString()) + "&" +
+			//			   "Random=" + new Random().Next().ToString() + "&" +
+			//			   "ServiceUnit=NontaxAgencyActuator";
+
+			//LogUtils.Info(s_url);
+			//HttpWebRequest request = (HttpWebRequest)WebRequest.Create(s_url);
+			//request.Method = "GET";
+			//request.ContentType = "text/html";
+
+			//HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+			//Stream myResponseStream = response.GetResponseStream();
+			//StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+			//string retString = myStreamReader.ReadToEnd();
+
+			//myStreamReader.Close();
+			//myResponseStream.Close();
+
+			////int i_pos1 = retString.IndexOf("\"ret\":\"");
+			////int i_pos2 = 0;
+			////if (i_pos1 >= 0)
+			////{
+			////	i_pos2 = retString.IndexOf("\"", i_pos1 + 7);
+			////	if (i_pos2 > i_pos1)
+			////	{
+			////		string s_base64 = retString.Substring(i_pos1 + 7, i_pos2 - (i_pos1 + 7));
+			////		string s_1 = Tools.DecodeBase64("utf-8", s_base64);
+			////		if (s_1.IndexOf("0000") >= 0)
+			////		{
+			////			XtraMessageBox.Show("打印成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			////		}
+			////	}
+			////}
+
+			//XtraMessageBox.Show(retString);
+
+			//return retString;
+
+
+			//string s_ret = SendRequest("invoice.e.issue.do", s_json);
+
+			//Dictionary<string, object> retdata = JsonConvert.DeserializeObject<Dictionary<string, object>>(s_ret);
+			//if (retdata != null)
+			//{
+			//	if (retdata.ContainsKey("message"))
+			//	{
+			//		string s_batch_code = string.Empty;
+			//		string s_bill_no = string.Empty;
+			//		Dictionary<string, string> success_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["message"].ToString());
+			//		s_batch_code = success_msg["bill_batch_code"];
+			//		s_bill_no = success_msg["bill_no"];
+
+			//		if (FinInvoiceLog(fa001, Envior.FIN_CODE, s_bill_no, s_batch_code, dec_hjje, Envior.cur_userId) > 0)
+			//		{
+			//			XtraMessageBox.Show("财政电子发票开具成功!\r\n" + "注册号:" + s_batch_code + "\r\n" + "票据号:" + s_bill_no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			//		}
+			//		else
+			//		{
+			//			XtraMessageBox.Show("财政电子发票开具成功!!!但记录日志失败，请与管理员联系！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			//			XtraMessageBox.Show("票据号:" + s_bill_no + "\r\n注册号:" + s_batch_code + "\r\n");
+			//		}
+			//		if (XtraMessageBox.Show("现在打印【财政电子发票】吗?" + "\r\n" + "发票号:" + s_bill_no, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			//		{
+			//			///PrintInvoice(s_batch_code, s_bill_no);
+			//		}
+			//		return 1;
+
+			//	}
+			//	else
+			//	{
+			//		Dictionary<string, string> error_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["error_message"].ToString());
+			//		XtraMessageBox.Show("开财政发票失败!" + error_msg["error_msg"] + "\r\n" + "错误代码:" + error_msg["error_code"], "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			//		return -1;
+			//	}
+
+			//}
+			//else
+			//{
+			//	XtraMessageBox.Show("未获取到数据!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			//	return -1;
+			//}
+
+
+		}
 
 		/// <summary>
 		/// 开具电子票据
 		/// </summary>
 		/// <returns></returns>
-		public static int InvoiceElec()
-		{
-			Dictionary<string, object> bdata = new Dictionary<string, object>();
-			Dictionary<string, Dictionary<string, object>> msg = new Dictionary<string, Dictionary<string, object>>();
+		//public static int InvoiceElec()
+		//{
+		//	Dictionary<string, object> bdata = new Dictionary<string, object>();
+		//	Dictionary<string, Dictionary<string, object>> msg = new Dictionary<string, Dictionary<string, object>>();
 
-			bdata.Add("serial_number", "1000009996");                     //业务流水号 
-			bdata.Add("place_code", "001");                               //开票点
-			bdata.Add("payer", "测试用户");                               //缴款人单位
-			bdata.Add("date", string.Format("{0:yyyy-MM-dd}", MiscAction.GetServerTime())); //开票日期
-			bdata.Add("author", "测试人员");                              //开票人
-			bdata.Add("payer_type", "1");                       //缴款人类型：1 个人 2 单位
-			bdata.Add("credit_code", " ");                       //组织机构代码
-			bdata.Add("bill_code", "0133");                     //票据种类编码			
-			bdata.Add("rec_mode", "1");                         //收款方式:1现金,2转账,3其它
-			bdata.Add("memo", "备注");                          //备注
+		//	bdata.Add("serial_number", "1000009996");                     //业务流水号 
+		//	bdata.Add("place_code", "001");                               //开票点
+		//	bdata.Add("payer", "测试用户");                               //缴款人单位
+		//	bdata.Add("date", string.Format("{0:yyyy-MM-dd}", MiscAction.GetServerTime())); //开票日期
+		//	bdata.Add("author", "测试人员");                              //开票人
+		//	bdata.Add("payer_type", "1");                       //缴款人类型：1 个人 2 单位
+		//	bdata.Add("credit_code", " ");                       //组织机构代码
+		//	bdata.Add("bill_code", "0133");                     //票据种类编码			
+		//	bdata.Add("rec_mode", "1");                         //收款方式:1现金,2转账,3其它
+		//	bdata.Add("memo", "备注");                          //备注
 
-			List<Dictionary<string, object>> detail_list = new List<Dictionary<string, object>>();
-			Dictionary<string, object> detail_data = null;
+		//	List<Dictionary<string, object>> detail_list = new List<Dictionary<string, object>>();
+		//	Dictionary<string, object> detail_data = null;
 
-			detail_data = new Dictionary<string, object>();
-			detail_data.Add("item_code", "10304490802");   //项目名 
-			detail_data.Add("std", 2);                     //单价
-			detail_data.Add("number", 1);                    //数量
-			detail_data.Add("amt", 2);                     //金额
-			detail_list.Add(detail_data);
+		//	detail_data = new Dictionary<string, object>();
+		//	detail_data.Add("item_code", "10304490802");   //项目名 
+		//	detail_data.Add("std", 2);                     //单价
+		//	detail_data.Add("number", 1);                    //数量
+		//	detail_data.Add("amt", 2);                     //金额
+		//	detail_list.Add(detail_data);
 
-			bdata.Add("item_details", detail_list);
-			bdata.Add("total_amt", 2);                    //合计金额
+		//	bdata.Add("item_details", detail_list);
+		//	bdata.Add("total_amt", 2);                    //合计金额
 
-			msg.Add("message", bdata);
+		//	msg.Add("message", bdata);
 
-			string s_json = Tools.ConvertObjectToJson(msg);
-			string s_ret = SendRequest("invoice.e.issue.do", s_json);
+		//	string s_json = Tools.ConvertObjectToJson(msg);
+		//	string s_ret = SendRequest("invoice.e.issue.do", s_json);
 
-			Dictionary<string, object> retdata = JsonConvert.DeserializeObject<Dictionary<string, object>>(s_ret);
-			if (retdata != null)
-			{
-				if (retdata.ContainsKey("message"))
-				{
-					string s_batch_code = string.Empty;
-					string s_bill_no = string.Empty;
-					Dictionary<string, string> success_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["message"].ToString());
-					s_batch_code = success_msg["bill_batch_code"];
-					s_bill_no = success_msg["bill_no"];
+		//	Dictionary<string, object> retdata = JsonConvert.DeserializeObject<Dictionary<string, object>>(s_ret);
+		//	if (retdata != null)
+		//	{
+		//		if (retdata.ContainsKey("message"))
+		//		{
+		//			string s_batch_code = string.Empty;
+		//			string s_bill_no = string.Empty;
+		//			Dictionary<string, string> success_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["message"].ToString());
+		//			s_batch_code = success_msg["bill_batch_code"];
+		//			s_bill_no = success_msg["bill_no"];
 
-					XtraMessageBox.Show("开具发票成功!");
-					XtraMessageBox.Show(s_batch_code, "注册号");
-					XtraMessageBox.Show(s_bill_no, "票号");
+		//			XtraMessageBox.Show("开具发票成功!");
+		//			XtraMessageBox.Show(s_batch_code, "注册号");
+		//			XtraMessageBox.Show(s_bill_no, "票号");
 
-					return 1;
-				}
-				else
-				{
-					Dictionary<string, string> error_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["error_message"].ToString());
-					XtraMessageBox.Show("开财政发票失败!" + error_msg["error_msg"] + "\r\n" + "错误代码:" + error_msg["error_code"], "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return -1;
-				}
-			}
-			else
-			{
-				XtraMessageBox.Show("未获取到数据!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return -1;
-			}			 
-		}
+		//			return 1;
+		//		}
+		//		else
+		//		{
+		//			Dictionary<string, string> error_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["error_message"].ToString());
+		//			XtraMessageBox.Show("开财政发票失败!" + error_msg["error_msg"] + "\r\n" + "错误代码:" + error_msg["error_code"], "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		//			return -1;
+		//		}
+		//	}
+		//	else
+		//	{
+		//		XtraMessageBox.Show("未获取到数据!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		//		return -1;
+		//	}			 
+		//}
+
+
 		/// <summary>
 		/// 获取电子票据图像 Base64编码
 		/// </summary>
 		/// <param name="fa001"></param>
 		/// <returns></returns>
-		public string GetInvoiceImageBase64(string fa001)
+		public static string GetInvoiceImageBase64(string fa001)
 		{
 			string s_bill_code = string.Empty;
 			string s_bill_no = string.Empty;
@@ -1236,5 +1519,144 @@ namespace Brown.Action
 				return  -1;
 			}
 		}
+
+		public static int CallinitParams(string url, string appId, string appKey)
+		{
+			return initParams(url, appId, appKey);
+		}
+
+		public static int CallService(string url,StringBuilder res)
+		{
+			return callagency3intfc(url, res); 
+		}
+
+
+		/// <summary>
+		/// 开具电子票据
+		/// </summary>
+		/// <param name="fa001"></param>
+		/// <returns></returns>
+		public static int InvoiceElec_test(string fa001)
+		{
+			//做开具财政发票前的预处理!!!
+			if (FinInvoicePrePare(fa001) < 0) return -1;
+
+			OracleParameter op_fa001 = new OracleParameter("fa001", OracleDbType.Varchar2, 10);
+			op_fa001.Direction = ParameterDirection.Input;
+			op_fa001.Value = fa001;
+			OracleDataReader reader_fa01 = SqlAssist.ExecuteReader("select fa003,fa180 from fa01 where fa001 = :fa001", new OracleParameter[] { op_fa001 });
+
+			string s_head = string.Empty;
+			string s_memo = string.Empty;  //备注
+			decimal dec_hjje = decimal.Zero;
+			while (reader_fa01.Read())
+			{
+				//读取交款人
+				s_head = reader_fa01["FA003"].ToString();
+				s_memo = reader_fa01["FA180"].ToString() + "	" + GetMemoAtMixedMode(fa001);
+			}
+			reader_fa01.Dispose();
+
+			///生成发送的数据
+
+			Dictionary<string, object> bdata = new Dictionary<string, object>();
+			Dictionary<string, Dictionary<string, object>> msg = new Dictionary<string, Dictionary<string, object>>();
+
+			List<Dictionary<string, object>> detail_list = new List<Dictionary<string, object>>();
+			Dictionary<string, object> detail_data = null;
+
+			bdata.Add("serial_number", fa001);                            //业务流水号 
+			bdata.Add("place_code", Envior.FIN_BILL_SITE);                //开票点
+			bdata.Add("payer", s_head);                                   //缴款人单位
+			bdata.Add("payer_tel", "12345678");                           //缴款人电话
+			bdata.Add("date", string.Format("{0:yyyy-MM-dd}", MiscAction.GetServerTime())); //开票日期
+			bdata.Add("author", Envior.cur_userName);                     //开票人
+			bdata.Add("payer_type", "1");                                 //缴款人类型：1 个人 2 单位
+			bdata.Add("credit_code", " ");                                //组织机构代码
+			bdata.Add("bill_code", Envior.FIN_CODE);                      //票据种类编码			
+			bdata.Add("bill_no", "");                                     //票据号
+			bdata.Add("rec_mode", "1");                                   //收款方式:1现金,2转账,3其它 
+			bdata.Add("memo", s_memo);                                    //备注
+			bdata.Add("print_info", "");                                  // 
+
+			Dictionary<string, object> notice_infos = new Dictionary<string, object>();
+			Dictionary<string, object> assist_infos = new Dictionary<string, object>();
+			Dictionary<string, object> extend_infos = new Dictionary<string, object>();
+
+			bdata.Add("notice_infos", notice_infos);
+			bdata.Add("assist_infos", assist_infos);
+			bdata.Add("extend_infos", extend_infos);
+
+
+			/////读取销售明细
+			string s_sql = @"select * from fa05 where fa001 = :fa001";
+			OracleDataReader reader_fa05 = SqlAssist.ExecuteReader(s_sql, new OracleParameter[] { op_fa001 });
+
+
+			Dictionary<string, object> item_extend_infos = new Dictionary<string, object>();
+			while (reader_fa05.Read())
+			{
+				detail_data = new Dictionary<string, object>();
+				detail_data.Add("item_code", reader_fa05["INVOICECODE"].ToString());   //项目名 
+				detail_data.Add("std", reader_fa05["PRICE"]);                      //单价
+				detail_data.Add("number", reader_fa05["NUMS"]);                    //数量
+				detail_data.Add("unit", "");									   //单位
+				detail_data.Add("amt", reader_fa05["FEE"]);                        //金额
+				detail_list.Add(detail_data);
+				detail_data.Add("extend_infos", item_extend_infos);
+
+				dec_hjje += Convert.ToDecimal(reader_fa05["FEE"]);				 
+			}
+			reader_fa05.Dispose();
+
+			bdata.Add("item_details", detail_list);
+			bdata.Add("total_amt", dec_hjje);                                        //合计金额
+			msg.Add("message", bdata);
+
+			string s_json = Tools.ConvertObjectToJson(msg); 
+			string s_ret = SendRequest("invoice.e.issue.do", s_json);
+
+			Dictionary<string, object> retdata = JsonConvert.DeserializeObject<Dictionary<string, object>>(s_ret);
+			if (retdata != null)
+			{
+				if (retdata.ContainsKey("message"))
+				{
+					string s_batch_code = string.Empty;
+					string s_bill_no = string.Empty;
+					Dictionary<string, string> success_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["message"].ToString());
+					s_batch_code = success_msg["bill_batch_code"];
+					s_bill_no = success_msg["bill_no"];
+
+					if (FinInvoiceLog(fa001, Envior.FIN_CODE, s_bill_no, s_batch_code, dec_hjje, Envior.cur_userId) > 0)
+					{
+						XtraMessageBox.Show("财政电子发票开具成功!\r\n" + "注册号:" + s_batch_code + "\r\n" + "票据号:" + s_bill_no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+					else
+					{
+						XtraMessageBox.Show("财政电子发票开具成功!!!但记录日志失败，请与管理员联系！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						XtraMessageBox.Show("票据号:" + s_bill_no + "\r\n注册号:" + s_batch_code + "\r\n");
+					}
+					if (XtraMessageBox.Show("现在打印【财政电子发票】吗?" + "\r\n" + "发票号:" + s_bill_no, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+					{
+						///PrintInvoice(s_batch_code, s_bill_no);
+					}
+					return 1;
+
+				}
+				else
+				{
+					Dictionary<string, string> error_msg = JsonConvert.DeserializeObject<Dictionary<string, string>>(retdata["error_message"].ToString());
+					XtraMessageBox.Show("开财政发票失败!" + error_msg["error_msg"] + "\r\n" + "错误代码:" + error_msg["error_code"], "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return -1;
+				}
+
+			}
+			else
+			{
+				XtraMessageBox.Show("未获取到数据!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return -1;
+			}
+		}
+
 	}
 }

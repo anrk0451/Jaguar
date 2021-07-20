@@ -224,6 +224,12 @@
     </Compile>
     <Compile Include="Dao\Ic01_dao.cs" />
     <Compile Include="Domain\Ic01.cs" />
+    <Compile Include="Forms\Frm_FinInvoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Frm_FinInvoice.Designer.cs">
+      <DependentUpon>Frm_FinInvoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Frm_invoiceLog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -766,6 +772,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BusinessObject\WorkStationList.resx">
       <DependentUpon>WorkStationList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Frm_FinInvoice.resx">
+      <DependentUpon>Frm_FinInvoice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Frm_invoiceLog.resx">
       <DependentUpon>Frm_invoiceLog.cs</DependentUpon>
