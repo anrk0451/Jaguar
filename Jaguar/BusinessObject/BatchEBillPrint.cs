@@ -104,7 +104,7 @@ namespace Jaguar.BusinessObject
 
 		private void gridView1_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
 		{
-            if(e.Column.FieldName.ToUpper() == "FA002")
+            if(e.Column.FieldName.ToUpper() == "FA002" && e.Value != null)
 			{
                 if (e.Value.ToString() == "0")
                     e.DisplayText = "火化业务";

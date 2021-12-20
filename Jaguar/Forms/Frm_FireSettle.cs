@@ -186,7 +186,7 @@ namespace Jaguar.Forms
                 s_tip = "本次结算实际应收金额为0,是否继续?";
             else
                 return;
-
+ 
             if (XtraMessageBox.Show(s_tip, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;
 
             string s_fa001 = Tools.GetEntityPK("FA01");

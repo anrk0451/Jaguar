@@ -139,7 +139,7 @@ namespace Jaguar.BusinessObject
 			if (dialogResult == DialogResult.OK)
 			{
 				DevExpress.XtraPrinting.XlsxExportOptions options = new DevExpress.XtraPrinting.XlsxExportOptions();
-				options.TextExportMode = TextExportMode.Text;//设置导出模式为文本
+				options.TextExportMode = TextExportMode.Value;    
 				gridControl1.ExportToXlsx(fileDialog.FileName, options);
 				XtraMessageBox.Show("导出成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}

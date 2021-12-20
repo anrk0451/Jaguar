@@ -410,14 +410,16 @@ namespace Jaguar
 
 		private void barButtonItem26_ItemClick(object sender, ItemClickEventArgs e)
 		{
-            //Frm_Demo frm_1 = new Frm_Demo();
-            //frm_1.ShowDialog();
-            //frm_1.Dispose();
-            //Frm_FinInvoice frm_1 = new Frm_FinInvoice();
-            //frm_1.ShowDialog();
-            //frm_1.Dispose();
-            openBusinessObject("BatchEBillPrint");
-        }
+			Frm_Demo frm_1 = new Frm_Demo();
+			frm_1.ShowDialog();
+			frm_1.Dispose();
+			//Frm_FinInvoice frm_1 = new Frm_FinInvoice();
+			//frm_1.ShowDialog();
+			//frm_1.Dispose();
+
+
+			//openBusinessObject("BatchEBillPrint");
+		}
 
 		/// <summary>
 		/// 临时销售
